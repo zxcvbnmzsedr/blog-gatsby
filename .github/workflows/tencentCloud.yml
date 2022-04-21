@@ -1,27 +1,27 @@
-#name: CI
-#on:
-#  push:
-#    branches:
-#      - master
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout master
-#        uses: actions/checkout@v2
-#        with:
-#          ref: master
-#      - uses: borales/actions-yarn@v2.3.0
-#        with:
-#          cmd: install
-#      - uses: borales/actions-yarn@v2.3.0
-#        with:
-#          cmd: build
-#      - name: Upload COS
-#        uses: zkqiang/tencent-cos-action@v0.1.0
-#        with:
-#          args: upload -r ./public/ /
-#          secret_id: ${{ secrets.SECRET_ID }}
-#          secret_key: ${{ secrets.SECRET_KEY }}
-#          bucket: ${{ secrets.BUCKET }}
-#          region: ${{ secrets.REGION }}
+name: CI
+on:
+  push:
+    branches:
+      - abc
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: install
+      - uses: borales/actions-yarn@v2.3.0
+        with:
+          cmd: build
+      - name: Upload COS
+        uses: zkqiang/tencent-cos-action@v0.1.0
+        with:
+          args: upload -r ./public/ /
+          secret_id: ${{ secrets.SECRET_ID }}
+          secret_key: ${{ secrets.SECRET_KEY }}
+          bucket: ${{ secrets.BUCKET }}
+          region: ${{ secrets.REGION }}
