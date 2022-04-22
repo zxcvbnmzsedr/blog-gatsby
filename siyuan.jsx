@@ -1,5 +1,7 @@
-const fs = require('fs')
 const fetch = require('isomorphic-fetch');
+const {siYuan} = require("./config");
+const path = require('path')
+
 const param = (data) => {
     return {
         method: 'POST',
@@ -10,18 +12,20 @@ const param = (data) => {
         body: JSON.stringify(data)
     }
 }
+const getFormatDate = ({date}) => {
+    return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${date.slice(8, 10)}:${date.slice(10, 12)}`
+}
 const getHead = ({title, date, tags}) => {
-    const formatDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${date.slice(8, 10)}:${date.slice(10, 12)}  `;
+    const formatDate = getFormatDate({date});
     return `---\n` +
         `title: ${title}\n` +
         `date: ${formatDate}\n` +
         `tags: [${tags}]\n` +
         `---\n`
 }
-const host = 'http://127.0.0.1:6806/api/'
 
 function getData(url, data) {
-    return fetch(host + url, param(data)).then(res => {
+    return fetch(siYuan.host + url, param(data)).then(res => {
         if (res.status >= 400) {
             console.log(res);
             const err = new Error('http server error');
@@ -32,48 +36,118 @@ function getData(url, data) {
     })
 }
 
-function delDir(path) {
-    let files = [];
-    if (fs.existsSync(path)) {
-        files = fs.readdirSync(path);
-        files.forEach((file, index) => {
-            let curPath = path + "/" + file;
-            if (fs.statSync(curPath).isDirectory()) {
-                delDir(curPath); //递归删除文件夹
-            } else {
-                fs.unlinkSync(curPath); //删除文件
-            }
-        });
-        fs.rmdirSync(path);
-    }
-}
 
-async function getSiyuan({path, box}) {
-    delDir(path)
-    fs.mkdirSync(path)
-    const pathArray = path.split('/')
-    const json = await getData('query/sql', {stmt: `select * from blocks where box = '${box}' and type='d'`});
-    for (let i = 0; i < json.data.length; i++) {
-        const {id, content, created} = json.data[i];
+/**
+ *
+ * @param path
+ * @param box
+ * @param hpath
+ * @returns {Promise<undefined | Object<{}>>}
+ */
+async function getSiYuanPost({box}) {
+    const siYuanBox = await getData('query/sql', {stmt: `select * from blocks where box = '${box}' and type='d' order by created desc`});
+    const list = await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
+        const {id, content, created} = siYuanBoxData;
         const {data} = await getData('export/exportMdContent', {id});
         if (!data.content.trim()) {
-            continue
+            return
         }
-        const tags = data.hPath.split('/').filter(e => !pathArray.includes(e)).slice(0,-1)
-        console.log(content, tags)
-        const head = getHead({title: content, date: created, tags})
-        fs.writeFile(path + content + '.md', head + data.content, err => {
-            if (err) {
-                console.error(err)
-            }
-        })
+        const attributes = await getData('query/sql', {stmt: `select name,value from attributes where block_id = '${id}'`});
+        const attribute = attributes.data.reduce((r, item) => (
+                {
+                    ...r,
+                    [item.name]: item.value,
+                }
+            ), {})
+        ;
+        const template = attribute['custom-template']
+        const slug = attribute['custom-slug']
+        const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
+        return {
+            ...siYuanBoxData,
+            title: content,
+            template,
+            slug: slug ? slug : data.hPath,
+            raw: data.content,
+            date: getFormatDate({date: created}),
+            tags: tags,
+            contentType: data.hPath.split('/')[1],
+        }
+    }));
+    return list
+}
+
+const addLevel = (root, level) => {
+    root.level = level;
+    if (root && root.children) {
+        root.children.forEach(e => addLevel(e, level + 1))
     }
 }
 
-try {
-    getSiyuan({path: './content/posts/', box: '20220420112442-p6q6e8w'}).catch(e => {
-        console.log(e)
-    })
-} catch (e) {
-    console.log(e);
+async function getSiYuanTopic({box}) {
+    const topicData = await getData('query/sql', {stmt: `select content, created, type, hpath, parent_id,id from blocks where box = '20220420112442-p6q6e8w' and (type = 'h' or type = 'd') and hpath like '/topic/分布式%'`});
+    const or = parseTreeParentId(topicData.data.map(e => getTreeNode(e)), '')
+    const o2 = parseTreePath(or, '/topic/分布式')
+    const res = []
+    const root = {
+        title: '分布式',
+        id: 'xxxx',
+        parentId: '',
+        href: '/topic/分布式',
+        path: '/topic/分布式',
+        children: o2
+    }
+    addLevel(root, 0)
+    res.push(root)
+    return res;
 }
+
+
+module.exports = {
+    getSiYuanPost, getSiYuanTopic
+}
+const getTreeNode = (data) => {
+    return {
+        title: data['content'],
+        id: data['id'],
+        href: data['hpath'] + '#' + data['content'],
+        parentId: data['parent_id'],
+        path: data['hpath'],
+        children: []
+    }
+}
+
+const parseTreeParentId = (arr, parentId) => {
+    function loop(parentId) {
+        return arr.reduce((acc, cur) => {
+            if (cur.parentId === parentId) {
+                cur.children = loop(cur.id)
+                acc.push(cur)
+            }
+            return acc
+        }, [])
+    }
+
+    return loop(parentId)
+}
+const parseTreePath = (arr, p) => {
+    function loop(p) {
+        return arr.reduce((acc, cur) => {
+            const parentPath = path.join(cur.path, '..')
+            if (parentPath === p) {
+                const l = loop(cur.path)
+                if (l.length > 0) {
+                    l.forEach(e => cur.children.push(e))
+                }
+                acc.push(cur)
+            }
+            return acc
+        }, [])
+    }
+
+    return loop(p)
+}
+const fs = require('fs')
+
+getSiYuanTopic({box: ''})
+    .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))

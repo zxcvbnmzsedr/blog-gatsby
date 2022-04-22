@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 const TagsTemplate = ({ pageContext, data }) => {
   const { tag } = pageContext;
-  const { totalCount } = data.allMarkdownRemark;
-  const posts = data.allMarkdownRemark.nodes;
+  const { totalCount } = data.allSiYuan;
+  const posts = data.allSiYuan.nodes;
   const title = `Posts tagged ${tag}`;
 
   return (
@@ -56,17 +56,17 @@ const Title = styled.h1`
 
 export const pageQuery = graphql`
   query($tag: String) {
-    allMarkdownRemark(
+    allSiYuan(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
       filter: {
         frontmatter: { tags: { in: [$tag] } }
-        fields: { contentType: { eq: "posts" } }
+        field: { contentType: { eq: "posts" } }
       }
     ) {
       totalCount
       nodes {
-        fields {
+        field {
           slug
         }
         frontmatter {

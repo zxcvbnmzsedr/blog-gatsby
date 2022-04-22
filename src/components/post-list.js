@@ -4,9 +4,9 @@ import { Link } from 'gatsby';
 import Tags from './tags';
 
 const PostList = ({ posts }) => {
-  const PostList = posts.map(({ frontmatter, fields, excerpt, timeToRead }) => {
+  const PostList = posts.map(({ frontmatter, field, excerpt, timeToRead }) => {
     const { title, tags, date, description } = frontmatter;
-    const { slug } = fields;
+    const { slug } = field;
 
     return (
       <PostListItem

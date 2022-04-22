@@ -1,5 +1,8 @@
-# Fork/Join框架
-
+---
+title: ForkJoin框架
+date: 2022-04-21 19:40  
+tags: [并发工具,线程池]
+---
 Fork/Join框架，是JDK7中加入的 一个线程类。Fork/Join是基于分治算法的并行实现。
 
 它是一个可以让使用者简单方便的使用并行，来对数据进行处理，极大限度的利用多处理器来提高应用的性能。
@@ -9,7 +12,6 @@ Fork/Join框架，是JDK7中加入的 一个线程类。Fork/Join是基于分治
 将大任务拆分成一个个子任务，然后join在一起，最后输出结果。
 
 ![forkjoin流程](https://www.shiyitopo.tech/uPic/forkjoin%E6%B5%81%E7%A8%8B.png)
-
 
 伪代码就是这样:
 
@@ -26,8 +28,6 @@ Result solve(Problem problem) {
   }
 }
 ```
-
-
 
 ## 案例?
 
@@ -102,7 +102,6 @@ sum: -243309312 in 624 ms.
 Fork/join sum: -243309312 in 168 ms.
 ```
 
-
 ## 原理
 
 我们来看看，forkJoin是如何去实现的。
@@ -135,16 +134,10 @@ queue2在执行完之后，会将queue0的task，给拉入到自己的线程下�
 ![forkjoin-工作窃取](https://www.shiyitopo.tech/uPic/forkjoin-%E5%B7%A5%E4%BD%9C%E7%AA%83%E5%8F%96.png)
 
 1. ForkJoinPool 的每个工作线程都维护着一个工作队列（WorkQueue），这是一个**双端队列（Deque）**，里面存放的对象是任务（**ForkJoinTask**）。
-
 2. 每个工作线程在运行中产生新的任务（通常是因为调用了 fork()）时，会放入工作队列的队尾，并且工作线程在处理自己的工作队列时，使用的是 **LIFO** 方式，也就是说每次从队尾取出任务来执行。
-
 3. 每个工作线程在处理自己的工作队列同时，会尝试窃取一个任务（或是来自于刚刚提交到 pool 的任务，或是来自于其他工作线程的工作队列），窃取的任务位于其他线程的工作队列的队首，也就是说工作线程在窃取其他工作线程的任务时，使用的是 FIFO 方式。
-
 4. 在遇到 join() 时，如果需要 join 的任务尚未完成，则会先处理其他任务，并等待其完成。
-
 5. 在既没有自己的任务，也没有可以窃取的任务时，进入休眠。
-
-
 
 ### 执行流程
 
@@ -203,4 +196,3 @@ public final ForkJoinTask<V> fork() {
 是因为加入的任务，不知道处于哪个队列的哪个位置，如果是top位置直接等待即可，如果不是则需要等待执行到这个任务才能获取结果
 
 ![img](https://www.shiyitopo.tech/uPic/java-thread-x-forkjoin-6.png)
-

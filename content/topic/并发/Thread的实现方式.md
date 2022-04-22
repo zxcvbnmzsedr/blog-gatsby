@@ -1,5 +1,8 @@
-# Thread的实现方式
-
+---
+title: Thread的实现方式
+date: 2022-04-21 19:40  
+tags: [并发基础,线程基础]
+---
 ## 实现Runable接口
 
 + 实现Runable接口
@@ -28,7 +31,7 @@ public ExtentsThread extend Threaad {
 
 ## 用线程池创建线程
 
-会给我们线程创建设置一些默认的值，比如名字，是不是守护线程，以及优先级 
+会给我们线程创建设置一些默认的值，比如名字，是不是守护线程，以及优先级
 
 ```java
 private static class DefaultThreadFactory implements ThreadFactory {
@@ -73,8 +76,6 @@ private static class DefaultThreadFactory implements ThreadFactory {
 
 TimerTask实现了Runable的接口，Timer中有个TimerThread继承了Thread，本质他还是Thread
 
-
-
 ## 本质?
 
 Thread的实现的方式从本质上来看只有一种。
@@ -94,15 +95,11 @@ Thread的实现的方式从本质上来看只有一种。
 ```
 
 + 方式1: 最终调用target.run() 方法
-
 + 方式2: 整个run方法被重写
 
   因此，创建线程只有一种方法：`构造Thread类`
 
-实现方式有两种: 
+实现方式有两种:
 
 1. 使用Runable的方式，最后调用target.run方法进行启动
-
 2. 直接继承Thread类，重写run方法
-
-   

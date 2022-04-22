@@ -4,7 +4,7 @@ import { Link, graphql } from 'gatsby';
 
 
 const Tags = ({ data }) => {
-  const tags = data.allMarkdownRemark.group;
+  const tags = data.allSiYuan.group;
 
   return (
     <Layout title="All Tags">
@@ -26,12 +26,13 @@ const Tags = ({ data }) => {
 export default Tags;
 
 export const pageQuery = graphql`
-  query {
-    allMarkdownRemark(limit: 2000) {
-      group(field: frontmatter___tags) {
-        fieldValue
-        totalCount
-      }
+  {
+  allSiYuan(limit: 2000, filter: {field: {contentType: {eq: "posts"}}}) {
+    group(field: frontmatter___tags) {
+      fieldValue
+      totalCount
     }
   }
+}
+
 `;

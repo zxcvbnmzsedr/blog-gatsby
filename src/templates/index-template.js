@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import StyledLink from '../components/styled-link';
 
 const HomePage = ({ data }) => {
-  const posts = data.allMarkdownRemark.nodes;
+  const posts = data.allSiYuan.nodes;
   const intro = data.markdownRemark.html;
   const title = data.markdownRemark.frontmatter.title;
 
@@ -56,36 +56,37 @@ const Intro = styled.div`
 `;
 
 export const pageQuery = graphql`
-  query($slug: String!) {
-    site {
-      siteMetadata {
-        title
-      }
+query ($slug: String!) {
+  site {
+    siteMetadata {
+      title
     }
-    allMarkdownRemark(
-      filter: { fields: { contentType: { eq: "posts" } } }
-      sort: { order: DESC, fields: frontmatter___date }
-      limit: 9
-    ) {
-      nodes {
-        fields {
-          slug
-        }
-        excerpt
-        timeToRead
-        frontmatter {
-          date(formatString: "YYYY-MM-DD")
-          description
-          title
-          tags
-        }
+  }
+  allSiYuan(
+    filter: {field: {contentType: {eq: "posts"}}}
+    sort: {order: DESC, fields: frontmatter___date}
+    limit: 9
+  ) {
+    nodes {
+      field {
+        slug
       }
-    }
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+      excerpt
+      timeToRead
       frontmatter {
+        date(formatString: "YYYY-MM-DD")
         title
+        description
+        tags
       }
     }
   }
+  markdownRemark(fields: {slug: {eq: $slug}}) {
+    html
+    frontmatter {
+      title
+    }
+  }
+}
+
 `;

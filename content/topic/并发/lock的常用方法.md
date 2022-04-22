@@ -1,6 +1,9 @@
- # lock的常用方法
-
-**方法概览:** 
+---
+title: lock的常用方法
+date: 2022-04-21 19:40  
+tags: [并发工具,各种锁]
+---
+**方法概览:**
 
 ```java
 public interface Lock {

@@ -1,30 +1,111 @@
 const path = require(`path`);
 const {createFilePath} = require(`gatsby-source-filesystem`);
+const {siYuan} = require("./config");
+const {getSiYuanPost, getSiYuanTopic} = require("./siyuan.jsx");
+const {timeToRead} = require(`gatsby-transformer-remark/utils/time-to-read`);
+const frontMatter = require('front-matter')
+const removeMd = require('remove-markdown')
+
+function getMarkdownExcerpt(markdown, maxExcerptLength = 120) {
+    const parsedMarkdown = frontMatter(markdown)
+    let contentText = removeMd(parsedMarkdown.body)
+    // Trim and normalize whitespace in content text
+    contentText = contentText.trim().replace(/\s+/g, ' ')
+    const excerpt = contentText.slice(0, maxExcerptLength)
+
+    if (contentText.length > maxExcerptLength) {
+        return excerpt + '...'
+    }
+
+    return excerpt
+}
+
 
 const createMind = async ({graphql, actions}) => {
     const {createPage} = actions
     const result = await graphql(`
     query MyQuery {
-        allIndexJson {
-            nodes {
-                tree
-                name
-            }
+      allTopic {
+        nodes {
+          tree
+          title
         }
+      }
     }
   `)
 
-    result.data.allIndexJson.nodes.forEach(({name}) => {
+    result.data.allTopic.nodes.forEach(({title}) => {
         createPage({
-            path: 'topic/' + name,
-            component: path.resolve(`./src/templates/blog-readme-mind.js`),
+            path: 'topic/' + title,
+            component: path.resolve(`./src/templates/mind-template.js`),
             context: {
-                name: name,
+                title: title,
             },
         })
     })
 }
 
+
+exports.sourceNodes = async ({actions, createContentDigest}) => {
+    const {createNode} = actions;
+    const list = await getSiYuanPost({box: siYuan.box});
+    const processResult = (result) => {
+        const {id, title, slug, date, tags, contentType, template, raw, content} = result;
+        const excerpt = getMarkdownExcerpt(raw)
+        return Object.assign({}, {
+            field: {
+                contentType: contentType,
+                slug
+            },
+            raw,
+            timeToRead: timeToRead(raw),
+            excerpt,
+            frontmatter: {
+                date,
+                tags,
+                template,
+                title,
+                description: excerpt
+            }
+        }, {
+            id: id,
+            endpointId: result.id,
+            parent: null,
+            children: [],
+            internal: {
+                type: `SiYuan`,
+                contentDigest: createContentDigest(result)
+            }
+        });
+    };
+    list.forEach(n => {
+        if (n) {
+            createNode(processResult(n))
+        }
+    })
+    const processTopic = (result) => {
+        const {id} = result;
+        return Object.assign({}, {
+            tree: JSON.stringify(result),
+            title: result.title
+        }, {
+            id: id,
+            endpointId: result.id,
+            parent: null,
+            children: [],
+            internal: {
+                type: `topic`,
+                contentDigest: createContentDigest(result)
+            }
+        });
+    };
+    const topicTree = await getSiYuanTopic({box: siYuan.box});
+    topicTree.forEach(n => {
+        if (n) {
+            createNode(processTopic(n))
+        }
+    })
+};
 
 exports.createPages = async ({graphql, actions, reporter}) => {
     await createMind({graphql, actions})
@@ -33,12 +114,12 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     const result = await graphql(
         `
       {
-        allMarkdownRemark(
+        allSiYuan(
           sort: { fields: [frontmatter___date], order: DESC }
           limit: 1000
         ) {
           nodes {
-            fields {
+            field {
               contentType
               slug
             }
@@ -47,9 +128,9 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             }
           }
         }
-        tagsGroup: allMarkdownRemark(
+        tagsGroup: allSiYuan(
           limit: 2000
-          filter: { fields: { contentType: { eq: "posts" } } }
+          filter: { field: { contentType: { eq: "posts" } } }
         ) {
           group(field: frontmatter___tags) {
             fieldValue
@@ -68,18 +149,18 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     }
 
     const tags = result.data.tagsGroup.group;
-    const allMarkdownNodes = result.data.allMarkdownRemark.nodes;
+    const allMarkdownNodes = result.data.allSiYuan.nodes;
 
     const blogMarkdownNodes = allMarkdownNodes.filter(
-        (node) => node.fields.contentType === `posts`
+        (node) => node.field.contentType === `posts`
     );
 
     const pageMarkdownNodes = allMarkdownNodes.filter(
-        (node) => node.fields.contentType === `pages`
+        (node) => node.field.contentType === `pages`
     );
 
     const topicMarkdownNodes = allMarkdownNodes.filter(
-        (node) => node.fields.contentType === `topic`
+        (node) => node.field.contentType === `topic`
     );
 
     if (blogMarkdownNodes.length > 0) {
@@ -88,18 +169,18 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             let nextSlug = null;
 
             if (index > 0) {
-                prevSlug = blogMarkdownNodes[index - 1].fields.slug;
+                prevSlug = blogMarkdownNodes[index - 1].field.slug;
             }
 
             if (index < blogMarkdownNodes.length - 1) {
-                nextSlug = blogMarkdownNodes[index + 1].fields.slug;
+                nextSlug = blogMarkdownNodes[index + 1].field.slug;
             }
 
             createPage({
-                path: `${node.fields.slug}`,
+                path: `${node.field.slug}`,
                 component: path.resolve(`./src/templates/post-template.js`),
                 context: {
-                    slug: `${node.fields.slug}`,
+                    slug: `${node.field.slug}`,
                     prevSlug: prevSlug,
                     nextSlug: nextSlug,
                 },
@@ -113,10 +194,10 @@ exports.createPages = async ({graphql, actions, reporter}) => {
                 const templateFile = `${String(node.frontmatter.template)}.js`;
 
                 createPage({
-                    path: `${node.fields.slug}`,
+                    path: `${node.field.slug}`,
                     component: path.resolve(`src/templates/${templateFile}`),
                     context: {
-                        slug: `${node.fields.slug}`,
+                        slug: `${node.field.slug}`,
                     },
                 });
             }
@@ -126,10 +207,10 @@ exports.createPages = async ({graphql, actions, reporter}) => {
     if (topicMarkdownNodes.length > 0) {
         topicMarkdownNodes.forEach((node) => {
             createPage({
-                path: `${node.fields.slug}`,
+                path: `${node.field.slug}`,
                 component: path.resolve(`./src/templates/post-template.js`),
                 context: {
-                    slug: `${node.fields.slug}`,
+                    slug: `${node.field.slug}`,
                 },
             });
 

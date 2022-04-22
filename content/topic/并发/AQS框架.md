@@ -1,5 +1,8 @@
-# AQS框架
-
+---
+title: AQS框架
+date: 2022-04-21 19:40  
+tags: [底层原理]
+---
 AQS框架，全名叫做**A**bstract**Q**ueued**S**ynchronizer。是目前JUC中，各个Lock锁的核心实现。
 
 AQS提供了一系列的方式方法，用于我们去实现自己的"锁"结构。
@@ -173,8 +176,6 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
 
 ```
 
-
-
 在tryAcquire方法返回false之后，将会进入第二个逻辑: **acquireQueued(addWaiter(Node.EXCLUSIVE), arg)**
 
 首先进入的是addWaiter，用户B的进入队列的逻辑:
@@ -296,7 +297,7 @@ private Node addWaiter(Node mode) {
 
 在 B、C入队之后，整个获取锁的流程就结束了，接下来就等待A执行完业务流程释放锁即可。
 
-## 释放锁流程 
+## 释放锁流程
 
 同样的，在解锁时也是调用AQS的release方法
 
@@ -437,18 +438,17 @@ final boolean acquireQueued(final Node node, int arg) {
   AQS是将每条请求共享资源的线程封装成一个CLH锁队列的一个结点(Node)来实现锁的分配。
 
   其中Sync queue，即同步队列，是双向链表，包括head结点和tail结点，head结点主要用作后续的调度。‘
-
 + `结点状态`
 
-  // CANCELLED，值为1，表示当前的线程被取消   
+  // CANCELLED，值为1，表示当前的线程被取消
 
-   // SIGNAL，值为-1，表示当前节点的后继节点包含的线程需要运行，也就是unpark   
+  // SIGNAL，值为-1，表示当前节点的后继节点包含的线程需要运行，也就是unpark
 
-   // CONDITION，值为-2，表示当前节点在等待condition，也就是在condition队列中   
+  // CONDITION，值为-2，表示当前节点在等待condition，也就是在condition队列中
 
-   // PROPAGATE，值为-3，表示当前场景下后续的acquireShared能够得以执行  
+  // PROPAGATE，值为-3，表示当前场景下后续的acquireShared能够得以执行
 
-    // 值为0，表示当前节点在sync队列中，等待着获取锁
+  // 值为0，表示当前节点在sync队列中，等待着获取锁
 
 AQS就是靠着这个数据结构来对线程来进行处理的。
 

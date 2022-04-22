@@ -1,5 +1,8 @@
-# FutureTask源码分析
-
+---
+title: FutureTask源码分析
+date: 2022-04-21 19:40  
+tags: [并发工具,Future]
+---
 FutureTask为future提供了基础实现，而且也是我们用的最多的实现方式。
 
 接下来，将会对FutureTask展开深入的分析。
@@ -138,11 +141,10 @@ public void run() {
           }
       }
   ```
-
 + 结果设置完毕调用finishCompletion()唤醒等待县城
 
   ```java
-  
+
   private void finishCompletion() {
           // assert state > COMPLETING;
     			// 确保当前状态是结果态，才能进行唤醒操作
@@ -170,9 +172,7 @@ public void run() {
           callable = null;        // to reduce footprint
       }
   ```
-
 + 如果run的运行期间被中断，需要调用handlePossibleCancellationInterrupt来处理中断逻辑，确保任何中断(例如cancel(true))只停留在当前run或runAndReset的任务中
-
 + ```java
   /**
    * Ensures that any interrupt from a possible cancel(true) is only
@@ -185,9 +185,9 @@ public void run() {
       if (s == INTERRUPTING)
           while (state == INTERRUPTING)
               Thread.yield(); // wait out pending interrupt
-  
+
       // assert state == INTERRUPTED;
-  
+
       // We want to clear any interrupt we may have received from
       // cancel(true).  However, it is permissible to use interrupts
       // as an independent mechanism for a task to communicate with
@@ -329,4 +329,3 @@ public boolean cancel(boolean mayInterruptIfRunning) {
 
 - 如果当前Future状态为NEW，根据参数修改Future状态为INTERRUPTING或CANCELLED。
 - 如果当前状态不为NEW，则根据参数mayInterruptIfRunning决定是否在任务运行中也可以中断。中断操作完成后，调用finishCompletion移除并唤醒所有等待线程。
-

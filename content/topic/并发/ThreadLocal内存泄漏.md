@@ -1,5 +1,8 @@
-# ThreadLocal内存泄漏
-
+---
+title: ThreadLocal内存泄漏
+date: 2022-04-21 19:40  
+tags: [并发工具,ThreadLocal]
+---
 ## ThreadLocal的实现原理
 
 ThreadLocal的保存变量，是维护在Thread中的。
@@ -7,8 +10,6 @@ ThreadLocal的保存变量，是维护在Thread中的。
 但是由于每个线程在访问ThreadLocal对象之后，都会在Thread中的Map中留下ThreadLocal对象与具体实例的引用，如果不删除这些引用则这些ThreadLocal则不能进行回收，会造成内存泄漏
 
 ![ThreadLocal](https://www.shiyitopo.tech/uPic/ThreadLocal.png)
-
-
 
 ![img](https://www.shiyitopo.tech/uPic/Cgq2xl5Pld-AHFhJAADLtGXmSxc833.png)
 
@@ -20,7 +21,7 @@ ThreadLocal的保存变量，是维护在Thread中的。
 
 因此，总是存在<ThreadLocal,LocalVariable>的强引用，file static修饰的变量不会被释放，所以即使TreadLocalMap的key是弱引用，但由于强引用的存在，弱引用一直会有值，不会被GC回收。
 
-内存泄漏的大小 = `核心线程数 * LocalVariable` 
+内存泄漏的大小 = `核心线程数 * LocalVariable`
 
 ```java
 public class ThreadLocalDemo {

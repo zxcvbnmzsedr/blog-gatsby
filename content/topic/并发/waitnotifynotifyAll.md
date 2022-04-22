@@ -1,5 +1,8 @@
-# wait/notify/notifyAll
-
+---
+title: waitnotifynotifyAll
+date: 2022-04-21 19:40  
+tags: [并发基础,线程基础]
+---
 ## 为什么wait必须在synchronized保护的代码中使用
 
 在使用wait方法时，必须在synchronized代码块中才能够正确的执行，否则会抛出`IllegalMonitorStateException: current thread is not owner`异常.
@@ -52,6 +55,7 @@ class BlockingQueue {
 > 1. 首先，消费者线程调用 `take` 方法并判断 `buffer.isEmpty` 方法是否返回 `true`，若为 `true` 代表 `buffer` 是空的，则线程希望进入等待，但是在线程调用 `wait` 方法之前，就被调度器暂停了，所以此时还没来得及执行 `wait` 方法。
 > 2. 此时生产者开始运行，执行了整个 `offer` 方法，它往 `buffer` 中添加了数据，并执行了 `notify` 方法，但 `notify` 并没有任何效果，因为消费者线程的 `wait` 方法没来得及执行，所以没有线程在等待被唤醒。
 > 3. 此时，刚才被调度器暂停的消费者线程回来继续执行 `wait` 方法并进入了等待。
+>
 
 把代码改写成源码注释所要求的被 `synchronized` 保护的同步代码块的形式，代码如下:
 
@@ -86,14 +90,10 @@ while (condition does not hold)
 
 这样即便被虚假唤醒了，也会再次检查 `while` 里面的条件，如果不满足条件，就会继续 `wait`，也就消除了虚假唤醒的风险。
 
-
-
 ## 为什么 wait/notify/notifyAll 被定义在 Object 类中，而 sleep 定义在 Thread 类中？
 
 1. 因为Java中每个对象都有一把叫做monitor的锁，由于每个对象都能够上锁，所以就要求在对象头中保存锁的信息，这个锁是对象级别的而不是线程级别的。wait/notify/notifyAll都属于锁级别的操作，他们的锁属于对象，所以把他们定义在Object类中最为合适，因为Object类是所有对象的父类。
 2. 假设，我们把wait/notify/notifyAll给定义在Thread中，这个时候需要一个线程需要持有多个对象的锁，以便于满足业务需求，也就是把wait定义在Thread中的时候，我们无法灵活的控制一个线程持有多把锁的逻辑，一个wait就把整个线程锁住了。既然是让线程去等待某个对象的锁，就 应该是操作对象来实现，而不是操作线程
-
-
 
 ## wait/notify 和 sleep 方法的异同？
 

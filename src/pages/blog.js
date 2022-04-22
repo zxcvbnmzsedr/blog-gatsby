@@ -5,7 +5,7 @@ import PostList from '../components/post-list';
 import styled from 'styled-components';
 
 const Blog = ({ data }) => {
-  const posts = data.allMarkdownRemark.nodes;
+  const posts = data.allSiYuan.nodes;
 
   return (
     <Layout title="Blog">
@@ -43,29 +43,30 @@ const HeaderWrapper = styled.div`
 `;
 
 export const homePageQuery = graphql`
-  query {
-    site {
-      siteMetadata {
-        title
-      }
+  {
+  site {
+    siteMetadata {
+      title
     }
-    allMarkdownRemark(
-      filter: { fields: { contentType: { eq: "posts" } } }
-      sort: { order: DESC, fields: frontmatter___date }
-    ) {
-      nodes {
-        fields {
-          slug
-        }
-        excerpt
-        timeToRead
-        frontmatter {
-          date(formatString: "YYYY-MM-DD")
-          description
-          title
-          tags
-        }
+  }
+  allSiYuan(
+    filter: {field: {contentType: {eq: "posts"}}}
+    sort: {order: DESC, fields: frontmatter___date}
+  ) {
+    nodes {
+      field {
+        slug
+      }
+      excerpt
+      timeToRead
+      frontmatter {
+        date(formatString: "YYYY-MM-DD")
+        description
+        title
+        tags
       }
     }
   }
+}
+
 `;

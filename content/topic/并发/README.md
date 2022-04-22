@@ -1,3 +1,8 @@
+---
+title: README
+date: 2022-04-21 19:40  
+tags: []
+---
 # Java并发工具包
 
 ## 并发基础
@@ -5,14 +10,11 @@
 ### 线程基础
 
 + [进程和线程的区别](进程与线程.md)
+
 - [线程的实现方法](Thread的实现方式.md)
-
 - [如何正确地停止线程](正确停止线程的方式.md)
-
 - [线程有哪些状态](Thread的状态.md)
-
 - [wait、notify/notifyAll、sleep方法](waitnotifynotifyAll.md)
-
 - [生产者消费者模型](生产者消费者模型.md)
 
 ### 线程安全

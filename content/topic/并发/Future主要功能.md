@@ -1,7 +1,8 @@
-
-
-# Future主要功能
-
+---
+title: Future主要功能
+date: 2022-04-21 19:40  
+tags: [并发工具,Future]
+---
 > Future 最主要的作用是，比如当做一定运算的时候，运算过程可能比较耗时，有时会去查数据库，或是繁重的计算，比如压缩、加密等。
 >
 > 在这种情况下，如果我们一直在原地等待方法返回，显然是不明智的，整体程序的运行效率会大大降低。
@@ -9,6 +10,7 @@
 > 我们可以把运算的过程放到子线程去执行，再通过 Future 去控制子线程执行的计算过程，最后获取到计算结果。
 >
 > 这样一来就可以把整个程序的运行效率提高，是一种异步的思想。
+>
 
 ## Future接口
 
@@ -66,26 +68,20 @@ get 方法最主要的作用就是获取任务执行的结果，该方法在执�
 1. **执行get的时候，任务已经执行完毕**
 
    可以立刻返回，获取到任务执行结果
-
 2. **任务还没有结果**
 
    线程池积压了很多任务，执行get的时候任务还没有开始
 
    或者，任务开始执行了，但是执行时间较长，调用get的时候会将当前线程阻塞，直到任务完成再把结果返回回来
-
 3. **任务执行过程中抛出异常**
 
    在调用get的时候，会抛出ExecutionException异常。不管执行的call方法里面抛出的异常类型是什么，执行get方法所获得的异常都是ExecutionException
-
 4. **任务被取消了**
 
    如果任务被取消，我们用 get 方法去获取结果时则会抛出 CancellationException。
-
 5. **任务超时**
 
    get 方法有一个重载方法，那就是带延迟参数的，调用了这个带延迟参数的 get 方法之后，如果 call 方法在规定时间内正常顺利完成了任务，那么 get 会正常返回；但是如果到达了指定时间依然没有完成任务，get 方法则会抛出 TimeoutException，代表超时了。
-
-
 
 ## 基础实现
 
@@ -123,7 +119,7 @@ public interface RunnableFuture<V> extends Runnable, Future<V> {
 
 ### FutureTask示例
 
-直接使用: 
+直接使用:
 
 ```java
 public class FutureDemo {
@@ -152,9 +148,7 @@ public class FutureDemo {
 }
 ```
 
-
-
-还有配合线程的使用: 
+还有配合线程的使用:
 
 + 第一种方式: Future + ExecutorService
 + 第二种方式: FutureTask + ExecutorService
@@ -240,4 +234,3 @@ public class CallDemo {
 }
 
 ```
-

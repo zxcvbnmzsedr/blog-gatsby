@@ -8,14 +8,10 @@ import Post from "../components/post";
 
 
 const PostTemplate = ({data}) => {
-    let {frontmatter, excerpt, fields, rawMarkdownBody} = data.markdownRemark;
+    let {frontmatter, excerpt, field, raw} = data.siYuan;
     const prev = data.prev;
     const next = data.next;
-    const isTopic = fields.slug.startsWith('/topic')
-    const title = isTopic ? rawMarkdownBody.match(/(?<=^(#+))(.*)/g) : frontmatter.title;
-    if (isTopic) {
-        rawMarkdownBody = rawMarkdownBody.replace(/(^(#+))(.*)/g, '')
-    }
+    const title = frontmatter.title;
 
     return (
         <Layout
@@ -30,30 +26,28 @@ const PostTemplate = ({data}) => {
                     <PostTitle>{title}</PostTitle>
                     <PostDate>{frontmatter.date}</PostDate>
                     ・本文已被阅
-                    <span id={fields.slug} className="leancloud_visitors" data-flag-title="Your Article Title"><i
+                    <span id={field.slug} className="leancloud_visitors" data-flag-title="Your Article Title"><i
                         className="leancloud-visitors-count">-1</i></span>
                     次
                 </article>
-                <Post rawMarkdownBody={rawMarkdownBody}/>
-                <Comment slug={fields.slug}/>
-                {!isTopic &&
+                <Post rawMarkdownBody={raw}/>
+                <Comment slug={field.slug}/>
+
                     <PostPagination>
                         {prev && (
                             <div>
                                 <span>上一篇</span>
-                                <Link to={prev.fields.slug}> {prev.frontmatter.title}</Link>
+                                <Link to={prev.field.slug}> {prev.frontmatter.title}</Link>
                             </div>
                         )}
 
                         {next && (
                             <div>
                                 <span>下一篇</span>
-                                <Link to={next.fields.slug}> {next.frontmatter.title}</Link>
+                                <Link to={next.field.slug}> {next.frontmatter.title}</Link>
                             </div>
                         )}
                     </PostPagination>
-                }
-
                 <Tags tags={frontmatter.tags}/>
             </PostWrapper>
         </Layout>
@@ -128,39 +122,34 @@ const PostPagination = styled.nav`
 
 export const pageQuery = graphql`
   query PostBySlug($slug: String!, $prevSlug: String, $nextSlug: String) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      excerpt(pruneLength: 160)
-      html
-      rawMarkdownBody
-      fields {
+    siYuan(field: { slug: { eq: $slug } }) {
+      excerpt
+      raw
+      field {
         slug
       }
       frontmatter {
         title
-        slug
         tags
         date(formatString: "YYYY-MM-DD")
         description
-        profile_image {
-          absolutePath
-        }
       }
     }
 
-    prev: markdownRemark(fields: { slug: { eq: $prevSlug } }) {
+    prev: siYuan(field: { slug: { eq: $prevSlug } }) {
       frontmatter {
         title
       }
-      fields {
+      field {
         slug
       }
     }
 
-    next: markdownRemark(fields: { slug: { eq: $nextSlug } }) {
+    next: siYuan(field: { slug: { eq: $nextSlug } }) {
       frontmatter {
         title
       }
-      fields {
+      field {
         slug
       }
     }

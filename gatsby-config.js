@@ -1,4 +1,4 @@
-const {valine, google, baidu, siteMetadata} = require('./config.js')
+const {valine, google, baidu, siteMetadata,siYuan} = require('./config.js')
 
 module.exports = {
     siteMetadata,

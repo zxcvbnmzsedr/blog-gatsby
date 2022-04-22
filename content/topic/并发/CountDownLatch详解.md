@@ -1,5 +1,8 @@
-# CountDownLatch详解
-
+---
+title: CountDownLatch详解
+date: 2022-04-21 19:40  
+tags: [并发工具,线程协作]
+---
 ## 介绍
 
 CountDownLatch是由AQS实现的，用来同步一个或多个任务的并发工具类。
@@ -44,7 +47,7 @@ public class Test {
         } catch (InterruptedException e) { e.printStackTrace();   }    }}
 ```
 
-输出结果: 
+输出结果:
 
 ```java
 等待2个子线程执行完毕...

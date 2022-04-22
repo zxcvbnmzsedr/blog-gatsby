@@ -1,5 +1,8 @@
-# happens_before规则
-
+---
+title: happens-before规则
+date: 2022-04-21 19:40  
+tags: [底层原理,java内存模型]
+---
 在JSR-133规范中，提出了happens-before的概念，通过这个概念来阐述操作之间的内存可见性。
 
 ## 什么是happens_before关系
@@ -80,8 +83,6 @@ volatile可以保证可见性，就是由于这条规则规定的
 - 信号量（Semaphore）它会释放许可证，也会获取许可证。这里的释放许可证的操作 happens-before 获取许可证的操作，也就是说，如果在获取许可证之前有释放许可证的操作，那么在获取时一定可以看到。
 - Future：Future 有一个 get 方法，可以用来获取任务的结果。那么，当 Future 的 get 方法得到结果的时候，一定可以看到之前任务中所有操作的结果，也就是说 Future 任务中的所有操作 happens-before Future 的 get 操作。
 - 线程池：要想利用线程池，就需要往里面提交任务（Runnable 或者 Callable），这里面也有一个 happens-before 关系的规则，那就是提交任务的操作 happens-before 任务的执行。
-
-
 
 ## 总结
 

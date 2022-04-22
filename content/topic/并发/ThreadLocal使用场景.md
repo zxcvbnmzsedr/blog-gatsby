@@ -1,5 +1,8 @@
-# ThreadLocal使用场景
-
+---
+title: ThreadLocal使用场景
+date: 2022-04-21 19:40  
+tags: [并发工具,ThreadLocal]
+---
 在业务开发中有两种典型的使用场景。
 
 1. 保存线程不安全的对象。

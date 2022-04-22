@@ -1,5 +1,8 @@
-# CopyOnWriteArrayList
-
+---
+title: CopyOnWriteArrayList
+date: 2022-04-21 19:40  
+tags: [并发工具,并发容器]
+---
 在CopyOnWrite诞生之前，就有了ArrayList和LinkedList作为List的数组，也有了线程安全的Vector和Collections.synchronizedList()可以使用。
 
 我们先来列举几个，Vector的实现:
@@ -181,4 +184,3 @@ get操作没有加锁，这样就能够保证了读取的速度，但遗憾的�
             throw new UnsupportedOperationException();
     }
 ```
-

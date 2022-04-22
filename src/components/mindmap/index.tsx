@@ -545,11 +545,11 @@ function handleNodes(parent, root, initialTreeDepth, count) {
             ...parent,
             f: f
         },
-        v: `<a href=${'/topic'+root.href}>${root.text}</a>`,
+        v: `<a href=${root.href}>${root.title}</a>`,
     };
-    if (root.child && root.child.length > 0) {
+    if (root.children && root.children.length > 0) {
         node.c = []
-        for (const c of root.child) {
+        for (const c of root.children) {
             node.c.push(handleNodes(node, c, initialTreeDepth, count + 1))
         }
     }

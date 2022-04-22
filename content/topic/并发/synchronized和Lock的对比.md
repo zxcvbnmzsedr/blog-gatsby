@@ -1,5 +1,8 @@
-# Synchronized和Lock的对比
-
+---
+title: synchronized和Lock的对比
+date: 2022-04-21 19:40  
+tags: [并发工具,各种锁]
+---
 ## 相同点
 
 ### 用来保护资源安全
@@ -19,7 +22,7 @@
 ### 都可重入
 
 可重入指的是某个线程如果已经获得了一个锁，现在试图再次请求这个它已经获得的锁，如果它无需提前释放这个锁，而是直接可以继续使用持有的这个锁。
-如果必须释放锁后才能再次申请这个锁，就是不可重入的。 
+如果必须释放锁后才能再次申请这个锁，就是不可重入的。
 
 而 synchronized 和 ReentrantLock 都具有可重入的特性。
 
@@ -28,19 +31,18 @@
 ### 用法不同
 
 + Lock的加锁方式是显示的。
-  
-  必须使用Lock对象来加锁和解锁，通常会在finally中使用unlock进行解锁，以避免出现异常锁无法释放的情况。
 
+  必须使用Lock对象来加锁和解锁，通常会在finally中使用unlock进行解锁，以避免出现异常锁无法释放的情况。
 + Synchronized的加锁方式是隐式。
-  
+
   加锁解锁都不需要手动去控制，仅仅需要声明一下即可。不需要指定锁对象，可以在方法上、也可以在代码中加锁。
 
 ### 加解锁顺序不同
 
 + Lock的加解锁顺序可以自由控制
-  
+
   如果有多把Lock锁，可以不按照加锁的顺序来反序解锁。如代码所示
-  
+
   ```java
   lock1.lock();
   lock2.lock()
@@ -48,9 +50,8 @@
   lock1.unlock();
   lock2.unlock();
   ```
-
 + Synchronized的解锁顺序必须和解锁顺序完全相反
-  
+
   ```java
   synchronized(obj1){
       synchronized(obj2){
@@ -58,13 +59,13 @@
       }
   }
   ```
-  
+
   因为synchronized的由JVM控制的，在编译的时候会将上列代码解析成大致如下
-  
+
   ```java
   monitorenter // 加obj1的锁
     monitorenter // 加obj2的锁
-  
+
     monitorexit // 解obj2的锁
   monitorexit // 解obj2的锁
   ```
@@ -94,11 +95,9 @@ ReentrantLock 等 Lock 实现类可以根据自己的需要来设置公平或非
 ## [如何选择](lock的常用方法.md)
 
 1. 如果能不用最好既不使用 Lock 也不使用 synchronized。
-   
+
    因为在许多情况下你可以使用 java.util.concurrent 包中的机制，它会为你处理所有的加锁和解锁操作，也就是推荐优先使用工具类来加解锁。
-
 2. 如果 synchronized 关键字适合你的程序， 那么请尽量使用它，这样可以减少编写代码的数量，减少出错的概率。
-   
-   因为一旦忘记在 finally 里 unlock，代码可能会出很大的问题，而使用 synchronized 更安全。
 
+   因为一旦忘记在 finally 里 unlock，代码可能会出很大的问题，而使用 synchronized 更安全。
 3. 如果特别需要 Lock 的特殊功能，比如尝试获取锁、可中断、超时功能等,或者是需要实现分布式锁的时候，才使用 Lock。
