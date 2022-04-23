@@ -7,7 +7,8 @@ const param = (data) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${siYuan.token}`,
         },
         body: JSON.stringify(data)
     }
@@ -15,15 +16,6 @@ const param = (data) => {
 const getFormatDate = ({date}) => {
     return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${date.slice(8, 10)}:${date.slice(10, 12)}`
 }
-const getHead = ({title, date, tags}) => {
-    const formatDate = getFormatDate({date});
-    return `---\n` +
-        `title: ${title}\n` +
-        `date: ${formatDate}\n` +
-        `tags: [${tags}]\n` +
-        `---\n`
-}
-
 function getData(url, data) {
     return fetch(siYuan.host + url, param(data)).then(res => {
         if (res.status >= 400) {
@@ -49,8 +41,12 @@ async function getSiYuanPost({box}) {
     const list = await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
         const {id, content, created} = siYuanBoxData;
         const {data} = await getData('export/exportMdContent', {id});
-        if (!data.content.trim()) {
-            return
+
+        const contentType= data.hPath.split('/')[1];
+        if (contentType === 'posts'){
+            if (!data.content.trim()) {
+                return
+            }
         }
         const attributes = await getData('query/sql', {stmt: `select name,value from attributes where block_id = '${id}'`});
         const attribute = attributes.data.reduce((r, item) => (
@@ -70,8 +66,8 @@ async function getSiYuanPost({box}) {
             slug: slug ? slug : data.hPath,
             raw: data.content,
             date: getFormatDate({date: created}),
-            tags: tags,
-            contentType: data.hPath.split('/')[1],
+            tags,
+            contentType,
         }
     }));
     return list

@@ -109,7 +109,6 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
 };
 
 exports.createPages = async ({graphql, actions, reporter}) => {
-    await createMind({graphql, actions})
     const {createPage} = actions;
 
     const result = await graphql(
@@ -226,6 +225,8 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             },
         });
     });
+    await createMind({graphql, actions})
+
 };
 
 exports.onCreateNode = ({node, actions, getNode}) => {

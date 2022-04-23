@@ -11,7 +11,7 @@ const Footer = () => {
           苏ICP备16037388号-1
           <FooterAttribution>
           Powered by{' '}
-          <a href="https://www.gatsbyjs.com/">GATSBY</a>
+          <a href="https://github.com/zxcvbnmzsedr/blog-gatsby">GATSBY</a>
         </FooterAttribution>
       </FooterWrapper>
     </StyledFooter>
