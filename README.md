@@ -8,39 +8,48 @@
 git clone git@github.com:zxcvbnmzsedr/blog-gatsby.git
 cd blog-gatsby
 yarn install
-yarn start
 ```
 
-启动成功之后访问 localhost:8000 即可访问
-
-然后启动思源本地客户端的，执行下面的命令，将markdown文件导入到本工程中，导入的位置在 content/pages 下
-
-```shell
-yarn siyuan
-```
-
-# 运行过程
-
-其脚本原理是通过API接口，扫描对应的笔记本，将笔记本中的内容生成markdown文件
-
-导入的脚本在siyuan.jsx中,通过修改导出路径和笔记本对应的box的ID即可完成导出
+启动思源客户端，配置config.js下的思源笔记对应的url路径和token
 
 ```js
-
-try {
-    getSiyuan({path: './content/posts/', box: '20220420112442-p6q6e8w'}).catch(e => {
-        console.log(e)
-    })
-} catch (e) {
-    console.log(e);
+siYuan: {
+    host: 'http://127.0.0.1:6806/api/',
+    token: '<token>',
+    box: '<boxId>'
 }
 ```
 
-# 其他功能
+通过`yarn start`启动项目，启动成功之后访问 localhost:8000 即可访问
 
-其中还通过扫描content/topic/ 路径下的markdown文件可以生成思维导图
+![LwEJBV](https://image.ztianzeng.com/uPic/LwEJBV.png)
 
-就像这样:
+复制出来的ID，就是对应笔记本的BoxId
 
-![VaXToq](https://image.ztianzeng.com/uPic/VaXToq.png)
+笔记本下面分为三块，posts、pages、topic
 
++ posts 就是日常的博客记录
++ pages 用于存放首页的一些title之类
++ topic 用于存放体系化结构的知识，会通过这些生成思维导图
+
+目前生成出来的文章标签是通过路径标记的，比如笔记本的路径是`/posts/java/HashMap`, 生成出来的文章的标签就是`java`
+
+思维导图的生成逻辑也是通过路径标记的，比如笔记本的路径是`/topic/分布式`和`/topic/并发`，这样就会以`分布式`和`并发`生成两份思维导图
+
+思维导图的顺序是根据手动排序的结果生成。
+
+Posts的顺序是通过文档的创建时间来生成。
+
+以下面的笔记结构为例:
+
+![IdyNzp](https://image.ztianzeng.com/uPic/IdyNzp.png)
+
+生成的思维导图就是这样的:
+
+![FHyPDb](https://image.ztianzeng.com/uPic/FHyPDb.png)
+
+![rsuarD](https://image.ztianzeng.com/uPic/rsuarD.png)
+
+文章就是这样的:
+
+![U0ExiV](https://image.ztianzeng.com/uPic/U0ExiV.png)

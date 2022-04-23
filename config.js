@@ -30,5 +30,10 @@ module.exports = {
     },
     baidu: {
         siteId: '<baidu.SITEID>'
+    },
+    siYuan: {
+        host: 'http://127.0.0.1:6806/api/',
+        token: '<token>',
+        box: '<boxId>'
     }
 }
