@@ -87,6 +87,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         const {id} = result;
         return Object.assign({}, {
             tree: JSON.stringify(result),
+            href:result.href,
             title: result.title
         }, {
             id: id,

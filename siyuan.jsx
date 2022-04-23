@@ -80,25 +80,31 @@ async function getSiYuanPost({box}) {
 const addLevel = (root, level) => {
     root.level = level;
     if (root && root.children) {
-        root.children.forEach(e => addLevel(e, level + 1))
+        root.children.sort((a, b) => a.sort - b.sort).forEach(e => addLevel(e, level + 1))
     }
 }
 
 async function getSiYuanTopic({box}) {
-    const topicData = await getData('query/sql', {stmt: `select content, created, type, hpath, parent_id,id from blocks where box = '20220420112442-p6q6e8w' and (type = 'h' or type = 'd') and hpath like '/topic/分布式%'`});
-    const or = parseTreeParentId(topicData.data.map(e => getTreeNode(e)), '')
-    const o2 = parseTreePath(or, '/topic/分布式')
+    const topicList = await getData('query/sql', {stmt: `select id,hpath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${box}' and (type = 'h' or type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
     const res = []
-    const root = {
-        title: '分布式',
-        id: 'xxxx',
-        parentId: '',
-        href: '/topic/分布式',
-        path: '/topic/分布式',
-        children: o2
+
+    const sortData = await getData('file/getFile', {path: `/data/${box}/.siyuan/sort.json`})
+    for (const topic of topicList.data) {
+        const topicData = await getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${box}' and (type = 'h' or type = 'd') and hpath like '${topic.hpath}%'`});
+        const treeList = topicData.data.map(e => getTreeNode(e, sortData)).sort((a, b) => a.sort - b.sort);
+        const or = parseTreeParentId(treeList, '')
+        const o2 = parseTreePath(or, topic.hpath)
+        const root = {
+            title: topic.topic,
+            id: topic.id,
+            parentId: '',
+            href: topic.hpath,
+            path: topic.hpath,
+            children: o2
+        }
+        addLevel(root, 0)
+        res.push(root)
     }
-    addLevel(root, 0)
-    res.push(root)
     return res;
 }
 
@@ -106,13 +112,14 @@ async function getSiYuanTopic({box}) {
 module.exports = {
     getSiYuanPost, getSiYuanTopic
 }
-const getTreeNode = (data) => {
+const getTreeNode = (data, sortData) => {
     return {
         title: data['content'],
         id: data['id'],
         href: data['hpath'] + '#' + data['content'],
         parentId: data['parent_id'],
         path: data['hpath'],
+        sort: sortData[data['id']],
         children: []
     }
 }
@@ -147,7 +154,7 @@ const parseTreePath = (arr, p) => {
 
     return loop(p)
 }
-const fs = require('fs')
-
-getSiYuanTopic({box: ''})
-    .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))
+// const fs = require('fs')
+//
+// getSiYuanTopic({box: '20220420112442-p6q6e8w'})
+//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))

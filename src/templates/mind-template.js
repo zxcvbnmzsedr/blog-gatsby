@@ -18,8 +18,8 @@ const BlogReadmeMind = ({data}) => {
 }
 export default BlogReadmeMind
 export const query = graphql`
-   query MyQuery {
-  topic {
+query MyQuery($title: String) {
+  topic(title: {eq: $title}) {
     title
     tree
   }

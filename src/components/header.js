@@ -1,59 +1,68 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'gatsby';
+import {Link} from 'gatsby';
 import Container from './container';
-import { useStaticQuery, graphql } from 'gatsby';
+import {useStaticQuery, graphql} from 'gatsby';
 
 const Header = () => {
-  const { site } = useStaticQuery(
-    graphql`
+    const {site, allTopic} = useStaticQuery(
+        graphql`
       query {
         site {
           siteMetadata {
             title
           }
         }
+        allTopic {
+          edges {
+            node {
+              title
+              href
+            }
+          }
+        }
       }
     `
-  );
+    );
 
-  return (
-    <StyledHeader>
-      <HeaderWrapper>
-        <HeaderTitle>
-          <Link to="/">{site.siteMetadata.title}</Link>
-        </HeaderTitle>
+    return (
+        <StyledHeader>
+            <HeaderWrapper>
+                <HeaderTitle>
+                    <Link to="/">{site.siteMetadata.title}</Link>
+                </HeaderTitle>
 
-        <HeaderNavList>
-          <HeaderNavList>
-            <HeaderNavListItem>
-              <Link to="/blog">Blog</Link>
-            </HeaderNavListItem>
-            <HeaderNavListItem>
-              <Link to="/topic/Java并发工具包">Java并发工具</Link>
-            </HeaderNavListItem>
-            <HeaderNavListItem>
-              <Link to="/topic/分布式解决方案">分布式解决方案</Link>
-            </HeaderNavListItem>
-          </HeaderNavList>
-        </HeaderNavList>
-      </HeaderWrapper>
-    </StyledHeader>
-  );
+                <HeaderNavList>
+                    <HeaderNavList>
+                        <HeaderNavListItem>
+                            <Link to="/blog">Blog</Link>
+                        </HeaderNavListItem>
+                        {allTopic.edges.map(({node}) => {
+                            const {title, href} = node
+                            return <HeaderNavListItem>
+                                <Link to={href}>{title}</Link>
+                            </HeaderNavListItem>
+
+                        })}
+                    </HeaderNavList>
+                </HeaderNavList>
+            </HeaderWrapper>
+        </StyledHeader>
+    );
 };
 
 export default Header;
 
-const HeaderNavList = ({ children }) => {
-  return (
-    <StyledNav>
-      <StyledNavList>{children}</StyledNavList>
-    </StyledNav>
-  );
+const HeaderNavList = ({children}) => {
+    return (
+        <StyledNav>
+            <StyledNavList>{children}</StyledNavList>
+        </StyledNav>
+    );
 };
 
-const HeaderNavListItem = ({ children }) => {
-  return <StyledNavListItem>{children}</StyledNavListItem>;
+const HeaderNavListItem = ({children}) => {
+    return <StyledNavListItem>{children}</StyledNavListItem>;
 };
 
 const StyledHeader = styled.header`
@@ -95,11 +104,13 @@ const StyledNavListItem = styled.li`
   &:not(:last-of-type) {
     margin-right: 2rem;
   }
+
   @media screen and (max-width: 700px) {
     &:not(:last-of-type) {
       margin-right: 1rem;
     }
   }
+
   & a {
     color: inherit;
     text-transform: uppercase;
@@ -107,6 +118,7 @@ const StyledNavListItem = styled.li`
     text-decoration: none;
     letter-spacing: 0.1rem;
   }
+
   @media screen and (max-width: 700px) {
     & a {
       font-size: 0.7rem;
