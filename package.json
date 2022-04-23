@@ -74,7 +74,7 @@
   "scripts": {
     "parse": "node listen-parse.jsx",
     "siyuan": "node siyuan.jsx",
-    "build": "export NODE_ENV=production && node parse.jsx && gatsby build",
+    "build": "export NODE_ENV=production && gatsby build",
     "dev": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run dev",
