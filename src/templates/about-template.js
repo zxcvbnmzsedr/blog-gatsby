@@ -5,15 +5,14 @@ import styled from 'styled-components';
 import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 const AboutTemplate = ({ data }) => {
-  const { html, frontmatter } = data.markdownRemark;
-  const profileImage = getImage(frontmatter.profile_image);
+  const { raw, frontmatter } = data.siYuan;
 
   return (
     <Layout title={frontmatter.title}>
       <AboutWrapper>
-        <AboutImageWrapper image={profileImage} alt="" />
+        {/*<AboutImageWrapper image={profileImage} alt="" />*/}
 
-        <AboutCopy dangerouslySetInnerHTML={{ __html: html }} />
+        <AboutCopy dangerouslySetInnerHTML={{ __html: raw }} />
       </AboutWrapper>
     </Layout>
   );
@@ -57,15 +56,10 @@ const AboutCopy = styled.div`
 
 export const pageQuery = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
-      html
+    siYuan(field: { slug: { eq: $slug } }) {
+      raw
       frontmatter {
         title
-        profile_image {
-          childImageSharp {
-            gatsbyImageData(placeholder: BLURRED, formats: PNG, height: 400)
-          }
-        }
       }
     }
   }

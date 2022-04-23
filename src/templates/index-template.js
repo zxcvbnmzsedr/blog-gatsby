@@ -4,19 +4,18 @@ import Layout from '../components/layout';
 import PostList from '../components/post-list';
 import styled from 'styled-components';
 import StyledLink from '../components/styled-link';
+import ReactMarkdown from "react-markdown";
 
 const HomePage = ({ data }) => {
   const posts = data.allSiYuan.nodes;
-  const intro = data.markdownRemark.html;
-  const title = data.markdownRemark.frontmatter.title;
+  const intro = data.siYuan.raw;
+  const title = data.siYuan.frontmatter.title;
 
   return (
     <Layout title={title}>
-      <Intro
-        dangerouslySetInnerHTML={{
-          __html: intro,
-        }}
-      />
+        <Intro>
+            <ReactMarkdown children={intro}/>
+        </Intro>
 
       <PostList posts={posts} />
       <StyledLink
@@ -81,8 +80,8 @@ query ($slug: String!) {
       }
     }
   }
-  markdownRemark(fields: {slug: {eq: $slug}}) {
-    html
+  siYuan(field: {slug: {eq: $slug}}) {
+    raw
     frontmatter {
       title
     }
