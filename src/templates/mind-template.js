@@ -8,10 +8,10 @@ import MindMap from "../components/mindmap";
 const BlogReadmeMind = ({data}) => {
     const node = data.topic
     const tree = JSON.parse(node.tree);
-    const name = node.name
+    const title = node.title
     return (
-        <DefaultLayout title={name} isFullContainer>
-            <h1 style={{textAlign: "center",marginBottom:100}}>{name}</h1>
+        <DefaultLayout title={title} isFullContainer>
+            <h1 style={{textAlign: "center",marginBottom:100}}>{title}</h1>
             <MindMap extension={true} isScale={false} root={tree} initialTreeDepth={-1}/>
         </DefaultLayout>
     )
