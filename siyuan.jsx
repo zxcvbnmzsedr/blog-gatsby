@@ -16,6 +16,7 @@ const param = (data) => {
 const getFormatDate = ({date}) => {
     return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)} ${date.slice(8, 10)}:${date.slice(10, 12)}`
 }
+
 function getData(url, data) {
     return fetch(siYuan.host + url, param(data)).then(res => {
         if (res.status >= 400) {
@@ -42,8 +43,8 @@ async function getSiYuanPost({box}) {
         const {id, content, created} = siYuanBoxData;
         const {data} = await getData('export/exportMdContent', {id});
 
-        const contentType= data.hPath.split('/')[1];
-        if (contentType === 'posts'){
+        const contentType = data.hPath.split('/')[1];
+        if (contentType === 'posts') {
             if (!data.content.trim()) {
                 return
             }
@@ -76,7 +77,22 @@ async function getSiYuanPost({box}) {
 const addLevel = (root, level) => {
     root.level = level;
     if (root && root.children) {
-        root.children.sort((a, b) => a.sort - b.sort).forEach(e => addLevel(e, level + 1))
+        root.children.sort((a, b) => {
+            if (a.type === 'h' && b.type === 'd') {
+                return -1;
+            }
+            return a.sort - b.sort;
+        }).forEach(e => addLevel(e, level + 1))
+    }
+}
+const merge = (pathTree, treeList) => {
+    if (pathTree) {
+        for (let i = 0; i < pathTree.length; i++) {
+            for (let filterKey of treeList.filter((tree) => tree.parentId === pathTree[i].id)) {
+                pathTree[i].children.push(filterKey)
+            }
+            merge(pathTree[i].children, treeList)
+        }
     }
 }
 
@@ -86,17 +102,19 @@ async function getSiYuanTopic({box}) {
 
     const sortData = await getData('file/getFile', {path: `/data/${box}/.siyuan/sort.json`})
     for (const topic of topicList.data) {
-        const topicData = await getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${box}' and (type = 'h' or type = 'd') and hpath like '${topic.hpath}%'`});
+        const topicData = await getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${box}' and (type ='h' or type = 'd') and hpath like '${topic.hpath}%'`});
         const treeList = topicData.data.map(e => getTreeNode(e, sortData)).sort((a, b) => a.sort - b.sort);
-        const or = parseTreeParentId(treeList, '')
-        const o2 = parseTreePath(or, topic.hpath)
+        const pathTree = parseTreeForPath(treeList.filter(({type}) => type === 'd'), topic.hpath)
+
+        merge(pathTree, treeList)
+
         const root = {
             title: topic.topic,
             id: topic.id,
             parentId: '',
             href: topic.hpath,
             path: topic.hpath,
-            children: o2
+            children: pathTree
         }
         addLevel(root, 0)
         res.push(root)
@@ -112,35 +130,24 @@ const getTreeNode = (data, sortData) => {
     return {
         title: data['content'],
         id: data['id'],
+        type: data['type'],
         href: data['hpath'] + '#' + data['content'],
         parentId: data['parent_id'],
         path: data['hpath'],
+        parentPath: path.join(data['hpath'], '..'),
         sort: sortData[data['id']],
         children: []
     }
 }
-
-const parseTreeParentId = (arr, parentId) => {
-    function loop(parentId) {
-        return arr.reduce((acc, cur) => {
-            if (cur.parentId === parentId) {
-                cur.children = loop(cur.id)
-                acc.push(cur)
-            }
-            return acc
-        }, [])
-    }
-
-    return loop(parentId)
-}
-const parseTreePath = (arr, p) => {
+const parseTreeForPath = (arr, p) => {
     function loop(p) {
         return arr.reduce((acc, cur) => {
-            const parentPath = path.join(cur.path, '..')
-            if (parentPath === p) {
+            if (cur.parentPath === p) {
                 const l = loop(cur.path)
                 if (l.length > 0) {
-                    l.forEach(e => cur.children.push(e))
+                    l.forEach(e => {
+                        cur.children.push(e)
+                    })
                 }
                 acc.push(cur)
             }
@@ -150,7 +157,8 @@ const parseTreePath = (arr, p) => {
 
     return loop(p)
 }
+
 // const fs = require('fs')
 //
 // getSiYuanTopic({box: '20220420112442-p6q6e8w'})
-//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))
+//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))
