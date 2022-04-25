@@ -1,8 +1,7 @@
 import React from 'react';
-import {graphql, Link} from 'gatsby';
+import {graphql} from 'gatsby';
 import Layout from '../components/layout';
 import styled from 'styled-components';
-import Tags from '../components/tags';
 import Comment from '../components/comment';
 import Post from "../components/post";
 import TopicSideBar from "../components/TopicSideBar";
