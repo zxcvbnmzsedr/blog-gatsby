@@ -52,10 +52,12 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
     const processResult = (result) => {
         const {id, title, slug, date, tags, contentType, template, raw, content} = result;
         const excerpt = getMarkdownExcerpt(raw)
+        const topic = slug.startsWith('/topic') ? slug.split('/')[2]:null
         return Object.assign({}, {
             field: {
                 contentType: contentType,
-                slug
+                slug,
+                topic
             },
             raw,
             timeToRead: timeToRead(raw),
@@ -122,6 +124,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             field {
               contentType
               slug
+              topic
             }
             frontmatter {
               template
@@ -208,9 +211,10 @@ exports.createPages = async ({graphql, actions, reporter}) => {
         topicMarkdownNodes.forEach((node) => {
             createPage({
                 path: `${node.field.slug}`,
-                component: path.resolve(`./src/templates/post-template.js`),
+                component: path.resolve(`./src/templates/topic-post-template.js`),
                 context: {
                     slug: `${node.field.slug}`,
+                    topic: `${node.field.topic}`,
                 },
             });
 
