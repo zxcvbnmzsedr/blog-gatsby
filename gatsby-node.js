@@ -2,7 +2,7 @@ const path = require(`path`);
 const {createFilePath} = require(`gatsby-source-filesystem`);
 const {siYuan} = require("./config");
 const {getSiYuanPost, getSiYuanTopic} = require("./siyuan.jsx");
-const {timeToRead} = require(`gatsby-transformer-remark/utils/time-to-read`);
+const readingTime = require('reading-time');
 const frontMatter = require('front-matter')
 const removeMd = require('remove-markdown')
 
@@ -60,7 +60,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
                 topic
             },
             raw,
-            timeToRead: timeToRead(raw),
+            timeToRead: readingTime(raw).minutes,
             excerpt,
             frontmatter: {
                 date,
