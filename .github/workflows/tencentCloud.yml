@@ -3,12 +3,6 @@ on:
   push:
     branches:
       - master
-env:
-  VALINE_APPID: ${{ secrets.VALINE_APPID }}
-  VALINE_APPKEY: ${{ secrets.VALINE_APPKEY }}
-  SIYUAN_HOST: ${{ secrets.SIYUAN_HOST }}
-  SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
-  SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -22,7 +16,13 @@ jobs:
           cmd: install
       - uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: build
+          cmd: build VALINE_APPID=${{ secrets.VALINE_APPID }} VALINE_APPKEY=${{ secrets.VALINE_APPKEY }} SIYUAN_HOST=${{ secrets.SIYUAN_HOST }} SIYUAN_TOKEN=${{ secrets.SIYUAN_TOKEN }} SIYUAN_BOX=${{ secrets.SIYUAN_BOX }}
+        env:
+          VALINE_APPID: ${{ secrets.VALINE_APPID }}
+          VALINE_APPKEY: ${{ secrets.VALINE_APPKEY }}
+          SIYUAN_HOST: ${{ secrets.SIYUAN_HOST }}
+          SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
+          SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
   push:
     needs: [build]
     runs-on: ubuntu-latest
