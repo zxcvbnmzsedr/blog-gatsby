@@ -6,7 +6,7 @@ import Container from './container';
 import GlobalStyle from './global-styles';
 import styled from 'styled-components';
 
-const Layout = ({ children, title, isFullContainer, description, socialImage = '' }) => {
+const Layout = ({ children, title, isFullContainer, description,sidebar, socialImage = '' }) => {
   return (
     <Fragment>
       <GlobalStyle />
@@ -14,6 +14,7 @@ const Layout = ({ children, title, isFullContainer, description, socialImage = '
       <LayoutWrapper>
         <Header />
         <main>
+            {sidebar}
           <Container full={isFullContainer}>{children}</Container>
         </main>
         <Footer />
