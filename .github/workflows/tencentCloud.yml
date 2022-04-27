@@ -4,7 +4,8 @@ on:
     branches:
       - master
 jobs:
-  create-envfile:
+  build:
+    needs: [create-envfile]
     runs-on: ubuntu-latest
     steps:
       - name: Make envfile
@@ -16,10 +17,6 @@ jobs:
           envkey_SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
           envkey_SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
           file_name: .env.production
-  build:
-    needs: [create-envfile]
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout master
         uses: actions/checkout@v2
         with:
