@@ -26,10 +26,6 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
-  push:
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
       - name: Upload COS
         uses: zkqiang/tencent-cos-action@v0.1.0
         with:
@@ -38,3 +34,4 @@ jobs:
           secret_key: ${{ secrets.COS_SECRET_KEY }}
           bucket: ${{ secrets.COS_BUCKET }}
           region: ${{ secrets.COS_REGION }}
+
