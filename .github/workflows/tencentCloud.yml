@@ -7,6 +7,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout master
+        uses: actions/checkout@v2
+        with:
+          ref: master
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -16,10 +20,6 @@ jobs:
           envkey_SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
           envkey_SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
           file_name: .env.production
-      - name: Checkout master
-        uses: actions/checkout@v2
-        with:
-          ref: master
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: install
