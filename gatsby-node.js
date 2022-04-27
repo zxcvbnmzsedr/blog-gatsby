@@ -52,7 +52,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
     const processResult = (result) => {
         const {id, title, slug, date, tags, contentType, template, raw, content} = result;
         const excerpt = getMarkdownExcerpt(raw)
-        const topic = slug.startsWith('/topic') ? slug.split('/')[2]:null
+        const topic = slug.startsWith('/topic') ? slug.split('/')[2] : null
         return Object.assign({}, {
             field: {
                 contentType: contentType,
@@ -89,7 +89,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         const {id} = result;
         return Object.assign({}, {
             tree: JSON.stringify(result),
-            href:result.href,
+            href: result.href,
             title: result.title
         }, {
             id: id,
@@ -178,7 +178,6 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             if (index < blogMarkdownNodes.length - 1) {
                 nextSlug = blogMarkdownNodes[index + 1].field.slug;
             }
-
             createPage({
                 path: `${node.field.slug}`,
                 component: path.resolve(`./src/templates/post-template.js`),
@@ -209,14 +208,17 @@ exports.createPages = async ({graphql, actions, reporter}) => {
 
     if (topicMarkdownNodes.length > 0) {
         topicMarkdownNodes.forEach((node) => {
-            createPage({
-                path: `${node.field.slug}`,
-                component: path.resolve(`./src/templates/topic-post-template.js`),
-                context: {
-                    slug: `${node.field.slug}`,
-                    topic: `${node.field.topic}`,
-                },
-            });
+            if (node.field.topic){
+                createPage({
+                    path: `${node.field.slug}`,
+                    component: path.resolve(`./src/templates/topic-post-template.js`),
+                    context: {
+                        slug: `${node.field.slug}`,
+                        topic: `${node.field.topic}`,
+                    },
+                });
+            }
+
 
         });
     }

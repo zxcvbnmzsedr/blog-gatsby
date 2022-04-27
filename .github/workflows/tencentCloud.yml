@@ -4,7 +4,20 @@ on:
     branches:
       - master
 jobs:
+  create-envfile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_VALINE_APPID: ${{ secrets.VALINE_APPID }}
+          envkey_VALINE_APPKEY: ${{ secrets.VALINE_APPKEY }}
+          envkey_SIYUAN_HOST: ${{ secrets.SIYUAN_HOST }}
+          envkey_SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
+          envkey_SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
+          file_name: .env.production
   build:
+    needs: [create-envfile]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout master
@@ -16,13 +29,7 @@ jobs:
           cmd: install
       - uses: borales/actions-yarn@v2.3.0
         with:
-          cmd: build VALINE_APPID=${{ secrets.VALINE_APPID }} VALINE_APPKEY=${{ secrets.VALINE_APPKEY }} SIYUAN_HOST=${{ secrets.SIYUAN_HOST }} SIYUAN_TOKEN=${{ secrets.SIYUAN_TOKEN }} SIYUAN_BOX=${{ secrets.SIYUAN_BOX }}
-        env:
-          VALINE_APPID: ${{ secrets.VALINE_APPID }}
-          VALINE_APPKEY: ${{ secrets.VALINE_APPKEY }}
-          SIYUAN_HOST: ${{ secrets.SIYUAN_HOST }}
-          SIYUAN_TOKEN: ${{ secrets.SIYUAN_TOKEN }}
-          SIYUAN_BOX: ${{ secrets.SIYUAN_BOX }}
+          cmd: build
   push:
     needs: [build]
     runs-on: ubuntu-latest

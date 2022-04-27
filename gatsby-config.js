@@ -1,3 +1,6 @@
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+})
 const {valine, google, baidu, siteMetadata} = require('./config.js')
 
 module.exports = {
