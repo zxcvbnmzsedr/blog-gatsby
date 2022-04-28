@@ -1,41 +1,32 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import SEO from './seo';
 import Header from './header';
-import Footer from './footer';
 import Container from './container';
 import GlobalStyle from './global-styles';
-import styled from 'styled-components';
+import {Layout} from 'antd';
+import './global.css'
 
-const Layout = ({ children, title, isFullContainer, description,sidebar, socialImage = '' }) => {
-  return (
-    <Fragment>
-      <GlobalStyle />
-      <SEO title={title} description={description} socialImage={socialImage} />
-      <LayoutWrapper>
-        <Header />
-        <main>
-            {sidebar}
-          <Container full={isFullContainer}>{children}</Container>
-        </main>
-        <Footer />
-      </LayoutWrapper>
-    </Fragment>
-  );
+const {Sider} = Layout;
+
+const PostLayout = ({children, title, isFullContainer, description, sidebar, socialImage = ''}) => {
+    return (
+        <Layout>
+            {/*<GlobalStyle/>*/}
+            <SEO title={title} description={description} socialImage={socialImage}/>
+            <Header/>
+            <Layout>
+                {sidebar &&
+                    <Sider width={200}>
+                        {sidebar}
+                    </Sider>
+                }
+
+                <Layout style={{padding: '0 24px 24px'}}>
+                    <Container full={isFullContainer}>{children}</Container>
+                </Layout>
+            </Layout>
+        </Layout>
+    );
 };
 
-export default Layout;
-
-const LayoutWrapper = styled.div`
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-
-  & main {
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-
-  & footer {
-    margin-top: auto;
-  }
-`;
+export default PostLayout;

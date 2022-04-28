@@ -1,51 +1,69 @@
 import React from 'react';
-import * as styles from './styles.module.css';
-import {Link} from 'gatsby';
-import styled from 'styled-components';
+import {Menu} from "antd";
+import {navigate} from "gatsby"
 
-const buildTree = (tree) => {
-    if (tree.type === 'h') {
-        return
+const onClick = (({key}) => {
+    console.log(key)
+    navigate(key, {
+        replace: true
+    })
+})
+const TopicSideBar = ({treeJson}) => {
+    const defaultOpenKeys = []
+    const buildTree = (tree) => {
+        tree.label = tree.title
+        tree.key = tree.href
+        defaultOpenKeys.push(tree.key)
+        tree.children = tree.children?.filter(t => t !== null).map(t => {
+            if (t.type === 'd') {
+                return buildTree(t)
+            } else {
+                return null;
+            }
+        })
+        if (tree.children?.length === 0) {
+            tree.children = null
+        }
+        return tree
     }
-    return (
-        <ul>
-            <li className={styles.item}>
-                <Link to={tree.href}>{tree.title}</Link>
-                {tree.children.map(t => buildTree(t))}
-            </li>
-        </ul>
-    )
-}
 
-const TopicSideBar = ({title, treeJson}) => {
+    const buildTree2 = (tree) => {
+
+        if (!tree){
+            return <></>
+        }
+        // tree.label = tree.title
+        // tree.key = tree.href
+        // defaultOpenKeys.push(tree.key)
+        return <Menu.SubMenu key={tree.title}>
+            {tree.title}
+            <Menu.Item>
+                {
+                    tree.children.map(t => {
+                            return buildTree2(t)
+                        }
+                    )
+                }
+            </Menu.Item>
+
+        </Menu.SubMenu>
+    }
+
     const tree = JSON.parse(treeJson)
-    return <Sidebar>
-        {buildTree(tree)}
-    </Sidebar>
+    console.log(tree)
+    buildTree(tree)
+    const items = buildTree(tree).children
+    return <Menu
+        onClick={onClick}
+        onTitleClick={onClick}
+        openKeys={defaultOpenKeys}
+        defaultOpenKeys={defaultOpenKeys}
+        triggerSubMenuAction="click"
+        mode="inline"
+        items={items}
+    >
+        {/*{buildTree2(tree)}*/}
+    </Menu>
 }
-const Sidebar = styled('aside')`
-  width: 100%;
-  height: 100vh;
-  overflow: auto;
-  position: fixed;
-  padding-left: 0px;
-  top: 50px;
-  padding-right: 0;
-  left: 50%;
-  margin-left: -700px;
-  @media only screen and (max-width: 1023px) {
-    width: 100%;
-    /* position: relative; */
-    height: 100vh;
-  }
 
-  @media (min-width: 767px) and (max-width: 1023px) {
-    padding-left: 0;
-  }
-
-  @media only screen and (max-width: 767px) {
-    padding-left: 0px;
-    height: auto;
-  }
-`;
 export default TopicSideBar;
