@@ -8,9 +8,9 @@ import TopicSideBar from "../components/TopicSideBar";
 
 
 const PostTemplate = ({data}) => {
-    let {frontmatter, excerpt, field, raw} = data.siYuan;
+    let {frontmatter, excerpt, field, raw,html} = data.siYuan;
     const title = frontmatter.title;
-
+    console.log(html)
     return (
         <Layout
             title={title}
@@ -30,7 +30,7 @@ const PostTemplate = ({data}) => {
                         className="leancloud-visitors-count">-1</i></span>
                     次
                 </article>
-                <Post rawMarkdownBody={raw}/>
+                <Post rawMarkdownBody={raw} html={html}/>
                 <Comment slug={field.slug}/>
             </PostWrapper>
         </Layout>
@@ -63,6 +63,7 @@ export const pageQuery = graphql`
   siYuan(field: {slug: {eq: $slug}}) {
     excerpt
     raw
+    html
     field {
       slug
       topic

@@ -50,7 +50,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
     const {createNode} = actions;
     const list = await getSiYuanPost({box: siYuan.box});
     const processResult = (result) => {
-        const {id, title, slug, date, tags, contentType, template, raw, content} = result;
+        const {id, title, slug, date, tags, contentType, template, raw, content, html} = result;
         const excerpt = getMarkdownExcerpt(raw)
         const topic = slug.startsWith('/topic') ? slug.split('/')[2] : null
         return Object.assign({}, {
@@ -60,6 +60,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
                 topic
             },
             raw,
+            html,
             timeToRead: readingTime(raw).minutes,
             excerpt,
             frontmatter: {
@@ -208,7 +209,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
 
     if (topicMarkdownNodes.length > 0) {
         topicMarkdownNodes.forEach((node) => {
-            if (node.field.topic){
+            if (node.field.topic) {
                 createPage({
                     path: `${node.field.slug}`,
                     component: path.resolve(`./src/templates/topic-post-template.js`),

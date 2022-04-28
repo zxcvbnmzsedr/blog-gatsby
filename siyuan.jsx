@@ -18,6 +18,7 @@ const getFormatDate = ({date}) => {
 }
 
 function getData(url, data) {
+    // console.log(param(data))
     return fetch(siYuan.host + url, param(data)).then(res => {
         if (res.status >= 400) {
             console.log(res);
@@ -42,6 +43,7 @@ async function getSiYuanPost({box}) {
     const list = await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
         const {id, content, created} = siYuanBoxData;
         const {data} = await getData('export/exportMdContent', {id});
+        const htmlResult = await getData('filetree/getDoc', {id, k: '', mode: 0, size: 99999});
 
         const contentType = data.hPath.split('/')[1];
         if (contentType === 'posts') {
@@ -62,6 +64,7 @@ async function getSiYuanPost({box}) {
         const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
         return {
             ...siYuanBoxData,
+            html: htmlResult.data.content,
             title: content,
             template,
             slug: slug ? slug : data.hPath,
@@ -158,7 +161,9 @@ const parseTreeForPath = (arr, p) => {
     return loop(p)
 }
 
-// const fs = require('fs')
-//
+const fs = require('fs')
+
 // getSiYuanTopic({box: '20220420112442-p6q6e8w'})
 //     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))
+// getSiYuanPost({box: '20220420112442-p6q6e8w'})
+//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))
