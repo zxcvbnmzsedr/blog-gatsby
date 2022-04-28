@@ -10,7 +10,6 @@ import TopicSideBar from "../components/TopicSideBar";
 const PostTemplate = ({data}) => {
     let {frontmatter, excerpt, field, raw,html} = data.siYuan;
     const title = frontmatter.title;
-    console.log(html)
     return (
         <Layout
             title={title}
