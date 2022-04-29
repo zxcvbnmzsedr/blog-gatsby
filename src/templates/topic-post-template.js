@@ -42,7 +42,6 @@ const PostWrapper = styled.div`
   padding-bottom: var(--size-900);
   margin-right: auto;
   word-wrap: break-word;
-  margin-left: 120px;
 `;
 
 const PostTitle = styled.h1`
