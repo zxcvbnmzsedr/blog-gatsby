@@ -33,14 +33,11 @@ function getData(url, data) {
 
 /**
  *
- * @param path
  * @param box
- * @param hpath
- * @returns {Promise<undefined | Object<{}>>}
  */
 async function getSiYuanPost({box}) {
     const siYuanBox = await getData('query/sql', {stmt: `select * from blocks where box = '${box}' and type='d' order by created desc`});
-    const list = await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
+    return await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
         const {id, content, created} = siYuanBoxData;
         const {data} = await getData('export/exportMdContent', {id});
         const htmlResult = await getData('filetree/getDoc', {id, k: '', mode: 0, size: 99999});
@@ -73,8 +70,7 @@ async function getSiYuanPost({box}) {
             tags,
             contentType,
         }
-    }));
-    return list
+    }))
 }
 
 const addLevel = (root, level) => {
@@ -134,7 +130,7 @@ const getTreeNode = (data, sortData) => {
         title: data['content'],
         id: data['id'],
         type: data['type'],
-        href: data['hpath'] + '#' + data['content'],
+        href: data['type'] === 'h' ? data['hpath'] + '#' + data['content'] : data['hpath'],
         parentId: data['parent_id'],
         path: data['hpath'],
         parentPath: path.join(data['hpath'], '..'),
@@ -161,7 +157,7 @@ const parseTreeForPath = (arr, p) => {
     return loop(p)
 }
 
-const fs = require('fs')
+// const fs = require('fs')
 
 // getSiYuanTopic({box: '20220420112442-p6q6e8w'})
 //     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))

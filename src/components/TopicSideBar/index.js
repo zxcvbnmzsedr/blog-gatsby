@@ -1,21 +1,43 @@
 import React from 'react';
 import {Badge, Menu} from "antd";
 import {Link, navigate} from "gatsby"
-const { SubMenu } = Menu;
+import {useLocation} from '@reach/router';
+
+const {SubMenu} = Menu;
 
 const onClick = (({key}) => {
     navigate(key, {
         replace: true
     })
 })
+const onTitleClick = (({key}) => {
+    navigate(key, {
+        replace: true
+    })
+})
 const TopicSideBar = ({treeJson}) => {
+    const location = useLocation();
+
+    console.log('currentUrl', decodeURI(location.pathname))
     const generateMenuItem = (item) => {
         if (!item.title) {
             return;
         }
+        const text = [
+            <span key="english">{item.title}</span>,
+            <span className="chinese" key="chinese">
+        {item.title}
+      </span>
+        ];
+
+        const child = <Link to={item.href}>
+            <Badge dot={false}>
+                {text}
+            </Badge>
+        </Link>;
         return (
-            <Menu.Item key={item.href}>
-                {item.title}
+            <Menu.Item key={item.href} disabled={false}>
+                {child}
             </Menu.Item>
         );
     };
@@ -24,29 +46,28 @@ const TopicSideBar = ({treeJson}) => {
             return generateMenuItem(item);
         }
         return (
-            <Menu.ItemGroup key={item.href} title={item.title}>
+            <SubMenu onTitleClick={onTitleClick} key={item.href} title={item.title}>
                 {item.children.map(generateMenuItem)}
-            </Menu.ItemGroup>
+            </SubMenu>
         );
     };
     const generateSubMenuItems = (tree) => {
-        const itemGroups = tree.map(menu => {
+        return tree.map(menu => {
             if (!menu.children || !menu.children.length) {
-                console.log("generateMenuItem",menu)
+                console.log("generateMenuItem", menu)
                 return generateMenuItem(menu);
             }
             const groupItems = menu.children.map((item) =>
                 generaGroupItem(item)
             );
             return (
-                <SubMenu title={menu.title} key={menu.href}>
+                <SubMenu onTitleClick={onTitleClick} title={menu.title} key={menu.href}>
                     {groupItems}
                 </SubMenu>
             );
         });
-        return itemGroups;
     };
-    const defaultOpenKeys =[]
+    const defaultOpenKeys = []
     const buildTree = (tree) => {
         defaultOpenKeys.push(tree.href)
         tree.children = tree.children.filter(t => t !== null).map(t => {
@@ -62,16 +83,16 @@ const TopicSideBar = ({treeJson}) => {
     const getMenuItems = () => {
         const tree = JSON.parse(treeJson)
         buildTree(tree)
-        console.log(JSON.stringify(tree))
         return generateSubMenuItems(tree.children);
     };
 
     const menuItems = getMenuItems();
     return <Menu
         onClick={onClick}
-        onTitleClick={onClick}
+        onTitleClick={onTitleClick}
         mode="inline"
         openKeys={defaultOpenKeys}
+        selectedKeys={[decodeURI(location.pathname)]}
     >
         {menuItems}
     </Menu>

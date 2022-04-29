@@ -1,1 +1,5 @@
 @import '~antd/dist/antd.css';
+
+.ant-sider{
+    background-color: red;
+}

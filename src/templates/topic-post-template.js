@@ -6,7 +6,6 @@ import Comment from '../components/comment';
 import Post from "../components/post";
 import TopicSideBar from "../components/TopicSideBar";
 
-
 const PostTemplate = ({data}) => {
     let {frontmatter, excerpt, field, raw,html} = data.siYuan;
     const title = frontmatter.title;

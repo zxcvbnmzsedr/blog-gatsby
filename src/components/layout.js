@@ -7,20 +7,21 @@ import {Layout} from 'antd';
 import './global.css'
 
 const {Sider} = Layout;
-
 const PostLayout = ({children, title, isFullContainer, description, sidebar, socialImage = ''}) => {
     return (
         <Layout>
-            {/*<GlobalStyle/>*/}
+            <GlobalStyle/>
             <SEO title={title} description={description} socialImage={socialImage}/>
             <Header/>
             <Layout>
                 {sidebar &&
-                    <Sider width={200}>
+                    <Sider
+                        width={200}
+                        theme='light'
+                    >
                         {sidebar}
                     </Sider>
                 }
-
                 <Layout style={{padding: '0 24px 24px'}}>
                     <Container full={isFullContainer}>{children}</Container>
                 </Layout>

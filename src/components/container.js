@@ -15,6 +15,8 @@ const Container = styled.div`
   }
   ${props => props.full && `
     max-width: inherit;
+    margin-left: unset;
+     margin-right: unset;
   `}
 `;
 
