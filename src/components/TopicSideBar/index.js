@@ -1,51 +1,101 @@
 import React from 'react';
-import * as styles from './styles.module.css';
-import {Link} from 'gatsby';
-import styled from 'styled-components';
+import {Badge, Menu} from "antd";
+import {Link, navigate} from "gatsby"
+import {useLocation} from '@reach/router';
 
-const buildTree = (tree) => {
-    if (tree.type === 'h') {
-        return
+const {SubMenu} = Menu;
+
+const onClick = (({key}) => {
+    navigate(key, {
+        replace: true
+    })
+})
+const onTitleClick = (({key}) => {
+    navigate(key, {
+        replace: true
+    })
+})
+const TopicSideBar = ({treeJson}) => {
+    const location = useLocation();
+
+    console.log('currentUrl', decodeURI(location.pathname))
+    const generateMenuItem = (item) => {
+        if (!item.title) {
+            return;
+        }
+        const text = [
+            <span key="english">{item.title}</span>,
+            <span className="chinese" key="chinese">
+        {item.title}
+      </span>
+        ];
+
+        const child = <Link to={item.href}>
+            <Badge dot={false}>
+                {text}
+            </Badge>
+        </Link>;
+        return (
+            <Menu.Item key={item.href} disabled={false}>
+                {child}
+            </Menu.Item>
+        );
+    };
+    const generaGroupItem = (item) => {
+        if (!item.children || !item.children.length) {
+            return generateMenuItem(item);
+        }
+        return (
+            <SubMenu onTitleClick={onTitleClick} key={item.href} title={item.title}>
+                {item.children.map(generateMenuItem)}
+            </SubMenu>
+        );
+    };
+    const generateSubMenuItems = (tree) => {
+        return tree.map(menu => {
+            if (!menu.children || !menu.children.length) {
+                console.log("generateMenuItem", menu)
+                return generateMenuItem(menu);
+            }
+            const groupItems = menu.children.map((item) =>
+                generaGroupItem(item)
+            );
+            return (
+                <SubMenu onTitleClick={onTitleClick} title={menu.title} key={menu.href}>
+                    {groupItems}
+                </SubMenu>
+            );
+        });
+    };
+    const defaultOpenKeys = []
+    const buildTree = (tree) => {
+        defaultOpenKeys.push(tree.href)
+        tree.children = tree.children.filter(t => t !== null).map(t => {
+            if (t.type === 'd') {
+                return buildTree(t)
+            } else {
+                return null;
+            }
+        }).filter(t => t !== null)
+
+        return tree
     }
-    return (
-        <ul>
-            <li className={styles.item}>
-                <Link to={tree.href}>{tree.title}</Link>
-                {tree.children.map(t => buildTree(t))}
-            </li>
-        </ul>
-    )
+    const getMenuItems = () => {
+        const tree = JSON.parse(treeJson)
+        buildTree(tree)
+        return generateSubMenuItems(tree.children);
+    };
+
+    const menuItems = getMenuItems();
+    return <Menu
+        onClick={onClick}
+        onTitleClick={onTitleClick}
+        mode="inline"
+        openKeys={defaultOpenKeys}
+        selectedKeys={[decodeURI(location.pathname)]}
+    >
+        {menuItems}
+    </Menu>
 }
 
-const TopicSideBar = ({title, treeJson}) => {
-    const tree = JSON.parse(treeJson)
-    return <Sidebar>
-        {buildTree(tree)}
-    </Sidebar>
-}
-const Sidebar = styled('aside')`
-  width: 100%;
-  height: 100vh;
-  overflow: auto;
-  position: fixed;
-  padding-left: 0px;
-  top: 50px;
-  padding-right: 0;
-  left: 50%;
-  margin-left: -700px;
-  @media only screen and (max-width: 1023px) {
-    width: 100%;
-    /* position: relative; */
-    height: 100vh;
-  }
-
-  @media (min-width: 767px) and (max-width: 1023px) {
-    padding-left: 0;
-  }
-
-  @media only screen and (max-width: 767px) {
-    padding-left: 0px;
-    height: auto;
-  }
-`;
 export default TopicSideBar;

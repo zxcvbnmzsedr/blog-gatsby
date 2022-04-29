@@ -8,7 +8,7 @@ import Post from "../components/post";
 
 
 const PostTemplate = ({data}) => {
-    let {frontmatter, excerpt, field, raw} = data.siYuan;
+    let {frontmatter, excerpt, field, raw, html} = data.siYuan;
     const prev = data.prev;
     const next = data.next;
     const title = frontmatter.title;
@@ -30,24 +30,24 @@ const PostTemplate = ({data}) => {
                         className="leancloud-visitors-count">-1</i></span>
                     次
                 </article>
-                <Post rawMarkdownBody={raw}/>
+                <Post rawMarkdownBody={raw} html={html}/>
                 <Comment slug={field.slug}/>
 
-                    <PostPagination>
-                        {prev && (
-                            <div>
-                                <span>上一篇</span>
-                                <Link to={prev.field.slug}> {prev.frontmatter.title}</Link>
-                            </div>
-                        )}
+                <PostPagination>
+                    {prev && (
+                        <div>
+                            <span>上一篇</span>
+                            <Link to={prev.field.slug}> {prev.frontmatter.title}</Link>
+                        </div>
+                    )}
 
-                        {next && (
-                            <div>
-                                <span>下一篇</span>
-                                <Link to={next.field.slug}> {next.frontmatter.title}</Link>
-                            </div>
-                        )}
-                    </PostPagination>
+                    {next && (
+                        <div>
+                            <span>下一篇</span>
+                            <Link to={next.field.slug}> {next.frontmatter.title}</Link>
+                        </div>
+                    )}
+                </PostPagination>
                 <Tags tags={frontmatter.tags}/>
             </PostWrapper>
         </Layout>

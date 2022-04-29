@@ -12,10 +12,11 @@ import Mermaid from '../mermaid'
 import CopyButton from "../copybutton";
 import rehypeRaw from 'rehype-raw'
 
-const Post = ({rawMarkdownBody}) => {
+const Post = ({rawMarkdownBody,html}) => {
     return (
         <div>
             <div className={style.markdownBody}>
+
                 <ReactMarkdown
                     className="markdown-body"
                     children={rawMarkdownBody}
