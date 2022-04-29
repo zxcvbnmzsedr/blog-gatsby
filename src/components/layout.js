@@ -16,7 +16,8 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
             <Layout>
                 {sidebar &&
                     <Sider
-                        width={200}
+                        style={{overflowY: 'auto'}}
+                        width={300}
                         theme='light'
                     >
                         {sidebar}
