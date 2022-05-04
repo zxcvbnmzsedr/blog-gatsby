@@ -3,7 +3,7 @@ import SEO from './seo';
 import Header from './header';
 import Container from './container';
 import GlobalStyle from './global-styles';
-import {Layout} from 'antd';
+import {Affix, Layout} from 'antd';
 import './global.css'
 
 const {Sider} = Layout;
@@ -27,13 +27,9 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar,side
                     <Container full={isFullContainer}>{children}</Container>
                 </Layout>
                 {sidebarRight &&
-                    <Sider
-                        style={{overflowY: 'auto'}}
-                        width={300}
-                        theme='light'
-                    >
+                    <Affix>
                         {sidebarRight}
-                    </Sider>
+                    </Affix>
                 }
             </Layout>
         </Layout>
