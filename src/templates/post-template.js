@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Tags from '../components/tags';
 import Comment from '../components/comment';
 import Post from "../components/post";
+import MarkdownNavbar from "markdown-navbar";
 
 
 const PostTemplate = ({data}) => {
@@ -17,6 +18,7 @@ const PostTemplate = ({data}) => {
         <Layout
             title={title}
             description={frontmatter.description || excerpt}
+            sidebarRight={<MarkdownNavbar declarative={true} source={raw}/>}
             socialImage={
                 frontmatter.profile_image ? frontmatter.profile_image.absolutePath : ''
             }

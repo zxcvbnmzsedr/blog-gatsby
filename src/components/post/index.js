@@ -78,10 +78,6 @@ const Post = ({rawMarkdownBody,html}) => {
                     }}
                 />
             </div>
-            <div className={style.navContainer}>
-                <MarkdownNavbar declarative={true} source={rawMarkdownBody}/>
-            </div>
-
         </div>
     )
 }
