@@ -17,18 +17,11 @@ const onTitleClick = (({key}) => {
 })
 const TopicSideBar = ({treeJson}) => {
     const location = useLocation();
-
-    console.log('currentUrl', decodeURI(location.pathname))
     const generateMenuItem = (item) => {
         if (!item.title) {
             return;
         }
-        const text = [
-            <span key="english">{item.title}</span>,
-            <span className="chinese" key="chinese">
-        {item.title}
-      </span>
-        ];
+        const text = item.title;
 
         const child = <Link to={item.href}>
             <Badge dot={false}>
@@ -54,7 +47,6 @@ const TopicSideBar = ({treeJson}) => {
     const generateSubMenuItems = (tree) => {
         return tree.map(menu => {
             if (!menu.children || !menu.children.length) {
-                console.log("generateMenuItem", menu)
                 return generateMenuItem(menu);
             }
             const groupItems = menu.children.map((item) =>

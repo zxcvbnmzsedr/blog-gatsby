@@ -3,11 +3,11 @@ import SEO from './seo';
 import Header from './header';
 import Container from './container';
 import GlobalStyle from './global-styles';
-import {Layout} from 'antd';
+import {Affix, Layout} from 'antd';
 import './global.css'
 
 const {Sider} = Layout;
-const PostLayout = ({children, title, isFullContainer, description, sidebar, socialImage = ''}) => {
+const PostLayout = ({children, title, isFullContainer, description, sidebar,sidebarRight, socialImage = ''}) => {
     return (
         <Layout>
             <GlobalStyle/>
@@ -26,6 +26,11 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
                 <Layout style={{padding: '0 24px 24px'}}>
                     <Container full={isFullContainer}>{children}</Container>
                 </Layout>
+                {sidebarRight &&
+                    <Affix>
+                        {sidebarRight}
+                    </Affix>
+                }
             </Layout>
         </Layout>
     );
