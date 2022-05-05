@@ -1,6 +1,5 @@
 import React from "react"
 import {graphql} from "gatsby"
-import 'markdown-navbar/dist/navbar.css';
 import DefaultLayout from "../components/layout";
 import 'react-medium-image-zoom/dist/styles.css'
 import MindMap from "../components/mindmap";

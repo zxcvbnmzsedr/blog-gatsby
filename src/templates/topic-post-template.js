@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import Comment from '../components/comment';
 import Post from "../components/post";
 import TopicSideBar from "../components/TopicSideBar";
-import MarkdownNavbar from "markdown-navbar";
+import SidebarRight from "../components/SidebarRight";
 
 const PostTemplate = ({data}) => {
-    let {frontmatter, excerpt, field, raw,html} = data.siYuan;
+    let {frontmatter, excerpt, field, raw, html} = data.siYuan;
     const title = frontmatter.title;
     return (
         <Layout
@@ -17,7 +17,7 @@ const PostTemplate = ({data}) => {
             socialImage={
                 frontmatter.profile_image ? frontmatter.profile_image.absolutePath : ''
             }
-            sidebarRight={<MarkdownNavbar declarative={true} source={raw}/>}
+            sidebarRight={<SidebarRight raw={raw}/>}
             sidebar={<TopicSideBar treeJson={data.topic.tree}/>}
         >
 

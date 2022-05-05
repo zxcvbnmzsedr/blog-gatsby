@@ -1,8 +1,6 @@
 import React from "react"
 import remarkGfm from "remark-gfm";
 import ReactMarkdown from "react-markdown";
-import MarkdownNavbar from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
 import * as style from './topic-post.module.css'
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
 import {okaidia} from 'react-syntax-highlighter/dist/esm/styles/prism'
@@ -12,7 +10,7 @@ import Mermaid from '../mermaid'
 import CopyButton from "../copybutton";
 import rehypeRaw from 'rehype-raw'
 
-const Post = ({rawMarkdownBody,html}) => {
+const Post = ({rawMarkdownBody}) => {
     return (
         <div>
             <div className={style.markdownBody}>
