@@ -68,7 +68,7 @@ export class Markmap {
         isScale: true,
         // 是否自动展开，撑开svg大小
         extension: false,
-        nodeClick: (e: any, d: IMarkmapFlexTreeItem) => ({})
+        nodeClick: () => ({})
     };
 
     options: IMarkmapOptions;
@@ -124,7 +124,7 @@ export class Markmap {
         const {style, nodeFont} = this.options;
         const {id} = this.state;
         const extraStyle = typeof style === 'function' ? style(id) : '';
-        const styleText = `\
+        return `\
 .${id} { line-height: 1; }
 .${id} a { color: #000000; text-decoration:none;}
 .${id} a:hover { color: #000000; }
@@ -139,7 +139,6 @@ export class Markmap {
 .${id}-fo pre { margin: 0; padding: .2em .4em; }
 ${extraStyle}
 `;
-        return styleText;
     }
 
     updateStyle(): void {
@@ -545,7 +544,7 @@ function handleNodes(parent, root, initialTreeDepth, count) {
             ...parent,
             f: f
         },
-        v: `<a href=${root.href}>${root.title}</a>`,
+        v: `<a href="${root.href}">${root.title}</a>`,
     };
     if (root.children && root.children.length > 0) {
         node.c = []
