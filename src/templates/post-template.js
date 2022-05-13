@@ -18,7 +18,6 @@ const PostTemplate = ({data}) => {
         <Layout
             title={title}
             description={frontmatter.description || excerpt}
-            sidebarRight={<SidebarRight raw={raw}/>}
             socialImage={
                 frontmatter.profile_image ? frontmatter.profile_image.absolutePath : ''
             }

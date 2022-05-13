@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Comment from '../components/comment';
 import Post from "../components/post";
 import TopicSideBar from "../components/TopicSideBar";
-import SidebarRight from "../components/SidebarRight";
 
 const PostTemplate = ({data}) => {
     let {frontmatter, excerpt, field, raw, html} = data.siYuan;
@@ -17,7 +16,6 @@ const PostTemplate = ({data}) => {
             socialImage={
                 frontmatter.profile_image ? frontmatter.profile_image.absolutePath : ''
             }
-            sidebarRight={<SidebarRight raw={raw}/>}
             sidebar={<TopicSideBar treeJson={data.topic.tree}/>}
         >
 
