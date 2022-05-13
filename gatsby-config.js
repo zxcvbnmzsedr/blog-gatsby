@@ -17,6 +17,12 @@ module.exports = {
             },
         },
         {
+            resolve: 'gatsby-plugin-less',
+            options: {
+                javascriptEnabled: true,
+            },
+        },
+        {
             resolve: `gatsby-plugin-google-analytics`,
             options: {
                 trackingId: google.trackingId,

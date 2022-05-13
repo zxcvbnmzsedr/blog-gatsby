@@ -23,14 +23,13 @@
 }
 
 .markdown-body {
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 5px 30px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0 5px 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     background: radial-gradient(100% 216.12% at 1.81% 0%,rgba(248,248,248,0.3) 0%,rgba(248,248,248,0.1) 100%);
 
     backface-visibility: hidden;
     transform: translate3d(0,0,0);
-    transform: translateZ(0);
     backdrop-filter: blur(.6rem);
 }
 .markdown-body h1 .octicon-link,
@@ -80,7 +79,7 @@
      color: #24292e;
      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
      font-size: 16px;
-     line-height: 1.5;
+     margin-right: 130px;
      word-wrap: break-word;
  }
 
@@ -102,7 +101,6 @@
 }
 
 .markdown-body strong {
-    font-weight: inherit;
     font-weight: bolder;
 }
 
@@ -738,7 +736,7 @@
 }
 
 .markdown-body li {
-    word-wrap: break-all;
+
 }
 
 .markdown-body li>p {
@@ -848,7 +846,6 @@
 
 .markdown-body pre code {
     display: inline;
-    max-width: auto;
     padding: 0;
     margin: 0;
     overflow: visible;

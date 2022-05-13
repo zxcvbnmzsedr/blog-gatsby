@@ -9,12 +9,14 @@ import 'react-medium-image-zoom/dist/styles.css'
 import Mermaid from '../mermaid'
 import CopyButton from "../copybutton";
 import rehypeRaw from 'rehype-raw'
+import {Affix} from "antd";
+import SidebarRight from "../SidebarRight";
+import '../../static/toc.less'
 
 const Post = ({rawMarkdownBody}) => {
     return (
         <div>
             <div className={style.markdownBody}>
-
                 <ReactMarkdown
                     className="markdown-body"
                     children={rawMarkdownBody}
@@ -28,14 +30,14 @@ const Post = ({rawMarkdownBody}) => {
                             </Zoom>
                         },
                         video({alt, ...props}) {
-                            return <div style={{textAlign:"center"}}>
+                            return <div style={{textAlign: "center"}}>
                                 <video style={{margin: "0 auto", width: 700}} {...props} >
-                                    <track />
+                                    <track/>
                                 </video>
                             </div>
                         },
                         table({alt, ...props}) {
-                            return <div style={{textAlign:"center"}}>
+                            return <div style={{textAlign: "center"}}>
                                 <table style={{margin: "0 auto", width: 700}} {...props} />
                             </div>
                         },
@@ -78,6 +80,9 @@ const Post = ({rawMarkdownBody}) => {
                     }}
                 />
             </div>
+            <Affix  className="toc-affix"  offsetTop={16}>
+                <SidebarRight raw={rawMarkdownBody}/>
+            </Affix>
         </div>
     )
 }
