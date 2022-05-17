@@ -6,6 +6,15 @@ const {valine, google, baidu, siteMetadata} = require('./config.js')
 module.exports = {
     siteMetadata,
     plugins: [
+        {
+            resolve: 'gatsby-plugin-less',
+            options: {
+                javascriptEnabled: true,
+            },
+            cssLoaderOptions: {
+                modules: true,
+            },
+        },
         `gatsby-plugin-styled-components`,
         `gatsby-plugin-image`,
         {
@@ -16,12 +25,7 @@ module.exports = {
                 avatar: `robohash`,
             },
         },
-        {
-            resolve: 'gatsby-plugin-less',
-            options: {
-                javascriptEnabled: true,
-            },
-        },
+
         {
             resolve: `gatsby-plugin-google-analytics`,
             options: {

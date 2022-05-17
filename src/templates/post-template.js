@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import Tags from '../components/tags';
 import Comment from '../components/comment';
 import Post from "../components/post";
-import SidebarRight from "../components/SidebarRight";
 
 
 const PostTemplate = ({data}) => {
