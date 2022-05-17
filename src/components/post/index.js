@@ -32,7 +32,7 @@ const Post = ({rawMarkdownBody}) => {
                         video({alt, ...props}) {
                             return <div style={{textAlign: "center"}}>
                                 <video style={{margin: "0 auto", width: 700}} {...props} >
-                                    <track/>
+                                    <track />
                                 </video>
                             </div>
                         },

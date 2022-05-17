@@ -232,6 +232,7 @@ exports.createPages = async ({graphql, actions, reporter}) => {
             },
         });
     });
+
     await createMind({graphql, actions})
 
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import SEO from './seo';
+import Seo from './seo';
 import Header from './header';
 import Container from './container';
 import GlobalStyle from './global-styles';
@@ -13,7 +13,7 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
     return (
         <Layout>
             <GlobalStyle/>
-            <SEO title={title} description={description} socialImage={socialImage}/>
+            <Seo title={title} description={description} socialImage={socialImage}/>
             <Header/>
             <Layout>
                 {!isMobile && sidebar &&
