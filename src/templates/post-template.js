@@ -59,8 +59,6 @@ export default PostTemplate;
 const PostWrapper = styled.div`
   padding-top: var(--size-900);
   padding-bottom: var(--size-900);
-  margin-left: auto;
-  margin-right: auto;
   word-wrap: break-word;
 `;
 
