@@ -9,7 +9,6 @@ import {isMobile} from 'react-device-detect';
 
 const {Sider} = Layout;
 const PostLayout = ({children, title, isFullContainer, description, sidebar, socialImage = ''}) => {
-    console.log(isMobile)
     return (
         <Layout>
             <GlobalStyle/>
@@ -25,7 +24,7 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
                         {sidebar}
                     </Sider>}
                 <Layout style={{padding: '0 24px 24px'}}>
-                    <Container full={isFullContainer}>{children}</Container>
+                    <Container isMobile={isMobile} full={isFullContainer}>{children}</Container>
                 </Layout>
             </Layout>
         </Layout>
