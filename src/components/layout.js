@@ -18,12 +18,12 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
             <Layout>
                 {!isMobile && sidebar &&
                     <Sider
-                    style={{overflowY: 'auto'}}
-                    width={300}
-                    theme='light'
-                >
-                    {sidebar}
-                </Sider>}
+                        style={{overflowY: 'auto'}}
+                        width={300}
+                        theme='light'
+                    >
+                        {sidebar}
+                    </Sider>}
                 <Layout style={{padding: '0 24px 24px'}}>
                     <Container full={isFullContainer}>{children}</Container>
                 </Layout>
