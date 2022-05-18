@@ -53,7 +53,6 @@ query {
   allSiYuan(
     filter: {field: {contentType: {eq: "posts"}}}
     sort: {order: DESC, fields: frontmatter___date}
-    limit: 9
   ) {
     nodes {
       field {
