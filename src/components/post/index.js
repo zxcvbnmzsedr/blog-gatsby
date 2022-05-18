@@ -12,6 +12,7 @@ import rehypeRaw from 'rehype-raw'
 import {Affix} from "antd";
 import SidebarRight from "../SidebarRight";
 import '../../static/toc.less'
+import {isMobile} from 'react-device-detect';
 
 const Post = ({rawMarkdownBody}) => {
     return (
@@ -32,7 +33,7 @@ const Post = ({rawMarkdownBody}) => {
                         video({alt, ...props}) {
                             return <div style={{textAlign: "center"}}>
                                 <video style={{margin: "0 auto", width: 700}} {...props} >
-                                    <track />
+                                    <track/>
                                 </video>
                             </div>
                         },
@@ -80,9 +81,10 @@ const Post = ({rawMarkdownBody}) => {
                     }}
                 />
             </div>
-            <Affix  className="toc-affix"  offsetTop={16}>
+            {!isMobile && <Affix className="toc-affix" offsetTop={16}>
                 <SidebarRight raw={rawMarkdownBody}/>
             </Affix>
+            }
         </div>
     )
 }
