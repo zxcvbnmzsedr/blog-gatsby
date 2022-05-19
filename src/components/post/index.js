@@ -9,10 +9,9 @@ import 'react-medium-image-zoom/dist/styles.css'
 import Mermaid from '../mermaid'
 import CopyButton from "../copybutton";
 import rehypeRaw from 'rehype-raw'
-import {Affix} from "antd";
+import {Affix, Col} from "antd";
 import SidebarRight from "../SidebarRight";
 import '../../static/toc.less'
-import {isMobile} from 'react-device-detect';
 
 const Post = ({rawMarkdownBody}) => {
     return (
@@ -81,10 +80,11 @@ const Post = ({rawMarkdownBody}) => {
                     }}
                 />
             </div>
-            {!isMobile && <Affix className="toc-affix" offsetTop={16}>
-                <SidebarRight raw={rawMarkdownBody}/>
-            </Affix>
-            }
+            <Col lg={24} xs={0} span={0}>
+                <Affix className="toc-affix" offsetTop={16}>
+                    <SidebarRight raw={rawMarkdownBody}/>
+                </Affix>
+            </Col>
         </div>
     )
 }
