@@ -15,27 +15,29 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
             <GlobalStyle/>
             <Seo title={title} description={description} socialImage={socialImage}/>
             <Row type="flex" justify="center">
-                <Col span={16}>
+                <Col xxl={16} xs={24}>
                     <Header/>
                 </Col>
-                <Col span={span}>
+                <Col xxl={span} xs={24}>
                     <Layout>
-                        {!isMobile && sidebar &&
-                            <Sider
-                                style={{overflowY: 'auto'}}
-                                width={300}
-                                theme='light'
-                            >
-                                {sidebar}
-                            </Sider>}
+
+                        {sidebar &&
+                            <Col lg={5} xs={0} span={0}>
+                                <Sider
+                                    style={{overflowY: 'auto'}}
+                                    width={300}
+                                    theme='light'
+                                >
+                                    {sidebar}
+                                </Sider>
+                            </Col>
+                            }
                         <Layout style={{padding: '0 24px 24px'}}>
                             <Container isMobile={isMobile} full={isFullContainer}>{children}</Container>
                         </Layout>
                     </Layout>
                 </Col>
-
             </Row>
-
         </Layout>
     )
         ;
