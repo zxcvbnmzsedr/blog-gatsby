@@ -93,7 +93,7 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
             href: result.href,
             title: result.title
         }, {
-            id: id,
+            id: 'topic' + id,
             endpointId: result.id,
             parent: null,
             children: [],
