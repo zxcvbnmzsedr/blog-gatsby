@@ -61,6 +61,12 @@ module.exports = {
                 icon: `src/images/icon.png`,
             },
         },
+        {
+            resolve: 'gatsby-plugin-brotli',
+            options: {
+                extensions: ['css', 'html', 'js', 'svg']
+            }
+        },
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-sitemap`,
     ],
