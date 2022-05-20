@@ -14,6 +14,7 @@
     "front-matter": "^4.0.2",
     "gatsby": "^4.14.1",
     "gatsby-plugin-baidu-analytics": "^2.2.0",
+    "gatsby-plugin-brotli": "^2.1.0",
     "gatsby-plugin-google-analytics": "^4.12.1",
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-google-tagmanager": "^4.14.0",
