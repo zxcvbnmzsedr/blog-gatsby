@@ -7464,6 +7464,11 @@ gatsby-plugin-sitemap@^5.14.0:
     minimatch "^3.1.2"
     sitemap "^7.0.0"
 
+gatsby-plugin-split-css@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/gatsby-plugin-split-css/-/gatsby-plugin-split-css-2.0.2.tgz#64cc353cbfb124e7952a67d0b8dd2a6a87d7f987"
+  integrity sha512-dgEC+LEkaC1VCE12KG9//KWe1XqwHoKA291j18/6STrkT8xC+O2QhEBrpxRl/3+Nbw5VVKT9iXAVFAU2+It/YQ==
+
 gatsby-plugin-styled-components@5.14.0:
   version "5.14.0"
   resolved "https://registry.yarnpkg.com/gatsby-plugin-styled-components/-/gatsby-plugin-styled-components-5.14.0.tgz#c1972f7eab39e05f77178fc55c9233d95fbabcae"

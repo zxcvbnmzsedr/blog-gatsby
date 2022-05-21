@@ -6,6 +6,7 @@ const {valine, google, baidu, siteMetadata} = require('./config.js')
 module.exports = {
     siteMetadata,
     plugins: [
+        `gatsby-plugin-split-css`,
         {
             resolve: 'gatsby-plugin-less',
             options: {
