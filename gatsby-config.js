@@ -2,11 +2,9 @@ require("dotenv").config({
     path: `.env.${process.env.NODE_ENV}`,
 })
 const {valine, google, baidu, siteMetadata} = require('./config.js')
-
 module.exports = {
     siteMetadata,
     plugins: [
-        `gatsby-plugin-split-css`,
         {
             resolve: 'gatsby-plugin-less',
             options: {
@@ -70,5 +68,7 @@ module.exports = {
         },
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-sitemap`,
+        // `gatsby-plugin-split-css`,
+
     ],
 };
