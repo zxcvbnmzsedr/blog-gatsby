@@ -21,7 +21,6 @@ const Post = ({rawMarkdownBody}) => {
                     className="markdown-body"
                     children={rawMarkdownBody}
                     remarkPlugins={[remarkGfm]}
-                    plugins={[remarkGfm]}
                     rehypePlugins={[rehypeRaw]}
                     components={{
                         img({alt, ...props}) {

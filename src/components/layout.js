@@ -2,7 +2,6 @@ import React from 'react';
 import Seo from './seo';
 import Header from './header';
 import Container from './container';
-import GlobalStyle from './global-styles';
 import {Col, Layout, Row} from 'antd';
 import './global.css'
 import {isMobile} from 'react-device-detect';
@@ -12,7 +11,6 @@ const PostLayout = ({children, title, isFullContainer, description, sidebar, soc
     const span = isFullContainer ? 24:16
     return (
         <Layout>
-            <GlobalStyle/>
             <Seo title={title} description={description} socialImage={socialImage}/>
             <Row type="flex" justify="center">
                 <Col xxl={16} xs={24}>
