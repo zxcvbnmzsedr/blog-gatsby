@@ -5,15 +5,6 @@ const {valine, google, baidu, siteMetadata} = require('./config.js')
 module.exports = {
     siteMetadata,
     plugins: [
-        {
-            resolve: 'gatsby-plugin-less',
-            options: {
-                javascriptEnabled: true,
-            },
-            cssLoaderOptions: {
-                modules: true,
-            },
-        },
         `gatsby-plugin-styled-components`,
         `gatsby-plugin-image`,
         {
@@ -68,7 +59,24 @@ module.exports = {
         },
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-sitemap`,
+        {
+            resolve: 'gatsby-plugin-less',
+            options: {
+                lessOptions: {
+                    javascriptEnabled: true
+                },
+                cssLoaderOptions: {
+                    modules: true,
+                },
+            }
+        },
         // `gatsby-plugin-split-css`,
-
+        {
+            resolve: 'gatsby-plugin-import',
+            options: {
+                libraryName: "antd",
+                style: true,   // or 'css'
+            }
+        },
     ],
 };
