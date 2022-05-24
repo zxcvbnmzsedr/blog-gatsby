@@ -33,13 +33,6 @@ module.exports = {
             },
         },
         {
-            resolve: `gatsby-plugin-google-fonts`,
-            options: {
-                fonts: [`Source Sans Pro`, `Poppins\:400,400i,700`],
-                display: 'swap',
-            },
-        },
-        {
             resolve: `gatsby-plugin-manifest`,
             options: {
                 name: `Gatsby Frosted Blog`,
@@ -75,7 +68,7 @@ module.exports = {
             resolve: 'gatsby-plugin-import',
             options: {
                 libraryName: "antd",
-                style: true,   // or 'css'
+                style: 'css',   // or 'css'
             }
         },
     ],
