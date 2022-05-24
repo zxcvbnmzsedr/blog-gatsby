@@ -68,7 +68,7 @@ module.exports = {
             resolve: 'gatsby-plugin-import',
             options: {
                 libraryName: "antd",
-                style: true,   // or 'css'
+                style: 'css',   // or 'css'
             }
         },
     ],
