@@ -12,6 +12,7 @@ import rehypeRaw from 'rehype-raw'
 import {Affix, Col} from "antd";
 import SidebarRight from "../SidebarRight";
 import '../../static/toc.less'
+import {Link} from "gatsby"
 
 const Post = ({rawMarkdownBody}) => {
     return (
@@ -42,8 +43,15 @@ const Post = ({rawMarkdownBody}) => {
                         },
                         // 重写URL ，让他不用跳来跳去
                         a({node, href, className, children, ...props}) {
+                            const parser = document.createElement('a');
+                            parser.href = href;
+                            if (window.location.host !== parser.host){
+                                return (
+                                    <a href={href} target="_blank" {...props}>{children}</a>
+                                )
+                            }
                             return (
-                                <a href={href.split('.md')[0]} {...props}>{children}</a>
+                                <Link to={href} {...props}>{children}</Link>
                             )
                         }, code: ({inline, children, className, ...props}) => {
                             const txt = children[0];
