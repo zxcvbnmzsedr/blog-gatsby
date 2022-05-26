@@ -59,6 +59,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.13.5",
     "css-loader": "^5.0.0",
+    "gh-pages": "^4.0.0",
     "postcss": "^8.1.10",
     "postcss-import": "^13.0.0",
     "postcss-loader": "^4.1.0",
@@ -77,6 +78,7 @@
     "url": "git+https://github.com/zxcvbnmzsedr/blog_gatsby"
   },
   "scripts": {
+    "deploy": "gatsby build && gh-pages -d public -b master -r https://github.com/zxcvbnmzsedr/zxcvbnmzsedr.github.io.git",
     "parse": "node listen-parse.jsx",
     "siyuan": "node siyuan.jsx",
     "build": "export NODE_ENV=production && gatsby build",
