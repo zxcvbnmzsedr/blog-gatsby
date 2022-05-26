@@ -78,7 +78,7 @@
     "url": "git+https://github.com/zxcvbnmzsedr/blog_gatsby"
   },
   "scripts": {
-    "deploy": "yarn clean && yarn build && gh-pages -d public -t true -b master -e public -r https://github.com/zxcvbnmzsedr/zxcvbnmzsedr.github.io.git",
+    "deploy": "yarn clean && yarn build && gh-pages -d public -t true -b master -e docs -r https://github.com/zxcvbnmzsedr/zxcvbnmzsedr.github.io.git",
     "parse": "node listen-parse.jsx",
     "siyuan": "node siyuan.jsx",
     "build": "export NODE_ENV=production && gatsby build",
