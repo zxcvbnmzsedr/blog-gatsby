@@ -59,7 +59,7 @@ const Post = ({rawMarkdownBody}) => {
                         a({node, href, className, children, ...props}) {
                             if (getLocation(href)) {
                                 return (
-                                    <a href={href} target="_blank" {...props}>{children}</a>
+                                    <a rel="noreferrer" href={href} target="_blank" {...props}>{children}</a>
                                 )
                             }
                             return (
