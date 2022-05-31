@@ -36,7 +36,7 @@ const createMind = async ({graphql, actions}) => {
 
     result.data.allTopic.nodes.forEach(({title}) => {
         createPage({
-            path: 'topic/' + title,
+            path: 'mind/topic/' + title,
             component: path.resolve(`./src/templates/mind-template.js`),
             context: {
                 title: title,
@@ -88,20 +88,23 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
     })
     const processTopic = (result) => {
         const {id} = result;
-        return Object.assign({}, {
-            tree: JSON.stringify(result),
-            href: result.href,
-            title: result.title
-        }, {
-            id: 'topic' + id,
-            endpointId: result.id,
-            parent: null,
-            children: [],
-            internal: {
-                type: `topic`,
-                contentDigest: createContentDigest(result)
-            }
-        });
+        return Object.assign(
+            {},
+            {
+                tree: JSON.stringify(result),
+                href: result.href,
+                title: result.title
+            },
+            {
+                id: 'topic' + id,
+                endpointId: result.id,
+                parent: null,
+                children: [],
+                internal: {
+                    type: `topic`,
+                    contentDigest: createContentDigest(result)
+                }
+            });
     };
     const topicTree = await getSiYuanTopic({box: siYuan.box});
     topicTree.forEach(n => {
