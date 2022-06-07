@@ -53,10 +53,11 @@ exports.sourceNodes = async ({actions, createContentDigest}) => {
         const {id, title, slug, date, tags, contentType, template, raw, html} = result;
         const excerpt = getMarkdownExcerpt(raw)
         const topic = slug.startsWith('/topic') ? slug.split('/')[2] : null
+        const slugReNew = contentType === 'posts' ? `/posts/${title}` : slug
         return Object.assign({}, {
             field: {
                 contentType: contentType,
-                slug,
+                slug: slugReNew,
                 topic
             },
             raw,

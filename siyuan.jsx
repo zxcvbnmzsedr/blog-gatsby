@@ -44,11 +44,18 @@ async function getSiYuanPost({box}) {
 
         const contentType = data.hPath.split('/')[1];
         if (contentType === 'posts') {
-            if (!data.content.trim()) {
+            if (!data.content.trim() || data.content.trim() === `# ${content}`) {
                 return
             }
         }
-        const attributes = await getData('query/sql', {stmt: `select name,value from attributes where block_id = '${id}'`});
+        const attributes = await getData('query/sql', {
+            stmt: `select name,value from attributes where block_id = '${id}' union \n 
+                       SELECT type, group_concat(content) \n
+                        from spans \n
+                        where type = 'tag' \n
+                               and block_id = '${id}' \n
+                        group by type`
+        });
         const attribute = attributes.data.reduce((r, item) => (
                 {
                     ...r,
@@ -59,6 +66,9 @@ async function getSiYuanPost({box}) {
         const template = attribute['custom-template']
         const slug = attribute['custom-slug']
         const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
+        if (attribute['tag']){
+            tags.push.apply(tags, attribute['tag'].split(','));
+        }
         return {
             ...siYuanBoxData,
             html: htmlResult.data.content,
@@ -157,9 +167,9 @@ const parseTreeForPath = (arr, p) => {
     return loop(p)
 }
 
-// const fs = require('fs')
+const fs = require('fs')
 
 // getSiYuanTopic({box: '20220420112442-p6q6e8w'})
 //     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))
-// getSiYuanPost({box: '20220420112442-p6q6e8w'})
-//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))
+getSiYuanPost({box: '20220420112442-p6q6e8w'})
+    .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e)))
