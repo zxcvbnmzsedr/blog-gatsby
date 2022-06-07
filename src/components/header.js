@@ -40,7 +40,7 @@ const Header = () => {
                         {allTopic.edges.map(({node}) => {
                             const {title, href} = node
                             return <HeaderNavListItem>
-                                <Link to={href}>{title}</Link>
+                                <Link to={'/mind' + href}>{title}</Link>
                             </HeaderNavListItem>
 
                         })}

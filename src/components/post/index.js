@@ -14,6 +14,20 @@ import SidebarRight from "../SidebarRight";
 import '../../static/toc.less'
 import {Link} from "gatsby"
 
+function getLocation(href) {
+    const match = href.match(/^(https?:)\/\/(([^:\/?#]*)(?::(\d+))?)(\/?[^?#]*)(\?[^#]*|)(#.*|)$/);
+    return match && {
+        href: href,
+        protocol: match[1],
+        host: match[2],
+        hostname: match[3],
+        port: match[4],
+        pathname: match[5],
+        search: match[6],
+        hash: match[7]
+    }
+}
+
 const Post = ({rawMarkdownBody}) => {
     return (
         <div>
@@ -43,11 +57,9 @@ const Post = ({rawMarkdownBody}) => {
                         },
                         // 重写URL ，让他不用跳来跳去
                         a({node, href, className, children, ...props}) {
-                            const parser = document.createElement('a');
-                            parser.href = href;
-                            if (window.location.host !== parser.host){
+                            if (getLocation(href)) {
                                 return (
-                                    <a href={href} target="_blank" {...props}>{children}</a>
+                                    <a rel="noreferrer" href={href} target="_blank" {...props}>{children}</a>
                                 )
                             }
                             return (
