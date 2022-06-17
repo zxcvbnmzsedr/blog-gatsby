@@ -1,6 +1,6 @@
 import React from 'react';
 import Seo from './seo';
-import Header from './header';
+import Header from './Header';
 import Container from './container';
 import {Col, Layout, Row} from 'antd';
 import './global.css'

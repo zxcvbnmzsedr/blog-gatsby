@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Link} from 'gatsby';
-import Container from './container';
+import Container from '../container';
 import {useStaticQuery, graphql} from 'gatsby';
+import NavItem from "./NavItem";
 
-const Header = () => {
+const Index = () => {
     const {site, allTopic} = useStaticQuery(
         graphql`
       query {
@@ -34,15 +35,10 @@ const Header = () => {
 
                 <HeaderNavList>
                     <HeaderNavList>
-                        <HeaderNavListItem>
-                            <Link to="/blog">Blog</Link>
-                        </HeaderNavListItem>
+                        <NavItem to="/blog" text="Blog"/>
                         {allTopic.edges.map(({node}) => {
                             const {title, href} = node
-                            return <HeaderNavListItem>
-                                <Link to={'/mind' + href}>{title}</Link>
-                            </HeaderNavListItem>
-
+                            return <NavItem to={'/mind' + href} text={title}/>
                         })}
                     </HeaderNavList>
                 </HeaderNavList>
@@ -51,7 +47,7 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Index;
 
 const HeaderNavList = ({children}) => {
     return (
@@ -61,9 +57,6 @@ const HeaderNavList = ({children}) => {
     );
 };
 
-const HeaderNavListItem = ({children}) => {
-    return <StyledNavListItem>{children}</StyledNavListItem>;
-};
 
 const StyledHeader = styled.header`
   padding-top: var(--size-300);
@@ -100,28 +93,4 @@ const StyledNavList = styled.ul`
   list-style-type: none;
 `;
 
-const StyledNavListItem = styled.li`
-  &:not(:last-of-type) {
-    margin-right: 2rem;
-  }
 
-  @media screen and (max-width: 700px) {
-    &:not(:last-of-type) {
-      margin-right: 1rem;
-    }
-  }
-
-  & a {
-    color: inherit;
-    text-transform: uppercase;
-    font-size: var(--size-300);
-    text-decoration: none;
-    letter-spacing: 0.1rem;
-  }
-
-  @media screen and (max-width: 700px) {
-    & a {
-      font-size: 0.7rem;
-    }
-  }
-`;
