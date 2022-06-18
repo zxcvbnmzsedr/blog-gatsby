@@ -96,26 +96,15 @@ const Header: React.FC<Props> = ({ transparentHeader }) => {
                 Icon={FaBookOpen}
                 textId={root("articles")}
               />
-              <NavItem
-                wrapper="navItem"
-                to="/slides"
-                onClick={close}
-                match={"startsWith"}
-                Icon={FaSlideshare}
-                textId={root("slides")}
-              />
               <UncontrolledDropdown nav={true} inNavbar={true} >
                 <DropdownToggle nav={true} caret={true}>
                   <FaInfo />
-                  <Localized id={root("about.title")} />
+                  <Localized id={root("topic.title")} />
                 </DropdownToggle>
                 <DropdownMenu right={true}>
 
                 </DropdownMenu>
               </UncontrolledDropdown>
-              <BSNavItem>
-                <NavbarLanguageSelector />
-              </BSNavItem>
             </Nav>
           </Collapse>
         </StyledNavbar>
@@ -143,7 +132,7 @@ const Branding: React.FC = () => {
   return (
     <Link to={"/"} className={"navbar-brand"}>
       <StyledLogo />
-      ztianzeng.com
+      天增的博客
     </Link>
   );
 };

@@ -129,7 +129,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
           title={title}
           description={excerpt}
           url={path}
-          locale={languageInfo[lang].detailedId}
+          locale={languageInfo['cn'].detailedId}
           meta={[
             { name: "og:type", content: "article" },
             { name: "og:article:published_time", content: publishedTime.toISO() },

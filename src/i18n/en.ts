@@ -21,6 +21,9 @@ export default {
       project: "About Website",
       me: "About Me",
     },
+    topic: {
+      title: 'Topic'
+    }
   },
 
   feedback: {

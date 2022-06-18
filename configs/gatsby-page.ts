@@ -43,7 +43,7 @@ export const createPages = async ({ actions, graphql }: CreatePagesArgs) => {
 
   const result = await graphql<ArticlesQueryResult>(`{
     allSiYuan(
-
+      filter: { field: { contentType: { eq: "posts" } } }
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {

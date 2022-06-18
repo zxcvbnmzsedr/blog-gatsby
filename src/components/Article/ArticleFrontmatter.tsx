@@ -51,7 +51,7 @@ const ContainerRow = styled.div`
   vertical-align: center;
 `;
 
-const DATE_FORMAT = "yyyy-MM-dd HH:mm";
+const DATE_FORMAT = "yyyy-MM-dd";
 
 const ArticleFrontmatter: React.FC<Props> = (props) => {
   const {
@@ -140,11 +140,8 @@ const LanguageSwitcher: React.FC<{ currentArticleLanguage: string; articleId: st
     return (
       <>
         <DisabledLangLink>
-          {languageInfo[currentArticleLanguage].name}
+          {languageInfo['cn'].name}
         </DisabledLangLink>
-        {Array.from(langPathMap.entries()).map(([lang, path]) => (
-          <LangLink key={lang} to={path}>{languageInfo[lang].name}</LangLink>
-        ))}
       </>
     );
   };
