@@ -1,11 +1,8 @@
-import { Link } from "gatsby";
 import React from "react";
-import { CardBody, CardText } from "reactstrap";
-import { useStore } from "simstate";
+import {CardBody, CardText} from "reactstrap";
 
-import { BaseCard, BaseCardHeader } from "@/components/Cards/components";
-import { Localized, prefix, useI18n } from "@/i18n";
-import MetadataStore from "@/stores/MetadataStore";
+import {BaseCard, BaseCardHeader} from "@/components/Cards/components";
+import {Localized, prefix} from "@/i18n";
 
 import Contacts from "../Contacts";
 
@@ -16,18 +13,14 @@ const p = prefix("selfIntro.");
 
 const SelfIntroCard: React.FC<Props> = () => {
 
-  const metadataStore = useStore(MetadataStore);
-  const i18n = useI18n();
-
-
   return (
     <BaseCard>
       <BaseCardHeader>
-        <span>👦 <Localized id={p("author")} /></span>
+        <span>👦 <Localized id={p("author")}/></span>
       </BaseCardHeader>
       <CardBody>
         <CardText>
-          <Localized id={p("university")} />
+          <Localized id={p("university")}/>
         </CardText>
         <Contacts color="black" size={1.4}/>
       </CardBody>

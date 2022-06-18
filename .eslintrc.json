@@ -1,3 +1,8 @@
 {
-  "extends": "@ddadaal"
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module"
+  },
+  "parser": "@typescript-eslint/parser"
 }

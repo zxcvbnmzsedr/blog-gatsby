@@ -1,12 +1,11 @@
-import { Link } from "gatsby";
+import {Link} from "gatsby";
 import React from "react";
-import { FaCode, FaRegCommentDots,FaRss } from "react-icons/fa";
-import { CardBody, CardText } from "reactstrap";
+import {FaCode, FaRegCommentDots, FaRss} from "react-icons/fa";
+import {CardBody, CardText} from "reactstrap";
 import styled from "styled-components";
 
-import { BaseCard, BaseCardHeader } from "@/components/Cards/components";
-import { Localized, prefix, useI18n } from "@/i18n";
-import { useArticleOfCurrentLang } from "@/stores/useArticleOfCurrentLang";
+import {BaseCard, BaseCardHeader} from "@/components/Cards/components";
+import {Localized, prefix, useI18n} from "@/i18n";
 
 const BlockContainer = styled.div`
   a {
@@ -21,10 +20,6 @@ interface Props {
 const root = prefix("blogIntro.");
 
 const BlogIntroCard: React.FC<Props> = () => {
-
-  const { translate } = useI18n();
-
-  const moreText = translate(root("more")) as string;
 
   return (
     <BaseCard>

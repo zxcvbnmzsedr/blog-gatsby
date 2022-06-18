@@ -1,31 +1,26 @@
-import { Link } from "gatsby";
-import React, { useCallback,useState } from "react";
+import {Link} from "gatsby";
+import React, {useCallback, useState} from "react";
+import {FaBookOpen, FaHome, FaInfo,} from "react-icons/fa";
 import {
-  FaBookOpen, FaFile,
-  FaGlobe,   FaHome,   FaInfo, FaMale, FaSlideshare,
-} from "react-icons/fa";
-import {
-  Collapse, DropdownMenu as BSDropdownMenu,
+  Collapse,
+  DropdownMenu as BSDropdownMenu,
   DropdownToggle as BSDropdownToggle,
   DropdownToggleProps,
   Nav,
   Navbar,
   NavbarToggler,
-  NavItem as BSNavItem,
   UncontrolledDropdown,
 } from "reactstrap";
-import { useStore } from "simstate";
+import {useStore} from "simstate";
 import styled from "styled-components";
 
 import Placeholder from "@/components/Header/HeaderPlaceholder";
-import NavbarLanguageSelector from "@/components/Header/NavbarLanguageSelector";
 import NavItem from "@/components/Header/NavItem";
-import ArticleNavItem from "@/components/Header/NavItem/ArticleNavItem";
-import { Localized, prefix } from "@/i18n";
+import {Localized, prefix} from "@/i18n";
 import LocationStore from "@/stores/LocationStore";
-import { colors,widths } from "@/styles/variables";
+import {colors, widths} from "@/styles/variables";
 import isServer from "@/utils/isServer";
-import { useEventListener } from "@/utils/useEventListener";
+import {useEventListener} from "@/utils/useEventListener";
 import Icon from "~/assets/logo.svg";
 
 interface Props {
@@ -51,10 +46,10 @@ const Container = styled.header`
 
 const NavbarContainer = styled.div<{ transparent: boolean }>`
   transition: background-color 0.2s ease-in-out;
-  background-color: ${({ transparent }) => transparent ? "transparent" : colors.headerBg};
+  background-color: ${({transparent}) => transparent ? "transparent" : colors.headerBg};
 `;
 
-const Header: React.FC<Props> = ({ transparentHeader }) => {
+const Header: React.FC<Props> = ({transparentHeader}) => {
   const [isOpen, setOpen] = useState(false);
   const [isTransparent, setTransparent] = useState(transparentHeader);
 
@@ -76,8 +71,8 @@ const Header: React.FC<Props> = ({ transparentHeader }) => {
       />
       <NavbarContainer transparent={isTransparent} className="fixed-top">
         <StyledNavbar dark={true} expand="md">
-          <Branding />
-          <NavbarToggler onClick={() => setOpen(!isOpen)} />
+          <Branding/>
+          <NavbarToggler onClick={() => setOpen(!isOpen)}/>
           <Collapse isOpen={isOpen} navbar={true}>
             <Nav className="ml-auto" navbar={true}>
               <NavItem
@@ -96,10 +91,10 @@ const Header: React.FC<Props> = ({ transparentHeader }) => {
                 Icon={FaBookOpen}
                 textId={root("articles")}
               />
-              <UncontrolledDropdown nav={true} inNavbar={true} >
+              <UncontrolledDropdown nav={true} inNavbar={true}>
                 <DropdownToggle nav={true} caret={true}>
-                  <FaInfo />
-                  <Localized id={root("topic.title")} />
+                  <FaInfo/>
+                  <Localized id={root("topic.title")}/>
                 </DropdownToggle>
                 <DropdownMenu right={true}>
 
@@ -131,21 +126,20 @@ const DropdownMenu = styled(BSDropdownMenu)`
 const Branding: React.FC = () => {
   return (
     <Link to={"/"} className={"navbar-brand"}>
-      <StyledLogo />
+      <StyledLogo/>
       天增的博客
     </Link>
   );
 };
 
 const DropdownToggle: React.FC<DropdownToggleProps> = (props) => {
-  const { pathname } = useStore(LocationStore);
+  const {pathname} = useStore(LocationStore);
 
-  const { className, ...rest } = props;
+  const {className, ...rest} = props;
 
   return (
     <BSDropdownToggle {...rest} className={
-      [className, pathname.startsWith("/about") ? "active" : undefined].
-        filter((x) => !!x)
+      [className, pathname.startsWith("/about") ? "active" : undefined].filter((x) => !!x)
         .join(" ")
     }
     />
