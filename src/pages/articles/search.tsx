@@ -31,15 +31,15 @@ const SearchPage: React.FC = () => {
   let searchResult = Array.from(metadataStore.articleIdMap.values());
 
   if (query) {
-    searchResult = searchResult.filter((articles) => {
+    searchResult = searchResult.filter((posts) => {
       // filter according to title
-      if (articles.some((article) =>
+      if (posts.some((article) =>
         article.frontmatter.title.toUpperCase().includes(query.toUpperCase()))) {
         return true;
       }
 
       // filter according to tag
-      if (articles.some((article) =>
+      if (posts.some((article) =>
         article.frontmatter.tags !== null // article has tags
         && article.frontmatter.tags.some(((tag) => // one of the tag satisfies:
           metadataStore.getAllVariationsOfTag(tag).some((existingTag) =>
@@ -94,7 +94,7 @@ const SearchPage: React.FC = () => {
         toPage={(pageNum) => {
           const queryEncoded = encodeURIComponent(query || "");
           const querystring = `query=${queryEncoded}&page=${pageNum + 1}`;
-          const path = `/articles/search?${querystring}`;
+          const path = `/posts/search?${querystring}`;
           return () => navigate(path);
         }}
       />

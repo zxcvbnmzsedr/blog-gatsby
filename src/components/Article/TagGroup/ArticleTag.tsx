@@ -25,7 +25,7 @@ const ArticleTag: React.FC<Props> = ({ tag }) => {
 
   const title = i18n.translate(
     "articleFrontmatter.tagLinkTitle", [` ${tagOfLang} `]) as string;
-  const toLink = `/articles/search?query=${tagOfLang}`;
+  const toLink = `/posts/search?query=${tagOfLang}`;
 
   return (
     <Tag className="badge badge-info article-tag" to={toLink} title={title}>

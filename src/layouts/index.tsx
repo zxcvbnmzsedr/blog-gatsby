@@ -3,17 +3,16 @@ import React from "react";
 
 import { ArticleNode } from "@/models/ArticleNode";
 import { SiteMetadata } from "@/models/SiteMetadata";
-import { Tag } from "@/models/Tag";
 
 import RootLayout from "./RootLayout";
 
 interface InitialData {
   site: { siteMetadata: SiteMetadata };
-  allTagsJson: { nodes: Tag[] };
   allSiYuan: { nodes: ArticleNode[] };
 }
 
 interface Props {
+  // eslint-disable-next-line no-undef
   location: Location;
   children: React.ReactNode;
 }
@@ -28,14 +27,9 @@ const query = graphql`
         siteUrl
       }
     }
-    allTagsJson {
-      nodes {
-        tag
-        cn
-        en
-      }
-    }
-    allSiYuan{
+    allSiYuan(
+    filter: { field: { contentType: { eq: "posts" } } }
+    ){
       nodes {
         excerpt
         timeToRead
@@ -61,8 +55,8 @@ const IndexLayout: React.FC<Props> = (props) => {
     <RootLayout
       location={props.location}
       siteMetadata={data.site.siteMetadata}
-      articles={data.allSiYuan.nodes}
-      tags={data.allTagsJson.nodes}
+      posts={data.allSiYuan.nodes}
+      tags={[]}
     >
       {props.children}
     </RootLayout>

@@ -26,7 +26,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
     [metadataStore.articleCount]) as string;
 
   const onSearch = (): void => {
-    navigate(`/articles/search?query=${encodeURIComponent(input)}`);
+    navigate(`/posts/search?query=${encodeURIComponent(input)}`);
     if (props.onSearch) {
       props.onSearch();
     }
@@ -40,7 +40,7 @@ const SearchBar: React.FC<Props> = (props: Props) => {
         placeholder={placeholder}
         onFocus={props.onFocus}
         onBlur={props.onBlur}
-        onKeyPress={(e) => {
+        onKeyDown={(e) => {
           if (e.key === "Enter") {
             onSearch();
           }

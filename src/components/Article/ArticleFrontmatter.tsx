@@ -3,14 +3,11 @@ import { DateTime } from "luxon";
 import React from "react";
 import {
   FaCalendar,
-  FaCalendarPlus, FaFileWord, FaGlobe,
-  FaTags,   FaUserClock } from "react-icons/fa";
-import { useStore } from "simstate";
+  FaCalendarPlus, FaFileWord, FaTags,   FaUserClock } from "react-icons/fa";
 import styled from "styled-components";
 
 import ArticleTag from "@/components/Article/TagGroup/ArticleTag";
-import { languageInfo, Localized, prefix, useI18n } from "@/i18n";
-import MetadataStore from "@/stores/MetadataStore";
+import { Localized, prefix, useI18n } from "@/i18n";
 import { breakpoints } from "@/styles/variables";
 import useConstant from "@/utils/useConstant";
 
@@ -55,8 +52,8 @@ const DATE_FORMAT = "yyyy-MM-dd";
 
 const ArticleFrontmatter: React.FC<Props> = (props) => {
   const {
-    date, timeToRead, tags, articleId,
-    lastUpdated, currentArticleLanguage, setItemProp, wordCount,
+    date, timeToRead, tags,
+    lastUpdated, setItemProp, wordCount,
   } = props;
 
   const { translate } = useI18n();
@@ -66,7 +63,6 @@ const ArticleFrontmatter: React.FC<Props> = (props) => {
 
   const createTimeTitle = translate(p("date")) as string;
   const lastUpdatedTimeTitle = translate(p("lastUpdated")) as string;
-
   return (
     <ContainerRow>
       {tags && (
@@ -105,43 +101,12 @@ const ArticleFrontmatter: React.FC<Props> = (props) => {
         <FaUserClock />
         <Localized id={p("timeToRead")} args={[timeToRead]} />
       </Span>
-      <Span>
-        <FaGlobe />
-        <LanguageSwitcher
-          articleId={articleId}
-          currentArticleLanguage={currentArticleLanguage}
-        />
-      </Span>
     </ContainerRow>
   );
 };
 
 export default ArticleFrontmatter;
-
-const LangLink = styled(Link)`
+styled(Link)`
 
   margin-right: 8px;
 `;
-
-const DisabledLangLink = styled.span`
-  margin-right: 8px;
-
-`;
-
-const LanguageSwitcher: React.FC<{ currentArticleLanguage: string; articleId: string }> =
-  (props) => {
-    const { articleId, currentArticleLanguage } = props;
-    const metadataStore = useStore(MetadataStore);
-
-    const langPathMap = metadataStore.getLangPathMap(articleId);
-
-    langPathMap.delete(currentArticleLanguage);
-
-    return (
-      <>
-        <DisabledLangLink>
-          {languageInfo['cn'].name}
-        </DisabledLangLink>
-      </>
-    );
-  };

@@ -1,13 +1,13 @@
-import { DateTime } from "luxon";
-import { useCallback,useMemo } from "react";
+import {DateTime} from "luxon";
+import {useCallback, useMemo} from "react";
 
-import { LanguageId } from "@/i18n";
-import { ArticleIdMap } from "@/models/ArticleIdMap";
-import { ArticleNode } from "@/models/ArticleNode";
-import { SiteMetadata } from "@/models/SiteMetadata";
-import { Tag, TagMap } from "@/models/Tag";
-import { formatDateTime } from "@/utils/datetime";
-import { groupBy } from "@/utils/groupBy";
+import {LanguageId} from "@/i18n";
+import {ArticleIdMap} from "@/models/ArticleIdMap";
+import {ArticleNode} from "@/models/ArticleNode";
+import {SiteMetadata} from "@/models/SiteMetadata";
+import {Tag, TagMap} from "@/models/Tag";
+import {formatDateTime} from "@/utils/datetime";
+import {groupBy} from "@/utils/groupBy";
 
 export type LangPathMap = Map<string, string>;
 
@@ -32,7 +32,6 @@ export default function MetadataStore(
           if (!tagMap.has(tag)) {
             tagMap.set(tag, { count: 1, variations: tag });
           } else {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             tagMap.get(tag)!.count++;
           }
         });
@@ -44,7 +43,7 @@ export default function MetadataStore(
   const articleIdMap: ArticleIdMap = useMemo(() => {
     const map = groupBy(articleNodes.map((article) => {
       const { frontmatter: { id, absolute_path } } = article;
-      article.path = `${absolute_path || `/articles/${id}`}`;
+      article.path = `${absolute_path || `/posts/${id}`}`;
       return article;
     }), (article) => article.frontmatter.id);
 
@@ -76,8 +75,7 @@ export default function MetadataStore(
       throw noSuchArticle(id);
     }
 
-    const node = group.find((x) => x.frontmatter.lang === languageId) || group[0];
-    return node;
+    return group.find((x) => x.frontmatter.lang === languageId) || group[0];
   }, [articleIdMap]);
 
   const getLangPathMap = useCallback((id: string): LangPathMap => {

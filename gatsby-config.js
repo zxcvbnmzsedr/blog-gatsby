@@ -53,13 +53,6 @@ module.exports = {
       }
     },
     'gatsby-plugin-catch-links',
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        name: 'contents',
-        path: `${__dirname}/contents`
-      }
-    },
     `gatsby-transformer-json`,
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

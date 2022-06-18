@@ -54,7 +54,9 @@ const Header: React.FC<Props> = ({transparentHeader}) => {
   const [isTransparent, setTransparent] = useState(transparentHeader);
 
   if (!isServer()) {
+    // eslint-disable-next-line no-undef
     useEventListener(window, "scroll", () => {
+      // eslint-disable-next-line no-undef
       setTransparent(transparentHeader && window.scrollY === 0);
     }, [transparentHeader]);
   }
@@ -85,11 +87,11 @@ const Header: React.FC<Props> = ({transparentHeader}) => {
               />
               <NavItem
                 wrapper="navItem"
-                to="/articles"
+                to="/posts"
                 onClick={close}
                 match={"startsWith"}
                 Icon={FaBookOpen}
-                textId={root("articles")}
+                textId={root("posts")}
               />
               <UncontrolledDropdown nav={true} inNavbar={true}>
                 <DropdownToggle nav={true} caret={true}>

@@ -17,7 +17,7 @@ interface Props {
 }
 
 function toPage(pageNum: number): () => void {
-  const path = `/articles${pageNum === 0 ? "" : `/${pageNum + 1}`}`;
+  const path = `/posts${pageNum === 0 ? "" : `/${pageNum + 1}`}`;
 
   return () => navigate(path);
 }

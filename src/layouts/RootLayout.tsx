@@ -32,8 +32,9 @@ const LayoutRoot = styled.div`
 `;
 
 interface Props {
+  // eslint-disable-next-line no-undef
   location: Location;
-  articles: ArticleNode[];
+  posts: ArticleNode[];
   siteMetadata: SiteMetadata;
   children?: React.ReactNode;
   tags: Tag[];
@@ -42,7 +43,7 @@ interface Props {
 const iconContext = { className: "icons" };
 
 const RootLayout: React.FC<Props> = ({
-  location, articles,
+  location, posts,
   siteMetadata, tags, children,
 }) => {
 
@@ -50,7 +51,7 @@ const RootLayout: React.FC<Props> = ({
 
   const metadataStore = useConstant(() => createStore(MetadataStore,
     siteMetadata,
-    articles,
+    posts,
     tags,
   ));
 

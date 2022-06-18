@@ -11,7 +11,7 @@ export default {
   },
   headers: {
     home: "主页",
-    articles: "文章",
+    posts: "文章",
     resume: "简历",
     slides: "幻灯片",
     articlePlans: "文章计划",
@@ -137,7 +137,7 @@ export default {
     hello: "你好",
     from: "来自一个学生 | 程序员 | 有梦想的咸鱼",
     links: {
-      articles: "文章 ({})",
+      posts: "文章 ({})",
       rss: "RSS",
       resume: "简历",
       slides: "幻灯片",

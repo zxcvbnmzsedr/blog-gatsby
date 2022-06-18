@@ -9,6 +9,7 @@ import { LanguageId, useI18n } from "@/i18n";
 import MetadataStore from "@/stores/MetadataStore";
 
 interface Props {
+  // eslint-disable-next-line no-unused-vars
   onClick?(tags: string): void;
   tag: string;
 }
@@ -22,7 +23,7 @@ const CountedArticleTag: React.FC<Props> = ({ tag, onClick }) => {
 
   const title = i18n.translate(
     "articleFrontmatter.tagLinkTitle", [` ${tagOfLang} `]) as string;
-  const toLink = `/articles/search?query=${tagOfLang}`;
+  const toLink = `/posts/search?query=${tagOfLang}`;
   const count = metadataStore.getCountOfTag(tag);
 
   const clickHandler = useCallback(() => {

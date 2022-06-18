@@ -1,6 +1,5 @@
 /* eslint-disable max-len */
 // for better code readability
-/* eslint-disable @typescript-eslint/no-use-before-define */
 
 import { CreatePagesArgs } from "gatsby";
 import GitHubSlugger from "github-slugger";
@@ -11,7 +10,6 @@ const articleTemplate = path.resolve("src/templates/ArticlePageTemplate.tsx");
 
 type CreatePageFn = CreatePagesArgs["actions"]["createPage"];
 
-type CreateRedirectFn = (from: string, to: string) => void;
 
 type ArticleGroups = { [articleId: string]: ArticleNode[] };
 
@@ -102,11 +100,9 @@ export const createPages = async ({ actions, graphql }: CreatePagesArgs) => {
 
   createArticlePages(
     createPage,
-    redirect,
     articleGroups,
   );
 
-  await createRedirects(redirect, createPage, graphql);
 
 
 };
@@ -115,7 +111,7 @@ function createPaginatedHomepages(
   createPage: CreatePageFn, articleGroups: ArticleGroups) {
 
   const generatePath = (index: number) => {
-    return `/articles${index === 0 ? "" : `/${index + 1}`}`;
+    return `/posts${index === 0 ? "" : `/${index + 1}`}`;
   };
 
   const notIgnoredGroups = [] as ArticleNode[];
@@ -151,7 +147,7 @@ function createPaginatedHomepages(
 }
 
 function createArticlePages(
-  createPage: CreatePageFn, redirect: CreateRedirectFn, articleGroups: ArticleGroups) {
+  createPage: CreatePageFn,  articleGroups: ArticleGroups) {
   const slugger = new GitHubSlugger();
 
   const createPageWithPath = (node: ArticleNode, path: string) => {
@@ -179,44 +175,3 @@ function createArticlePages(
   });
 }
 
-
-interface RedirectsQueryResult {
-  allRedirectsJson: {
-    nodes: { id: string; to: string }[];
-  }
-}
-
-const CLIENT_REDIRECT = true;
-const redirectsTemplate = path.resolve("src/templates/RedirectPageTemplate.tsx");
-const redirectPrefix = "/r/";
-
-async function createRedirects(
-  redirect: CreateRedirectFn,
-  createPage: CreatePageFn,
-  graphql: CreatePagesArgs["graphql"],
-) {
-  const result = await graphql<RedirectsQueryResult>(`{
-    allRedirectsJson {
-      nodes {
-        id
-        to
-      }
-    }
-  }`);
-
-  if (result.errors || !result.data) {
-    throw result.errors;
-  }
-
-  result.data.allRedirectsJson.nodes.forEach(({ id, to }) => {
-
-    const path = redirectPrefix + id;
-
-    if (CLIENT_REDIRECT) {
-      createPage({ path: path, component: redirectsTemplate, context: { id, to } });
-    } else {
-      redirect(path, to);
-    }
-  });
-
-}

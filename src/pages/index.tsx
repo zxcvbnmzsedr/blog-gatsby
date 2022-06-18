@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React from "react";
-import { FaBookOpen, FaClock, FaFile, FaMale, FaRss,FaSlideshare } from "react-icons/fa";
+import { FaBookOpen, FaClock, FaRss,FaSlideshare } from "react-icons/fa";
 import { useStore } from "simstate";
 import styled from "styled-components";
 
@@ -120,10 +120,10 @@ const HomePage: React.FunctionComponent = () => {
           </TitleText>
           <Slogan><Localized id={root("from")} /></Slogan>
           <LinkContainer>
-            <Button to="/articles">
+            <Button to="/posts">
               <FaBookOpen />
               <Localized
-                id={root("links.articles")}
+                id={root("links.posts")}
                 args={[metadataStore.articleCount]}
               />
             </Button>

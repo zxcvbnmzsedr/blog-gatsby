@@ -11,7 +11,7 @@ export default {
   },
   headers: {
     home: "Home",
-    articles: "Articles",
+    posts: "Articles",
     resume: "Resume",
     slides: "Slides",
     articlePlans: "Article Plans",
@@ -138,7 +138,7 @@ export default {
     hello: "Hello",
     from: "From a Student | Programmer | Dreamer",
     links: {
-      articles: "Articles ({})",
+      posts: "Articles ({})",
       rss: "RSS",
       resume: "Resume",
       slides: "Slides",
