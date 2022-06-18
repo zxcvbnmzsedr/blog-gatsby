@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2017"
+    ],
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "removeComments": false,
+    "preserveConstEnums": true,
+    "downlevelIteration": true,
+    "strictNullChecks": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "~/*": [
+        "./*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ],
+    "importHelpers": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "./configs/**/*",
+    "./src/**/*",
+    "__tests__/enzyme.js"
+  ]
+}

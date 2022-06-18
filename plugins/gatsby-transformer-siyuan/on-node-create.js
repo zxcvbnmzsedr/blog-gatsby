@@ -40,7 +40,8 @@ const create = async ({actions, createContentDigest}, options) => {
       excerpt,
       frontmatter: {
         date,
-        id,
+        absolute_path:slug,
+        id: slug,
         tags,
         lang: "cn",
         template,

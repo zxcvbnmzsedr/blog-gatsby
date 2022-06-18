@@ -157,6 +157,19 @@ module.exports = function remarkExtendNodeType({
         const r = await getHTML(markdownNode, context);
         return timeToRead(r);
       }
+    },
+    wordCountChinese: {
+      type: "Int",
+      resolve(markdownNode) {
+        return getHTML(markdownNode).then(html => {
+          const pureText = require(`sanitize-html`)(html, {
+            allowTags: []
+          });
+          return (
+            _.words(pureText, /[\s\p{sc=Han}]/gu).length
+          );
+        });
+      }
     }
   }
   async function getHeadings(markdownNode, context) {
