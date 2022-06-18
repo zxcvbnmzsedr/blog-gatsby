@@ -1,4 +1,3 @@
-import { Link } from "gatsby";
 import React from "react";
 import { useStore } from "simstate";
 
@@ -6,7 +5,6 @@ import Contacts from "@/components/Contacts";
 import { RunningTime } from "@/components/Footer/RunningTime";
 import { Localized, prefix } from "@/i18n";
 import MetadataStore from "@/stores/MetadataStore";
-import { useArticleOfCurrentLang } from "@/stores/useArticleOfCurrentLang";
 
 const root = prefix("footer.");
 
@@ -16,10 +14,6 @@ const Brief: React.FC = () => {
 
   return (
     <div className="footer-brief">
-
-      <p>
-        👨🏼‍💻&nbsp;
-      </p>
       <p>
         📝 <Localized id={root("license")} args={[
           <a key="license" rel="licene"

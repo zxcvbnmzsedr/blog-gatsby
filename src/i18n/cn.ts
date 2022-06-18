@@ -70,7 +70,7 @@ export default {
     poweredBy: "强力驱动",
     license: "本站文章在{}协议下授权",
     contacts: "联系我",
-    madeWithLove: "用 ❤ 制作",
+    madeWithLove: "苏ICP备16037388号-1",
     friendLinkhire: "如果您希望您的链接加入本站友情链接，请联系我！",
     runningTime: "博客已经运行 {} 天 {} 时 {} 分 {} 秒",
   },
@@ -134,8 +134,8 @@ export default {
   friends: {title: "朋友们"},
 
   homepage: {
-    hello: "你好",
-    from: "来自一个学生 | 程序员 | 有梦想的咸鱼",
+    hello: "天增",
+    from: "一期一会，世当珍惜",
     links: {
       posts: "文章 ({})",
       rss: "RSS",
