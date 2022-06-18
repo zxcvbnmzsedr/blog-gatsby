@@ -27,6 +27,7 @@
   "dependencies": {
     "@babel/core": "7.17.10",
     "@types/react-responsive": "8.0.5",
+    "Kotlin": "github:mathiasfrohlich/vscode-kotlin",
     "bootstrap": "4.6.0",
     "classnames": "2.3.1",
     "gatsby": "4.13.1",
@@ -57,7 +58,6 @@
     "gatsby-transformer-remark": "5.13.0",
     "gatsby-transformer-sharp": "4.13.0",
     "gitalk": "1.7.2",
-    "Kotlin": "github:mathiasfrohlich/vscode-kotlin",
     "luxon": "2.3.2",
     "node-sass": "^6.0.1",
     "normalize.css": "8.0.1",
@@ -93,6 +93,7 @@
     "@typescript-eslint/parser": "5.22.0",
     "babel-plugin-styled-components": "2.0.7",
     "eslint": "8.14.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "7.29.4",
     "gatsby-plugin-react-svg": "3.1.0",
     "gatsby-plugin-root-import": "2.0.8",

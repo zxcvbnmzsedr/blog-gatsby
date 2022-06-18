@@ -2,7 +2,7 @@
 // for better code readability
 /* eslint-disable @typescript-eslint/no-use-before-define */
 
-import { CreatePagesArgs, SourceNodesArgs } from "gatsby";
+import { CreatePagesArgs } from "gatsby";
 import GitHubSlugger from "github-slugger";
 import path from "path";
 
