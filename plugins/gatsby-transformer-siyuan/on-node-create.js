@@ -1,7 +1,6 @@
 const {SiYuan} = require("./siyuan.jsx");
 const frontMatter = require('front-matter')
 const removeMd = require('remove-markdown')
-const readingTime = require('reading-time');
 
 
 function getMarkdownExcerpt(markdown, maxExcerptLength = 120) {
@@ -37,7 +36,6 @@ const create = async ({actions, createContentDigest}, options) => {
         slug: slugReNew,
         topic
       },
-      timeToRead: parseInt(readingTime(raw).minutes),
       raw,
       excerpt,
       frontmatter: {
