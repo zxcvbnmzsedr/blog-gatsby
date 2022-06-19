@@ -13,7 +13,6 @@ import {
 } from "reactstrap";
 import {useStore} from "simstate";
 import styled from "styled-components";
-
 import Placeholder from "@/components/Header/HeaderPlaceholder";
 import NavItem from "@/components/Header/NavItem";
 import {Localized, prefix} from "@/i18n";
@@ -22,6 +21,7 @@ import {colors, widths} from "@/styles/variables";
 import isServer from "@/utils/isServer";
 import {useEventListener} from "@/utils/useEventListener";
 import Icon from "~/assets/logo.svg";
+import MetadataStore from "@/stores/MetadataStore";
 
 interface Props {
   transparentHeader: boolean;
@@ -64,7 +64,7 @@ const Header: React.FC<Props> = ({transparentHeader}) => {
   const close = useCallback(() => {
     setOpen(false);
   }, []);
-
+  const metadataStore = useStore(MetadataStore);
   return (
     <Container>
       <Placeholder
@@ -99,7 +99,19 @@ const Header: React.FC<Props> = ({transparentHeader}) => {
                   <Localized id={root("topic.title")}/>
                 </DropdownToggle>
                 <DropdownMenu right={true}>
-
+                  {
+                    metadataStore.topicList.map(e => {
+                      return (
+                        <NavItem
+                          wrapper="navItem"
+                          to={`/topic/${e.title}`}
+                          onClick={close}
+                          match={"startsWith"}
+                          text={e.title}
+                        />
+                      )
+                    })
+                  }
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>

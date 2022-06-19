@@ -1,6 +1,6 @@
 import { Link } from "gatsby";
 import React from "react";
-import { FaBookOpen, FaClock, FaRss,FaSlideshare } from "react-icons/fa";
+import { FaBookOpen, FaClock, FaRss} from "react-icons/fa";
 import { useStore } from "simstate";
 import styled from "styled-components";
 
@@ -101,7 +101,6 @@ const Button: React.FC<{ to: string; mode?: "to" | "href" }> = ({
 
 const links = [
   ["/rss.xml", FaRss, root("links.rss"), "href"],
-  ["/slides", FaSlideshare, root("links.slides")],
 ] as const;
 
 const HomePage: React.FunctionComponent = () => {

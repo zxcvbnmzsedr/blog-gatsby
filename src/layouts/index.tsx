@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 
-import { ArticleNode } from "@/models/ArticleNode";
+import {ArticleNode, TopicNode} from "@/models/ArticleNode";
 import { SiteMetadata } from "@/models/SiteMetadata";
 
 import RootLayout from "./RootLayout";
@@ -9,6 +9,7 @@ import RootLayout from "./RootLayout";
 interface InitialData {
   site: { siteMetadata: SiteMetadata };
   allSiYuan: { nodes: ArticleNode[] };
+  allTopic: { nodes: TopicNode[] };
 }
 
 interface Props {
@@ -27,8 +28,14 @@ const query = graphql`
         siteUrl
       }
     }
+    allTopic {
+        nodes {
+          tree
+          title
+        }
+    }
     allSiYuan(
-    filter: { field: { contentType: { eq: "posts" } } }
+      filter: { field: { contentType: { eq: "posts" } } }
     ){
       nodes {
         excerpt
@@ -56,7 +63,7 @@ const IndexLayout: React.FC<Props> = (props) => {
       location={props.location}
       siteMetadata={data.site.siteMetadata}
       posts={data.allSiYuan.nodes}
-      tags={[]}
+      topics={data.allTopic.nodes}
     >
       {props.children}
     </RootLayout>

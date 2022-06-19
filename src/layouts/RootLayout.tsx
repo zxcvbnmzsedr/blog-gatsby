@@ -1,20 +1,19 @@
 import "@/styles/index.scss";
 
 import React from "react";
-import { IconContext } from "react-icons";
-import { createStore,StoreProvider } from "simstate";
+import {IconContext} from "react-icons";
+import {createStore, StoreProvider} from "simstate";
 import styled from "styled-components";
 
-import { PageMetadata } from "@/components/PageMetadata";
+import {PageMetadata} from "@/components/PageMetadata";
 import ToTop from "@/components/ToTop";
 import UpdatePop from "@/components/UpdatePop";
-import { Provider } from "@/i18n";
+import {Provider} from "@/i18n";
 import cn from "@/i18n/cn";
-import { ArticleNode } from "@/models/ArticleNode";
-import { SiteMetadata } from "@/models/SiteMetadata";
-import { Tag } from "@/models/Tag";
+import {ArticleNode, TopicNode} from "@/models/ArticleNode";
+import {SiteMetadata} from "@/models/SiteMetadata";
 import ArticleStore from "@/stores/ArticleStore";
-import LocationStore, { LocationProvider } from "@/stores/LocationStore";
+import LocationStore, {LocationProvider} from "@/stores/LocationStore";
 import MetadataStore from "@/stores/MetadataStore";
 import useConstant from "@/utils/useConstant";
 import icon512 from "~/assets/icon.png";
@@ -35,24 +34,24 @@ interface Props {
   // eslint-disable-next-line no-undef
   location: Location;
   posts: ArticleNode[];
+  topics: TopicNode[];
   siteMetadata: SiteMetadata;
   children?: React.ReactNode;
-  tags: Tag[];
 }
 
-const iconContext = { className: "icons" };
+const iconContext = {className: "icons"};
 
 const RootLayout: React.FC<Props> = ({
-  location, posts,
-  siteMetadata, tags, children,
-}) => {
+                                       location, posts,
+                                       siteMetadata, topics, children,
+                                     }) => {
 
   const locationStore = useConstant(() => createStore(LocationStore, location));
 
   const metadataStore = useConstant(() => createStore(MetadataStore,
     siteMetadata,
     posts,
-    tags,
+    topics
   ));
 
   const articleStore = useConstant(() => createStore(ArticleStore, null));
@@ -66,15 +65,15 @@ const RootLayout: React.FC<Props> = ({
           articleStore,
         ]}
         >
-          <LocationProvider location={location} />
+          <LocationProvider location={location}/>
           <LayoutRoot>
             <PageMetadata
               meta={[
-                { name: "keywords", content: "gatsbyjs, gatsby, react, blog" },
+                {name: "keywords", content: "gatsbyjs, gatsby, react, blog"},
               ]}
               link={[
-                { rel: "icon", type: "image/png", href: icon512 },
-                { rel: "shortcut icon", type: "image/png", href: icon512 },
+                {rel: "icon", type: "image/png", href: icon512},
+                {rel: "shortcut icon", type: "image/png", href: icon512},
               ]}
               script={[
                 {
@@ -84,8 +83,8 @@ const RootLayout: React.FC<Props> = ({
                 },
               ]}
             />
-            <UpdatePop />
-            <ToTop />
+            <UpdatePop/>
+            <ToTop/>
             {children}
           </LayoutRoot>
         </StoreProvider>

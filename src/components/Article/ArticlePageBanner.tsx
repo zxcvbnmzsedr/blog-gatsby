@@ -16,23 +16,6 @@ interface Props {
   currentArticleLanguage: string;
 }
 
-// const InnerContainer = styled(BaseInnerContainer)`
-//   height: ${heights.banner}px;
-//   width: 100%;
-// `;
-
-// const ImgContainer = styled(InnerContainer)`
-//   width: 100%;
-
-//   & > img {
-//     float: right;
-//     height: ${heights.banner}px;
-
-//   }
-
-//   z-index: 1;
-// `;
-
 const ArticlePageBanner: React.FC<Props> = ({
   title, id, tags, date, lastUpdated,
   timeToRead, currentArticleLanguage, wordCount,

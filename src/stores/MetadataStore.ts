@@ -3,9 +3,9 @@ import {useCallback, useMemo} from "react";
 
 import {LanguageId} from "@/i18n";
 import {ArticleIdMap} from "@/models/ArticleIdMap";
-import {ArticleNode} from "@/models/ArticleNode";
+import {ArticleNode, TopicNode} from "@/models/ArticleNode";
 import {SiteMetadata} from "@/models/SiteMetadata";
-import {Tag, TagMap} from "@/models/Tag";
+import {TagMap} from "@/models/Tag";
 import {formatDateTime} from "@/utils/datetime";
 import {groupBy} from "@/utils/groupBy";
 
@@ -16,21 +16,15 @@ function noSuchArticle(articleId: string): string {
 }
 
 export default function MetadataStore(
-  siteMetadata: SiteMetadata, articleNodes: ArticleNode[], tags: Tag[]) {
+  siteMetadata: SiteMetadata, articleNodes: ArticleNode[], topics: TopicNode[]) {
 
   const tagMap = useMemo(() => {
-    // calculate tag map with article nodes and tags
     const tagMap = new Map() as TagMap;
-    tags.forEach(({ tag, ...variations }) => {
-      tagMap.set(tag, { count: 0, variations });
-    });
-
-    // for each tags
     articleNodes.forEach((node) => {
       if (node.frontmatter.tags) {
         node.frontmatter.tags.forEach((tag) => {
           if (!tagMap.has(tag)) {
-            tagMap.set(tag, { count: 1, variations: tag });
+            tagMap.set(tag, {count: 1, variations: tag});
           } else {
             tagMap.get(tag)!.count++;
           }
@@ -38,11 +32,11 @@ export default function MetadataStore(
       }
     });
     return tagMap;
-  }, [articleNodes, tags]);
+  }, [articleNodes]);
 
   const articleIdMap: ArticleIdMap = useMemo(() => {
     const map = groupBy(articleNodes.map((article) => {
-      const { frontmatter: { id, absolute_path } } = article;
+      const {frontmatter: {id, absolute_path}} = article;
       article.path = `${absolute_path || `/posts/${id}`}`;
       return article;
     }), (article) => article.frontmatter.id);
@@ -56,7 +50,9 @@ export default function MetadataStore(
       // except the chinese or the first version, append lang prefix
       const exception = values.find((x) => x.frontmatter.lang === "cn") || values[0];
       values.forEach((article) => {
-        if (article === exception) { return; }
+        if (article === exception) {
+          return;
+        }
         article.path += `/${article.frontmatter.lang}`;
       });
     });
@@ -97,9 +93,11 @@ export default function MetadataStore(
   const getTagOfLang = useCallback(
     (tag: string, languageId: LanguageId): string | null => {
       const info = tagMap.get(tag);
-      if (!info) { return null; }
+      if (!info) {
+        return null;
+      }
 
-      const { variations } = info;
+      const {variations} = info;
       if (typeof variations === "string") {
         return variations;
       }
@@ -120,7 +118,7 @@ export default function MetadataStore(
 
   const getAllTagsOfLang = useCallback((languageId: LanguageId): string[] => {
     const tags = [] as string[];
-    tagMap.forEach(({ variations }) => {
+    tagMap.forEach(({variations}) => {
       if (typeof variations === "string") {
         tags.push(variations);
       } else {
@@ -140,11 +138,16 @@ export default function MetadataStore(
     return formatDateTime(DateTime.fromISO(siteMetadata.lastUpdated));
   }, [siteMetadata.lastUpdated]);
 
+  const topicList = useMemo(() => {
+    return topics;
+  }, [topics])
+
   return {
-    siteMetadata: { ...siteMetadata, formattedLastUpdate },
+    siteMetadata: {...siteMetadata, formattedLastUpdate},
     tagMap,
     articleCount,
     articleIdMap,
+    topicList,
     getArticleOfLang,
     getLangPathMap,
     getTagOfLang,

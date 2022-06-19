@@ -18,3 +18,7 @@ export interface ArticleNode {
     lang: string;
   };
 }
+export interface TopicNode {
+  tree:string
+  title:string
+}
