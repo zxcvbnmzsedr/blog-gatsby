@@ -104,7 +104,7 @@ const Header: React.FC<Props> = ({transparentHeader}) => {
                       return (
                         <NavItem
                           wrapper="navItem"
-                          to={`/topic/${e.title}`}
+                          to={`/mind/topic/${e.title}`}
                           onClick={close}
                           match={"startsWith"}
                           text={e.title}

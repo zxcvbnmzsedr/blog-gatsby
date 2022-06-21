@@ -34,13 +34,14 @@ const query = graphql`
           title
         }
     }
-    allSiYuan(
-      filter: { field: { contentType: { eq: "posts" } } }
-    ){
+    allSiYuan {
       nodes {
         excerpt
         timeToRead
         wordCountChinese
+        field {
+            contentType
+        }
         frontmatter {
           date
           id

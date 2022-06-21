@@ -20,7 +20,7 @@ export default function MetadataStore(
 
   const tagMap = useMemo(() => {
     const tagMap = new Map() as TagMap;
-    articleNodes.forEach((node) => {
+    articleNodes.filter(e => e.field.contentType === 'posts').forEach((node) => {
       if (node.frontmatter.tags) {
         node.frontmatter.tags.forEach((tag) => {
           if (!tagMap.has(tag)) {
@@ -139,7 +139,14 @@ export default function MetadataStore(
   }, [siteMetadata.lastUpdated]);
 
   const topicList = useMemo(() => {
-    return topics;
+
+    return topics.map(e => {
+      return {
+        title: e.title,
+        // @ts-ignore
+        tree: JSON.parse(e.tree)
+      }
+    })
   }, [topics])
 
   return {

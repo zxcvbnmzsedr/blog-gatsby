@@ -9,6 +9,9 @@ export interface ArticleNode {
   excerpt: string;
   timeToRead: number;
   wordCountChinese: number;
+  field: {
+    contentType: string
+  }
   frontmatter: {
     absolute_path?: string;
     date: string;
@@ -18,7 +21,20 @@ export interface ArticleNode {
     lang: string;
   };
 }
+
 export interface TopicNode {
-  tree:string
-  title:string
+  tree: TopicNodeTree
+  title: string
+}
+
+export interface TopicNodeTree {
+  title: string,
+  id: string,
+  type: string,
+  href: string
+  parentId: string,
+  path: string,
+  parentPath: string,
+  sort: number,
+  children: TopicNodeTree
 }

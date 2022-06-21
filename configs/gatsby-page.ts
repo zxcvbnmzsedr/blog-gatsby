@@ -1,12 +1,13 @@
 /* eslint-disable max-len */
 // for better code readability
 
-import { CreatePagesArgs } from "gatsby";
+import {CreatePagesArgs} from "gatsby";
 import GitHubSlugger from "github-slugger";
 import path from "path";
 
 const indexTemplate = path.resolve("src/templates/ArticleListPageTemplate.tsx");
 const articleTemplate = path.resolve("src/templates/ArticlePageTemplate.tsx");
+const mindTemplate = path.resolve("src/templates/ArticleMindTemplate.tsx");
 
 type CreatePageFn = CreatePagesArgs["actions"]["createPage"];
 
@@ -19,6 +20,9 @@ interface ArticleNode {
     date: string;
     absolute_path?: string;
   };
+  field: {
+    contentType: string
+  }
   path: string;
   headings: {
     depth: number;
@@ -33,19 +37,31 @@ interface ArticlesQueryResult {
       node: ArticleNode;
     }[];
   };
+  allTopic: {
+    nodes: {
+      title: string
+    }[]
+  }
 }
 
-export const createPages = async ({ actions, graphql }: CreatePagesArgs) => {
+export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
 
-  const { createPage, createRedirect } = actions;
+  const {createPage, createRedirect} = actions;
 
   const result = await graphql<ArticlesQueryResult>(`{
+     allTopic {
+        nodes {
+          title
+        }
+      }
     allSiYuan(
-      filter: { field: { contentType: { eq: "posts" } } }
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {
         node {
+          field {
+            contentType
+          }
           frontmatter {
             id
             date
@@ -67,11 +83,18 @@ export const createPages = async ({ actions, graphql }: CreatePagesArgs) => {
 
   // Group articles with lang
   const articleGroups = {} as ArticleGroups;
-  result.data.allSiYuan.edges.forEach(({ node }) => {
-    const { id, absolute_path } = node.frontmatter;
-    articleGroups[id] = articleGroups[id] || [];
+  const topicGroups = {} as ArticleGroups;
+  result.data.allSiYuan.edges.forEach(({node}) => {
+    const {id, absolute_path} = node.frontmatter;
     node.path = absolute_path as string;
-    articleGroups[id].push(node);
+    if (node.field.contentType === 'posts') {
+      articleGroups[id] = articleGroups[id] || [];
+      articleGroups[id].push(node);
+    }
+    if (node.field.contentType === 'topic'){
+      topicGroups[id] = topicGroups[id] || [];
+      topicGroups[id].push(node);
+    }
   });
 
   function redirect(from: string, to: string) {
@@ -103,7 +126,20 @@ export const createPages = async ({ actions, graphql }: CreatePagesArgs) => {
     articleGroups,
   );
 
+  createArticlePages(
+    createPage,
+    topicGroups,
+  );
 
+  result.data.allTopic.nodes.forEach(({title}) => {
+    createPage({
+      path: 'mind/topic/' + title,
+      component: mindTemplate,
+      context: {
+        title: title,
+      },
+    })
+  })
 
 };
 
@@ -118,7 +154,7 @@ function createPaginatedHomepages(
 
   for (const key in articleGroups) {
     const node = articleGroups[key][0];
-      notIgnoredGroups.push(node);
+    notIgnoredGroups.push(node);
   }
 
   notIgnoredGroups.sort((a, b) =>
@@ -128,7 +164,7 @@ function createPaginatedHomepages(
 
   const pageCount = Math.ceil(notIgnoredGroups.length / pageSize);
 
-  Array.from({ length: pageCount }).forEach((_, pageIndex) => {
+  Array.from({length: pageCount}).forEach((_, pageIndex) => {
     createPage({
       path: generatePath(pageIndex),
       component: indexTemplate,
@@ -147,7 +183,7 @@ function createPaginatedHomepages(
 }
 
 function createArticlePages(
-  createPage: CreatePageFn,  articleGroups: ArticleGroups) {
+  createPage: CreatePageFn, articleGroups: ArticleGroups) {
   const slugger = new GitHubSlugger();
 
   const createPageWithPath = (node: ArticleNode, path: string) => {
@@ -166,7 +202,9 @@ function createArticlePages(
   };
 
   Object.entries(articleGroups).forEach(([key, nodes]) => {
-    if (nodes.length === 0) { throw new Error(`${key} has no article!`); }
+    if (nodes.length === 0) {
+      throw new Error(`${key} has no article!`);
+    }
 
     // 2. Create index page for the cn version or the first version
     const firstNode = nodes[0];

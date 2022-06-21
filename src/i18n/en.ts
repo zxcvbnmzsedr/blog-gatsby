@@ -65,7 +65,6 @@ export default {
     license: "Articles are licensed under {}",
     contacts: "Contact me",
     madeWithLove: "Made with ❤",
-    friends: "Friends",
     friendLinkhire: "Contact me if you'd like your website added to this list :D",
     runningTime: "Blog's been running for {} d {} h {} m {} s",
   },
@@ -127,7 +126,6 @@ export default {
     lastUpdated: "Last updated",
   },
   tagsCard: { title: "Tags" },
-  friends: { title: "Friends" },
   homepage: {
     hello: "Hello",
     from: "From a Student | Programmer | Dreamer",

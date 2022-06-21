@@ -48,12 +48,6 @@ const themedWiths = [
 ].map(([name, link]) => ({ name, link }));
 
 
-const friends = [
-
-].map(({ name, link, description }) => ({
-  name: `${name} - ${description}`,
-  link,
-}));
 
 const root = prefix("footer.");
 
@@ -71,10 +65,6 @@ const Footer: React.FC<Props> = (props) => {
         <Col className={"d-none d-sm-none d-md-block"} md={{ size: 2 }}>
           <h6>🎨 <Localized id={root("themedWith")}/></h6>
           <List links={themedWiths}/>
-        </Col>
-        <Col md={{ size: 4 }}>
-          <h6>👨‍🎓 <Localized id="friends.title" /></h6>
-          <List links={friends}/>
         </Col>
       </Row>
       <hr/>

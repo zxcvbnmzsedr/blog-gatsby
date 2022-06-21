@@ -174,7 +174,7 @@ module.exports = {
 }
 
 
-const fs = require('fs')
+// const fs = require('fs')
 // const s = new SiYuan('noeyqg6qknhqvl5m','http://127.0.0.1:6806/api/','20220420112442-p6q6e8w')
 // s.getSiYuanTopic()
 //     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))

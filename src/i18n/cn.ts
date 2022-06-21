@@ -125,7 +125,6 @@ export default {
 
   },
   tagsCard: {title: "标签"},
-  friends: {title: "朋友们"},
 
   homepage: {
     hello: "天增",
