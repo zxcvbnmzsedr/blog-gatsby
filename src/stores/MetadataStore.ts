@@ -60,9 +60,7 @@ export default function MetadataStore(
     return map;
   }, [articleNodes]);
 
-  const articleCount = useMemo(() =>
-    Array.from(articleIdMap.values())
-      .length, [articleIdMap]);
+  const articleCount = articleNodes.filter(e=>e.field.contentType === 'posts').length;
 
   const getArticleOfLang = useCallback((id: string, languageId: string): ArticleNode => {
     const group = articleIdMap.get(id);

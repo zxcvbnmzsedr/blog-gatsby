@@ -17,7 +17,7 @@ interface Props {
   lastUpdated?: DateTime;
   timeToRead: number;
   wordCount: number;
-  tags: string[] | null;
+  tags?: string[] | null;
   currentArticleLanguage: string;
   setItemProp: boolean;
 }

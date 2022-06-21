@@ -1,14 +1,14 @@
-import { DateTime } from "luxon";
+import {DateTime} from "luxon";
 import React from "react";
 
-import { BannerLayoutTitle } from "@/layouts/BannerLayout";
+import {BannerLayoutTitle} from "@/layouts/BannerLayout";
 
 import ArticleFrontmatter from "./ArticleFrontmatter";
 
 interface Props {
   title: string;
   id: string;
-  tags: string[] | null;
+  tags?: string[] | null;
   date: DateTime;
   lastUpdated?: DateTime;
   timeToRead: number;
@@ -17,9 +17,9 @@ interface Props {
 }
 
 const ArticlePageBanner: React.FC<Props> = ({
-  title, id, tags, date, lastUpdated,
-  timeToRead, currentArticleLanguage, wordCount,
-}) => {
+                                              title, id, tags, date, lastUpdated,
+                                              timeToRead, currentArticleLanguage, wordCount,
+                                            }) => {
   return (
     <>
       <BannerLayoutTitle>{title}</BannerLayoutTitle>

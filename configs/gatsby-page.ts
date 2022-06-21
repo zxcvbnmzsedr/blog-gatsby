@@ -7,6 +7,7 @@ import path from "path";
 
 const indexTemplate = path.resolve("src/templates/ArticleListPageTemplate.tsx");
 const articleTemplate = path.resolve("src/templates/ArticlePageTemplate.tsx");
+const topicPageTemplate = path.resolve("src/templates/TopicPageTemplate.tsx");
 const mindTemplate = path.resolve("src/templates/ArticleMindTemplate.tsx");
 
 type CreatePageFn = CreatePagesArgs["actions"]["createPage"];
@@ -91,7 +92,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
       articleGroups[id] = articleGroups[id] || [];
       articleGroups[id].push(node);
     }
-    if (node.field.contentType === 'topic'){
+    if (node.field.contentType === 'topic') {
       topicGroups[id] = topicGroups[id] || [];
       topicGroups[id].push(node);
     }
@@ -124,11 +125,13 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
   createArticlePages(
     createPage,
     articleGroups,
+    articleTemplate
   );
 
   createArticlePages(
     createPage,
     topicGroups,
+    topicPageTemplate
   );
 
   result.data.allTopic.nodes.forEach(({title}) => {
@@ -183,13 +186,13 @@ function createPaginatedHomepages(
 }
 
 function createArticlePages(
-  createPage: CreatePageFn, articleGroups: ArticleGroups) {
+  createPage: CreatePageFn, articleGroups: ArticleGroups, template: string) {
   const slugger = new GitHubSlugger();
 
   const createPageWithPath = (node: ArticleNode, path: string) => {
     createPage({
       path,
-      component: articleTemplate,
+      component: template,
       context: {
         id: node.frontmatter.id,
         htmlAst: node.htmlAst,
