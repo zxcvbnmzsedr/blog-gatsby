@@ -3,7 +3,7 @@ import {useCallback, useMemo} from "react";
 
 import {LanguageId} from "@/i18n";
 import {ArticleIdMap} from "@/models/ArticleIdMap";
-import {ArticleNode, TopicNode} from "@/models/ArticleNode";
+import {ArticleNode, TopicNode, TopicNodeTree} from "@/models/ArticleNode";
 import {SiteMetadata} from "@/models/SiteMetadata";
 import {TagMap} from "@/models/Tag";
 import {formatDateTime} from "@/utils/datetime";
@@ -142,7 +142,7 @@ export default function MetadataStore(
       return {
         title: e.title,
         // @ts-ignore
-        tree: JSON.parse(e.tree)
+        tree: JSON.parse(e.tree) as TopicNodeTree
       }
     })
   }, [topics])

@@ -36,5 +36,5 @@ export interface TopicNodeTree {
   path: string,
   parentPath: string,
   sort: number,
-  children: TopicNodeTree
+  children: TopicNodeTree[]
 }
