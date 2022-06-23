@@ -30,9 +30,6 @@ const BlogIntroCard: React.FC<Props> = () => {
         <CardText>
           <Localized id={root("description1")} />
         </CardText>
-        <CardText>
-          <Localized id={root("description2")} />
-        </CardText>
         <BlockContainer>
           <a href="https://github.com/zxcvbnmzsedr/blog-gatsby" target="__blank">
             <FaCode />

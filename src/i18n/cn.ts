@@ -108,9 +108,8 @@ export default {
   },
   blogIntro: {
     subtitle: "天增的博客",
-    description1: "基于Gatsby开发的静态网站",
-    description2: "技术，代码，感悟和日常生活",
-    sourceCode: "在GitHub上的博客源码",
+    description1: "基于思源笔记配合Gatsby的静态网站",
+    sourceCode: "源码",
     feedback: "反馈",
     lastUpdated: "上次更新于{}",
     more: "更多博客信息",
