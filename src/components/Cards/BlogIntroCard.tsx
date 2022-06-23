@@ -5,7 +5,7 @@ import {CardBody, CardText} from "reactstrap";
 import styled from "styled-components";
 
 import {BaseCard, BaseCardHeader} from "@/components/Cards/components";
-import {Localized, prefix, useI18n} from "@/i18n";
+import {Localized, prefix} from "@/i18n";
 
 const BlockContainer = styled.div`
   a {
@@ -38,10 +38,10 @@ const BlogIntroCard: React.FC<Props> = () => {
             <FaCode />
             <Localized id={root("sourceCode")} />
           </a>
-          {/*<a href="/rss.xml" target="__blank">*/}
-          {/*  <FaRss />*/}
-          {/*  RSS*/}
-          {/*</a>*/}
+          <a href="/rss.xml" target="__blank">
+            <FaRss />
+            RSS
+          </a>
           <Link to="/feedback">
             <FaRegCommentDots />
             <Localized id={root("feedback")} />

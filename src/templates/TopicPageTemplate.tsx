@@ -122,7 +122,16 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
     if (!tags) {
       return
     }
-    let items = metadataStore.topicList.filter(e => e.title === tags[0])[0].tree.children as TopicNodeTree[];
+    let t
+    if (!tags[0]){
+      t = title
+    }else {
+      t = tags[0]
+    }
+    if (!t){
+      return
+    }
+    let items = metadataStore.topicList.filter(e => e.title === t)[0].tree.children as TopicNodeTree[];
 
     items = deleteOther(items)
     if (items.length > 0) {

@@ -65,6 +65,62 @@ module.exports = {
       },
     },
     {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            query: `
+            {
+              allSiYuan(
+                sort: { order: DESC, fields: [frontmatter___date] },
+              ) {
+                edges {
+                  node {
+                    field {
+                      contentType
+                    }
+                    html
+                    frontmatter {
+                      id
+                      date
+                      absolute_path
+                      title
+                      tags
+                    }
+                  }
+                }
+              }
+            }
+          `,
+            serialize: ({ query: { site, allSiYuan } }) => {
+              return allSiYuan.edges.map(({ node }) => {
+                const path = `${node.frontmatter.absolute_path}`;
+                return {
+                  title: node.frontmatter.title,
+                  date: DateTime.fromSQL(node.frontmatter.date, { zone: "Asia/Shanghai" }).toString(),
+                  url: site.siteMetadata.siteUrl + path,
+                  categories: node.frontmatter.tags || [],
+                  guid: path,
+                  custom_elements: [{ "content:encoded": node.html }]
+                };
+              });
+            },
+            output: "/rss.xml",
+            title: "ztianzeng.com RSS",
+          },
+        ],
+      },
+    },
+    {
       resolve: 'gatsby-transformer-remark',
       options: {
         plugins: [
