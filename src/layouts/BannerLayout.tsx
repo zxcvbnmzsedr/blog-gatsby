@@ -12,19 +12,21 @@ import HeaderFooterLayout from "./HeaderFooterLayout";
 
 interface Props {
   transparentHeader: boolean;
-  banner: React.ReactNode;
+  banner?: React.ReactNode;
 }
 
 const BannerLayout: React.FC<Props> = ({ transparentHeader, banner, children }) => {
   return (
     <HeaderFooterLayout transparentHeader={transparentHeader}>
-      <RootContainer>
+      {banner && <RootContainer>
         <InnerContainer>
           <BannerContainer>
             {banner}
           </BannerContainer>
         </InnerContainer>
       </RootContainer>
+      }
+
       {children}
     </HeaderFooterLayout>
   );

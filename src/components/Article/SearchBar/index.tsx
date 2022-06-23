@@ -30,7 +30,7 @@ const ArticleSearchBar: React.FC<Props> = () => {
 
   return (
     <Container ref={containerRef}>
-      <SearchBar onFocus={() => setShow(true)} />
+      {/*<SearchBar onFocus={() => setShow(true)} />*/}
       <TagDropdown onTagClicked={close} show={show} />
     </Container>
   );

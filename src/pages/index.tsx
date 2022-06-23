@@ -100,7 +100,7 @@ const Button: React.FC<{ to: string; mode?: "to" | "href" }> = ({
 
 
 const links = [
-  ["/rss.xml", FaRss, root("links.rss"), "href"],
+  // ["/rss.xml", FaRss, root("links.rss"), "href"],
 ] as const;
 
 const HomePage: React.FunctionComponent = () => {

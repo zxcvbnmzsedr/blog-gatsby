@@ -3,8 +3,6 @@ import React, {useEffect} from "react";
 import {Col, Row} from "reactstrap";
 import {useStore} from "simstate";
 import styled, {keyframes} from "styled-components";
-
-import ArticlePageBanner from "@/components/Article/ArticlePageBanner";
 import CommentPanel from "@/components/Article/CommentPanel";
 import ArticleContentDisplay from "@/components/Article/ContentDisplay";
 import TocPanel from "@/components/Article/TocPanel";
@@ -19,7 +17,6 @@ import MetadataStore from "@/stores/MetadataStore";
 import {heights} from "@/styles/variables";
 import {fromArticleTime} from "@/utils/datetime";
 import useConstant from "@/utils/useConstant";
-import {tree} from "d3";
 import {Link} from "gatsby";
 
 interface Props {
@@ -62,29 +59,10 @@ interface RootLayoutProps {
   lastUpdated?: DateTime;
 }
 
-const RootLayout: React.FC<RootLayoutProps> = ({
-                                                 article, children,
-                                                 lang, date, lastUpdated,
-                                               }) => {
-
-  const {
-    frontmatter: {id, title, tags},
-    timeToRead, wordCountChinese,
-  } = article;
+const RootLayout: React.FC<RootLayoutProps> = ({children}) => {
 
   return (
-    <BannerLayout transparentHeader={false} banner={
-      <ArticlePageBanner
-        title={title}
-        id={id}
-        date={date}
-        lastUpdated={lastUpdated}
-        timeToRead={timeToRead}
-        currentArticleLanguage={lang}
-        wordCount={wordCountChinese}
-      />
-    }
-    >
+    <BannerLayout transparentHeader={false}>
       {children}
     </BannerLayout>
   );
@@ -128,7 +106,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
   }
   const buildNav = (item) => {
     return (
-      <ul>
+      <li>
         <li>
           <Link to={item.href}>{item.title}</Link>
         </li>
@@ -137,7 +115,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
             buildNav(subNav)
           )
         })}
-      </ul>
+      </li>
     )
   }
   const getDIr = () => {
@@ -191,12 +169,13 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
               })),
           ]}
         />
+
         <PageComponent hasHeader={true}>
+          <SideBar className="d-none d-xl-block">
+            {getDIr()}
+          </SideBar>
           <Row>
-            <Col md={2}>
-              {getDIr()}
-            </Col>
-            <Col md={7} sm={12}>
+            <Col md={9} sm={12}>
               <ArticleContentDisplay
                 htmlAst={htmlAst}
                 headings={headings}
@@ -225,4 +204,32 @@ export default ArticlePageTemplate;
 const StickySidePanel = styled.div`
   position: sticky;
   top: ${heights.header + 32}px;
+`;
+
+
+const SideBar = styled.aside`
+  background-color: #222;
+  width: 20rem;
+  position: fixed;
+  z-index: 10;
+  margin: 0;
+  top: 3.6rem;
+  left: 0;
+  bottom: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    padding-left: 1rem;
+  }
+
+  a {
+    padding: .35rem 1rem .35rem 1.25rem;
+    color: #cbd2d8;
+  }
 `;

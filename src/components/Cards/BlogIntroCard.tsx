@@ -25,7 +25,6 @@ const BlogIntroCard: React.FC<Props> = () => {
     <BaseCard>
       <BaseCardHeader>
         <span>💻 ztianzeng.com | <Localized id={root("subtitle")} /></span>
-
       </BaseCardHeader>
       <CardBody>
         <CardText>
@@ -39,10 +38,10 @@ const BlogIntroCard: React.FC<Props> = () => {
             <FaCode />
             <Localized id={root("sourceCode")} />
           </a>
-          <a href="/rss.xml" target="__blank">
-            <FaRss />
-            RSS
-          </a>
+          {/*<a href="/rss.xml" target="__blank">*/}
+          {/*  <FaRss />*/}
+          {/*  RSS*/}
+          {/*</a>*/}
           <Link to="/feedback">
             <FaRegCommentDots />
             <Localized id={root("feedback")} />
