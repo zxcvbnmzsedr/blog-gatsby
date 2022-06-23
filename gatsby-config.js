@@ -1,220 +1,75 @@
-"use strict"
-
-const { DateTime } = require("luxon");
-const path = require("path");
-
+require("dotenv").config({
+    path: `.env.${process.env.NODE_ENV}`,
+})
+const {valine, google, baidu, siteMetadata} = require('./config.js')
 module.exports = {
-  siteMetadata: {
-    lastUpdated: DateTime.utc().toString(),
-    name: `天增`,
-    author: {
-      name: `天增的博客`,
-      summary: `一期一会，世当珍惜`,
-    },
-    image: {},
-    description: `一期一会，世当珍惜`,
-    siteUrl: `https://www.ztianzeng.com`,
-    social: {
-      github: `zxcvbnmzsedr`,
-    },
-    socialLinks: [
-      {
-        name: 'GitHub',
-        url: 'https://github.com/zxcvbnmzsedr',
-      },
-      {
-        name: 'Email',
-        url: 'mailto:i@ztianzeng.com'
-      }
-    ],
-  },
-  plugins: [
-    'gatsby-plugin-typescript',
-    {
-      resolve: `gatsby-plugin-sass`,
-      options: {
-        sassOptions: {
-          includePaths: [path.join(__dirname, "src/styles")],
-        }
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-styled-components',
-      options: {
-        minify: true,
-      },
-    },
-    "gatsby-plugin-layout",
-    {
-      resolve: 'gatsby-plugin-root-import',
-      options: {
-        "@": path.join(__dirname, 'src'),
-        "~": path.join(__dirname)
-      }
-    },
-    'gatsby-plugin-catch-links',
-    `gatsby-transformer-json`,
-    'gatsby-plugin-sharp',
-    'gatsby-transformer-sharp',
-    {
-      resolve: `gatsby-transformer-siyuan`,
-      options: {
-        host: process.env.SIYUAN_HOST || 'http://127.0.0.1:6806/api/',
-        token: process.env.SIYUAN_TOKEN || 'noeyqg6qknhqvl5m',
-        box: process.env.SIYUAN_BOX || '20220420112442-p6q6e8w'
-      },
-    },
-    {
-      resolve: `gatsby-plugin-feed`,
-      options: {
-        query: `
-          {
-            site {
-              siteMetadata {
-                siteUrl
-              }
-            }
-          }
-        `,
-        feeds: [
-          {
-            query: `
-            {
-              allSiYuan(
-                sort: { order: DESC, fields: [frontmatter___date] },
-              ) {
-                edges {
-                  node {
-                    field {
-                      contentType
-                    }
-                    html
-                    frontmatter {
-                      id
-                      date
-                      absolute_path
-                      title
-                      tags
-                    }
-                  }
-                }
-              }
-            }
-          `,
-            serialize: ({ query: { site, allSiYuan } }) => {
-              return allSiYuan.edges.map(({ node }) => {
-                const path = `${node.frontmatter.absolute_path}`;
-                return {
-                  title: node.frontmatter.title,
-                  date: DateTime.fromSQL(node.frontmatter.date, { zone: "Asia/Shanghai" }).toString(),
-                  url: site.siteMetadata.siteUrl + path,
-                  categories: node.frontmatter.tags || [],
-                  guid: path,
-                  custom_elements: [{ "content:encoded": node.html }]
-                };
-              });
+    siteMetadata,
+    plugins: [
+        `gatsby-plugin-styled-components`,
+        `gatsby-plugin-image`,
+        {
+            resolve: `gatsby-plugin-valine`,
+            options: {
+                appId: valine.appId,
+                appKey: valine.appKey,
+                avatar: `robohash`,
             },
-            output: "/rss.xml",
-            title: "ztianzeng.com RSS",
-          },
-        ],
-      },
-    },
-    {
-      resolve: 'gatsby-transformer-remark',
-      options: {
-        plugins: [
-          {
-            resolve: 'gatsby-remark-responsive-iframe',
+        },
+
+        {
+            resolve: `gatsby-plugin-google-analytics`,
             options: {
-              wrapperStyle: 'margin-bottom: 1rem'
-            }
-          },
-          {
-            resolve: 'gatsby-remark-vscode',
+                trackingId: google.trackingId,
+                head: true,
+            },
+        },
+        {
+            resolve: `gatsby-plugin-baidu-analytics`,
             options: {
-              inlineCode: {
-                marker: "±",
-              },
-              theme: "Dark+ (default dark)",
-              extensions: ['Kotlin', "viml"],
-              languageAliases: {
-                "kotlin": "kts",
-                "vimscript": "viml",
-              }
-            }
-          },
-          `gatsby-remark-emoji`,
-          {
-            resolve: 'gatsby-remark-copy-linked-files',
+                // 百度统计站点ID
+                siteId: baidu.siteId,
+                // 配置统计脚本插入位置，默认值为 false, 表示插入到 body 中, 为 true 时插入脚本到 head 中
+                head: true,
+            },
+        },
+        {
+            resolve: `gatsby-plugin-manifest`,
             options: {
-              destinationDir: "static",
-              // ignoreFileExtensions: [],
-            }
-          },
-          'gatsby-remark-smartypants',
-          {
-            resolve: 'gatsby-remark-images',
+                name: `Gatsby Frosted Blog`,
+                short_name: `Gatsby Frosted`,
+                start_url: `/`,
+                background_color: `#ffffff`,
+                theme_color: `#663399`,
+                display: `minimal-ui`,
+                icon: `src/images/icon.png`,
+            },
+        },
+        // {
+        //     resolve: 'gatsby-plugin-brotli',
+        //     options: {
+        //         extensions: ['css', 'html', 'js', 'svg']
+        //     }
+        // },
+        `gatsby-plugin-react-helmet`,
+        `gatsby-plugin-sitemap`,
+        {
+            resolve: 'gatsby-plugin-less',
             options: {
-              maxWidth: 1140,
-              quality: 90,
-              showCaptions: true,
-              linkImagesToOriginal: false
+                lessOptions: {
+                    javascriptEnabled: true
+                },
+                cssLoaderOptions: {
+                    modules: true,
+                },
             }
-          },
-          {
-            resolve: `gatsby-remark-images-medium-zoom`,
+        },
+        // `gatsby-plugin-split-css`,
+        {
+            resolve: 'gatsby-plugin-import',
             options: {
-              background: "#222",
-              zIndex: 1040,
+                libraryName: "antd",
+                style: 'css',   // or 'css'
             }
-          }
-        ]
-      }
-    },
-    'gatsby-transformer-json',
-    {
-      resolve: 'gatsby-plugin-canonical-urls',
-      options: {
-        siteUrl: 'https://www.ztianzeng.com'
-      }
-    },
-    {
-      resolve: `gatsby-plugin-baidu-analytics`,
-      options: {
-        siteId: "305970e09045d4afbab60ece95d61930",
-        head: false,
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-react-svg',
-      options: {
-        include: /assets/
-      }
-    },
-    {
-      resolve: `gatsby-plugin-nprogress`,
-      options: {
-        // Setting a color is optional.
-        color: `#3498DB`,
-        // Disable the loading spinner.
-        showSpinner: false,
-      }
-    },
-    'gatsby-plugin-react-helmet',
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: "ztianzeng.com",
-        short_name: "ztianzeng",
-        start_url: "/",
-        background_color: "#FFFFFF",
-        theme_color: "#3498DB",
-        display: "minimal-ui",
-        icon: "assets/icon.png", // This path is relative to the root of the site.
-      },
-    },
-    `gatsby-plugin-remove-serviceworker`,
-    'gatsby-plugin-sitemap'
-  ]
-}
+        },
+    ],
+};
