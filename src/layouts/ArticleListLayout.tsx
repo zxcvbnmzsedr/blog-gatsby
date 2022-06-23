@@ -45,12 +45,9 @@ const ArticleListLayout: React.FC<Props> = (props: Props) => {
           <Col md={4} xs={12}>
             <MediaQuery minWidth={breakpoints.md}>
               <Sidebar>
-                {/* <ArticleSearchBar /> */}
-                {/* <SearchBar /> */}
                 <BlogIntroCard />
                 <SearchCard />
                 <TagsCard />
-                {/*<SelfIntroCard/>*/}
               </Sidebar>
             </MediaQuery>
           </Col>
