@@ -69,6 +69,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
           }
           frontmatter {
             id
+            title
             date
             absolute_path
           }
