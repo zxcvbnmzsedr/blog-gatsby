@@ -23,7 +23,7 @@ interface ArticleNode {
   };
   field: {
     contentType: string
-    topic:string,
+    topic: string,
   }
   path: string;
   headings: {
@@ -146,22 +146,23 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
 
 
   topicGroups.forEach((node) => {
-    const slugger = new GitHubSlugger();
-
-    createPage({
-        path: node.path,
-        component: topicPageTemplate,
-        context: {
-          id: node.frontmatter.id,
-          htmlAst: node.htmlAst,
-          articleNode: node,
-          tree: topicMap[node.field.topic],
-          headings: node.headings.map((x) => ({
-            ...x,
-            slug: slugger.slug(x.value, false),
-          })),
-        },
-      })
+      const slugger = new GitHubSlugger();
+      if (topicMap[node.field.topic]) {
+        createPage({
+          path: node.path,
+          component: topicPageTemplate,
+          context: {
+            id: node.frontmatter.id,
+            htmlAst: node.htmlAst,
+            articleNode: node,
+            tree: topicMap[node.field.topic],
+            headings: node.headings.map((x) => ({
+              ...x,
+              slug: slugger.slug(x.value, false),
+            })),
+          },
+        })
+      }
     }
   )
 
