@@ -1,23 +1,22 @@
-import { DateTime } from "luxon";
-import React, { useEffect } from "react";
-import { Col,Row } from "reactstrap";
-import { useStore } from "simstate";
-import styled, { keyframes } from "styled-components";
+import {DateTime} from "luxon";
+import React, {useEffect} from "react";
+import {Col, Row} from "reactstrap";
+import {useStore} from "simstate";
+import styled, {keyframes} from "styled-components";
 
 import ArticlePageBanner from "@/components/Article/ArticlePageBanner";
 import CommentPanel from "@/components/Article/CommentPanel";
 import ArticleContentDisplay from "@/components/Article/ContentDisplay";
 import TocPanel from "@/components/Article/TocPanel";
-import { PageMetadata } from "@/components/PageMetadata";
-import { languageInfo, useI18n } from "@/i18n";
+import {PageMetadata} from "@/components/PageMetadata";
+import {languageInfo, useI18n} from "@/i18n";
 import BannerLayout from "@/layouts/BannerLayout";
 import Page from "@/layouts/Page";
-import { ArticleNode, Heading } from "@/models/ArticleNode";
-import { HtmlAst } from "@/models/HtmlAst";
+import {ArticleNode, Heading} from "@/models/ArticleNode";
+import {HtmlAst} from "@/models/HtmlAst";
 import ArticleStore from "@/stores/ArticleStore";
-import MetadataStore from "@/stores/MetadataStore";
-import { heights } from "@/styles/variables";
-import { fromArticleTime } from "@/utils/datetime";
+import {heights} from "@/styles/variables";
+import {fromArticleTime} from "@/utils/datetime";
 import useConstant from "@/utils/useConstant";
 
 interface Props {
@@ -26,6 +25,7 @@ interface Props {
     lang: string;
     htmlAst: HtmlAst;
     headings: Heading[];
+    articleNode: ArticleNode;
   };
   location: Location;
 }
@@ -93,12 +93,10 @@ const RootLayout: React.FC<RootLayoutProps> = ({
 const ArticlePageTemplate: React.FC<Props> = (props) => {
 
   const i18n = useI18n();
-  const metadataStore = useStore(MetadataStore);
   const articleStore = useStore(ArticleStore);
 
-  const { id, lang, htmlAst, headings } = props.pageContext;
+  const { id, lang, htmlAst, headings,articleNode } = props.pageContext;
 
-  const articleNode = metadataStore.getArticleOfLang(id, lang);
 
   useEffect(() => {
     articleStore.setArticle(articleNode);
@@ -112,7 +110,6 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
     frontmatter: { title, date, tags },
   } = articleNode;
 
-  const langPathMap = metadataStore.getLangPathMap(props.pageContext.id);
 
   const publishedTime = useConstant(() => fromArticleTime(date));
   const lastUpdatedTime = useConstant(() => undefined);
@@ -135,12 +132,6 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
               name: "og:article:tag",
               content: x,
             })),
-            ...Object.keys(langPathMap)
-              .filter((x) => x !== lang)
-              .map((x) => ({
-                name: "og:locale:alternate",
-                content: languageInfo[x].detailedId,
-              })),
           ]}
         />
         <PageComponent hasHeader={true}>

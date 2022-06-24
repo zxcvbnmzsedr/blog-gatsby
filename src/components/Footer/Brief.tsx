@@ -1,16 +1,21 @@
 import React from "react";
-import { useStore } from "simstate";
-
+import { useStaticQuery, graphql } from "gatsby"
 import Contacts from "@/components/Contacts";
 import { RunningTime } from "@/components/Footer/RunningTime";
 import { Localized, prefix } from "@/i18n";
-import MetadataStore from "@/stores/MetadataStore";
 
 const root = prefix("footer.");
 
 const Brief: React.FC = () => {
-
-  const metadataStore = useStore(MetadataStore);
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          lastUpdated(formatString :"YYYY-MM-DD hh:mm")
+        }
+      }
+    }
+  `)
 
   return (
     <div className="footer-brief">
@@ -26,7 +31,7 @@ const Brief: React.FC = () => {
       </p>
       <p>
         ⏲️ <Localized id="statistics.lastUpdated" />:
-        <strong>{metadataStore.siteMetadata.formattedLastUpdate}</strong>
+        <strong>{data.site.siteMetadata.lastUpdated}</strong>
       </p>
       {/* <p>
         📔 <Localized id={lang.statistics.articleCount} replacements={[

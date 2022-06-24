@@ -1,7 +1,6 @@
 import {DateTime} from "luxon";
-import React, {useEffect} from "react";
+import React from "react";
 import {Col, Row} from "reactstrap";
-import {useStore} from "simstate";
 import styled, {keyframes} from "styled-components";
 import CommentPanel from "@/components/Article/CommentPanel";
 import ArticleContentDisplay from "@/components/Article/ContentDisplay";
@@ -12,8 +11,6 @@ import BannerLayout from "@/layouts/BannerLayout";
 import Page from "@/layouts/Page";
 import {ArticleNode, Heading, TopicNodeTree} from "@/models/ArticleNode";
 import {HtmlAst} from "@/models/HtmlAst";
-import ArticleStore from "@/stores/ArticleStore";
-import MetadataStore from "@/stores/MetadataStore";
 import {heights} from "@/styles/variables";
 import {fromArticleTime} from "@/utils/datetime";
 import useConstant from "@/utils/useConstant";
@@ -25,6 +22,8 @@ interface Props {
     lang: string;
     htmlAst: HtmlAst;
     headings: Heading[];
+    tree: TopicNodeTree;
+    articleNode: ArticleNode;
   };
 }
 
@@ -71,26 +70,14 @@ const RootLayout: React.FC<RootLayoutProps> = ({children}) => {
 const ArticlePageTemplate: React.FC<Props> = (props) => {
 
   const i18n = useI18n();
-  const metadataStore = useStore(MetadataStore);
-  const articleStore = useStore(ArticleStore);
 
-  const {id, lang, htmlAst, headings} = props.pageContext;
-
-  const articleNode = metadataStore.getArticleOfLang(id, lang);
-
-  useEffect(() => {
-    articleStore.setArticle(articleNode);
-    return () => {
-      articleStore.setArticle(null);
-    };
-  }, [articleNode]);
+  const {id, lang, htmlAst, headings, tree, articleNode} = props.pageContext;
 
   const {
     path, excerpt,
     frontmatter: {title, date, tags},
   } = articleNode;
 
-  const langPathMap = metadataStore.getLangPathMap(props.pageContext.id);
 
   const publishedTime = useConstant(() => fromArticleTime(date));
   const lastUpdatedTime = useConstant(() => undefined);
@@ -118,20 +105,8 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
       </li>
     )
   }
-  const getDIr = () => {
-    if (!tags) {
-      return
-    }
-    let t
-    if (!tags[0]){
-      t = title
-    }else {
-      t = tags[0]
-    }
-    if (!t){
-      return
-    }
-    let items = metadataStore.topicList.filter(e => e.title === t)[0].tree.children as TopicNodeTree[];
+  const getDIr = (tree) => {
+    let items = tree.children as TopicNodeTree[];
 
     items = deleteOther(items)
     if (items.length > 0) {
@@ -170,21 +145,18 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
               name: "og:article:tag",
               content: x,
             })),
-            ...Object.keys(langPathMap)
-              .filter((x) => x !== lang)
-              .map((x) => ({
-                name: "og:locale:alternate",
-                content: languageInfo[x].detailedId,
-              })),
           ]}
         />
 
         <PageComponent hasHeader={true}>
           <SideBar className="d-none d-xl-block">
-            {getDIr()}
+            {getDIr(tree)}
           </SideBar>
           <Row>
-            <Col md={9} sm={12}>
+            <Col md={1}>
+
+            </Col>
+            <Col md={8} sm={12}>
               <ArticleContentDisplay
                 htmlAst={htmlAst}
                 headings={headings}

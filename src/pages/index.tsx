@@ -83,7 +83,7 @@ const Button: React.FC<{ to: string; mode?: "to" | "href" }> = ({
     return (
       <Link {...commonProps} to={to.startsWith("/")
         ? to
-        : metadataStore.getArticleOfLang(to, i18n.currentLanguage.id).path
+        : metadataStore.getArticle(to).path
       }
       >
         {children}

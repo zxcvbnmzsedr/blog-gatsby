@@ -10,7 +10,8 @@ export interface ArticleNode {
   timeToRead: number;
   wordCountChinese: number;
   field: {
-    contentType: string
+    contentType: string;
+    topic: string
   }
   frontmatter: {
     absolute_path?: string;

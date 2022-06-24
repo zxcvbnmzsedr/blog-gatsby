@@ -62,14 +62,14 @@ export default function MetadataStore(
 
   const articleCount = articleNodes.filter(e=>e.field.contentType === 'posts').length;
 
-  const getArticleOfLang = useCallback((id: string, languageId: string): ArticleNode => {
+  const getArticle = useCallback((id: string): ArticleNode => {
     const group = articleIdMap.get(id);
 
     if (!group) {
       throw noSuchArticle(id);
     }
 
-    return group.find((x) => x.frontmatter.lang === languageId) || group[0];
+    return group[0];
   }, [articleIdMap]);
 
   const getLangPathMap = useCallback((id: string): LangPathMap => {
@@ -153,7 +153,7 @@ export default function MetadataStore(
     articleCount,
     articleIdMap,
     topicList,
-    getArticleOfLang,
+    getArticle,
     getLangPathMap,
     getTagOfLang,
     getAllTagsOfLang,
