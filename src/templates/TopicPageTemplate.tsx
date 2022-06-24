@@ -153,7 +153,10 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
             {getDIr(tree)}
           </SideBar>
           <Row>
-            <Col md={9} sm={12}>
+            <Col md={1}>
+
+            </Col>
+            <Col md={8} sm={12}>
               <ArticleContentDisplay
                 htmlAst={htmlAst}
                 headings={headings}
