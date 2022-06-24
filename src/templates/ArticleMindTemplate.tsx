@@ -1,15 +1,17 @@
 import React from "react"
 import MindMap from "@/components/MindMap";
 import BannerLayout from "@/layouts/BannerLayout";
+import {TopicNodeTree} from "@/models/ArticleNode";
 
 
 interface Props {
   pageContext: {
     title: string;
+    tree: TopicNodeTree;
   };
 }
 
-const ArticleMindTemplate: React.FC<Props> = ({pageContext: {title}}) => {
+const ArticleMindTemplate: React.FC<Props> = ({pageContext: {title,tree}}) => {
   return (
     <BannerLayout transparentHeader={true}
     banner={
@@ -17,7 +19,7 @@ const ArticleMindTemplate: React.FC<Props> = ({pageContext: {title}}) => {
         {title}
       </h1>
     }>
-      <MindMap title={title}/>
+      <MindMap tree={tree}/>
     </BannerLayout>
   )
 }

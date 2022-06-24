@@ -1,9 +1,8 @@
 import * as React from "react";
-import {useStore} from "simstate";
-import MetadataStore from "@/stores/MetadataStore";
 import {Markmap} from "markmap-view";
 import {INode} from 'markmap-common';
 import {SVGAttributes} from "react";
+import {TopicNodeTree} from "@/models/ArticleNode";
 
 
 function handleNodes(parent, root, initialTreeDepth, count): INode {
@@ -22,13 +21,17 @@ function handleNodes(parent, root, initialTreeDepth, count): INode {
   return node;
 }
 
+interface Props {
+  height?: number;
+  tree: TopicNodeTree;
 
-const MindMap = ({
-                   title,
-                   height = 800,
-                 }) => {
-  const metadataStore = useStore(MetadataStore);
-  const root = metadataStore.topicList.filter(e => e.title === title)[0].tree
+}
+
+const MindMap: React.FC<Props> = ({
+                                    tree,
+                                    height = 800,
+                                  }) => {
+  const root = tree
   // @ts-ignore
   const svgRef = React.useRef<SVGAttributes>();
   const markMapRef = React.useRef<Markmap>();

@@ -23,6 +23,7 @@ interface ArticleNode {
   };
   field: {
     contentType: string
+    topic:string,
   }
   path: string;
   headings: {
@@ -41,6 +42,7 @@ interface ArticlesQueryResult {
   allTopic: {
     nodes: {
       title: string
+      tree: string
     }[]
   }
 }
@@ -53,6 +55,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
      allTopic {
         nodes {
           title
+          tree
         }
       }
     allSiYuan(
@@ -62,6 +65,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
         node {
           field {
             contentType
+            topic
           }
           frontmatter {
             id
@@ -84,7 +88,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
 
   // Group articles with lang
   const articleGroups = {} as ArticleGroups;
-  const topicGroups = {} as ArticleGroups;
+  const topicGroups = [] as ArticleNode[];
   result.data.allSiYuan.edges.forEach(({node}) => {
     const {id, absolute_path} = node.frontmatter;
     node.path = absolute_path as string;
@@ -93,8 +97,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
       articleGroups[id].push(node);
     }
     if (node.field.contentType === 'topic') {
-      topicGroups[id] = topicGroups[id] || [];
-      topicGroups[id].push(node);
+      topicGroups.push(node);
     }
   });
 
@@ -127,22 +130,39 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
     articleGroups,
     articleTemplate
   );
-
-  createArticlePages(
-    createPage,
-    topicGroups,
-    topicPageTemplate
-  );
-
-  result.data.allTopic.nodes.forEach(({title}) => {
+  const topicMap = {}
+  result.data.allTopic.nodes.forEach(({title, tree}) => {
+    topicMap[title] = JSON.parse(tree)
     createPage({
       path: 'mind/topic/' + title,
       component: mindTemplate,
       context: {
         title: title,
+        tree: JSON.parse(tree),
       },
     })
   })
+
+
+  topicGroups.forEach((node) => {
+    const slugger = new GitHubSlugger();
+
+    createPage({
+        path: node.path,
+        component: topicPageTemplate,
+        context: {
+          id: node.frontmatter.id,
+          htmlAst: node.htmlAst,
+          articleNode: node,
+          tree: topicMap[node.field.topic],
+          headings: node.headings.map((x) => ({
+            ...x,
+            slug: slugger.slug(x.value, false),
+          })),
+        },
+      })
+    }
+  )
 
 };
 
@@ -196,6 +216,7 @@ function createArticlePages(
       context: {
         id: node.frontmatter.id,
         htmlAst: node.htmlAst,
+        articleNode: node,
         headings: node.headings.map((x) => ({
           ...x,
           slug: slugger.slug(x.value, false),
