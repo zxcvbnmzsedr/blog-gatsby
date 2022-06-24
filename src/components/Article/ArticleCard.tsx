@@ -1,13 +1,12 @@
-import { navigate } from "gatsby";
+import {navigate} from "gatsby";
 import React from "react";
-import { CardBody } from "reactstrap";
+import {CardBody} from "reactstrap";
 import styled from "styled-components";
 
-import { BaseCard } from "@/components/Cards/components";
-import { useI18n } from "@/i18n";
+import {BaseCard} from "@/components/Cards/components";
 import MetadataStore from "@/stores/MetadataStore";
-import { colors } from "@/styles/variables";
-import { useStore } from "~/node_modules/simstate";
+import {colors} from "@/styles/variables";
+import {useStore} from "~/node_modules/simstate";
 
 interface Props {
   articleId: string;
@@ -37,10 +36,8 @@ const Card = styled(BaseCard)`
 const ArticleCard: React.FC<Props> = ({ articleId, className }) => {
 
   const metadataStore = useStore(MetadataStore);
-  const i18n = useI18n();
 
-  const localizedArticle = metadataStore.getArticleOfLang(
-    articleId, i18n.currentLanguage.id);
+  const localizedArticle = metadataStore.getArticle(articleId);
 
   return (
     <Card className={className} onClick={() => navigate(localizedArticle.path)}>

@@ -98,7 +98,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
 
   const { id, lang, htmlAst, headings } = props.pageContext;
 
-  const articleNode = metadataStore.getArticleOfLang(id, lang);
+  const articleNode = metadataStore.getArticle(id);
 
   useEffect(() => {
     articleStore.setArticle(articleNode);

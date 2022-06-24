@@ -31,7 +31,7 @@ const NavbarLanguageSelector: React.FC = () => {
 
     const article = articleStore.article;
     if (article) {
-      const targetNode = metadataStore.getArticleOfLang(article.frontmatter.id, id);
+      const targetNode = metadataStore.getArticle(article.frontmatter.id);
       if (targetNode) {
         navigate(targetNode.path);
       }

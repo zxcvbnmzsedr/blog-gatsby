@@ -22,7 +22,6 @@ const PaginationContainer = styled.div`
 
 const ArticleList: React.FC<Props> = ({ ids, pageCount, pageIndex, toPage }) => {
 
-  const i18n = useI18n();
   const metadataStore = useStore(MetadataStore);
 
   const items = ids.map((id) => {
@@ -35,8 +34,7 @@ const ArticleList: React.FC<Props> = ({ ids, pageCount, pageIndex, toPage }) => 
     <div>
       {items
         .map((nodes) => {
-          const node = metadataStore.getArticleOfLang(
-            nodes[0].frontmatter.id, i18n.currentLanguage.id);
+          const node = metadataStore.getArticle(nodes[0].frontmatter.id);
           return (
             <ArticleItem
               article={node}
