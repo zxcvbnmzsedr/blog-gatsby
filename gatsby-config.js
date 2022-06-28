@@ -1,6 +1,6 @@
 "use strict"
 
-const { DateTime } = require("luxon");
+const {DateTime} = require("luxon");
 const path = require("path");
 
 module.exports = {
@@ -61,7 +61,46 @@ module.exports = {
       options: {
         host: process.env.SIYUAN_HOST || 'http://127.0.0.1:6806/api/',
         token: process.env.SIYUAN_TOKEN || 'noeyqg6qknhqvl5m',
-        box: process.env.SIYUAN_BOX || '20220420112442-p6q6e8w'
+        box: process.env.SIYUAN_BOX || '20220420112442-p6q6e8w',
+        plugins: [
+          {
+            resolve: 'gatsby-remark-mermaid',
+            options: {
+              language: 'mermaid',
+              theme: 'default',
+            }
+          },
+
+          {
+            resolve: 'gatsby-remark-vscode',
+            options: {
+              inlineCode: {
+                marker: "±",
+              },
+              theme: "Dark+ (default dark)",
+              languageAliases: {
+                shell: "sh",
+                nginx: "sh",
+              }
+            }
+          },
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 1140,
+              quality: 90,
+              showCaptions: true,
+              linkImagesToOriginal: false
+            }
+          },
+          {
+            resolve: `gatsby-remark-images-medium-zoom`,
+            options: {
+              background: "#222",
+              zIndex: 1040,
+            }
+          }
+        ]
       },
     },
     {
@@ -101,16 +140,16 @@ module.exports = {
               }
             }
           `,
-            serialize: ({ query: { site, allSiYuan } }) => {
-              return allSiYuan.edges.map(({ node }) => {
+            serialize: ({query: {site, allSiYuan}}) => {
+              return allSiYuan.edges.map(({node}) => {
                 const path = `${node.frontmatter.absolute_path}`;
                 return {
                   title: node.frontmatter.title,
-                  date: DateTime.fromSQL(node.frontmatter.date, { zone: "Asia/Shanghai" }).toString(),
+                  date: DateTime.fromSQL(node.frontmatter.date, {zone: "Asia/Shanghai"}).toString(),
                   url: site.siteMetadata.siteUrl + path,
                   categories: node.frontmatter.tags || [],
                   guid: path,
-                  custom_elements: [{ "content:encoded": node.html }]
+                  custom_elements: [{"content:encoded": node.html}]
                 };
               });
             },
