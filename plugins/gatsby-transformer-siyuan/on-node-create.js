@@ -25,7 +25,7 @@ const create = async ({actions, createContentDigest}, options) => {
 
   const list = await siYuan.getSiYuanPost();
   const processResult = (result) => {
-    const {id, title, slug, date, tags, contentType, template, raw,html} = result;
+    const {id, title, slug, date, tags, contentType, template, raw, html, headings} = result;
     const excerpt = getMarkdownExcerpt(raw)
     const topic = slug.startsWith('/topic') ? slug.split('/')[2] : null
     const slugReNew = contentType === 'posts' ? `/posts/${title}` : slug
@@ -39,9 +39,10 @@ const create = async ({actions, createContentDigest}, options) => {
       raw,
       html,
       excerpt,
+      // headings,
       frontmatter: {
         date,
-        absolute_path:slugReNew,
+        absolute_path: slugReNew,
         id: slugReNew,
         tags,
         lang: "cn",

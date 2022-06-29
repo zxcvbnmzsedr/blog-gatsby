@@ -20,6 +20,7 @@ interface Props {
   pageContext: {
     id: string;
     lang: string;
+    html: string;
     htmlAst: HtmlAst;
     headings: Heading[];
     tree: TopicNodeTree;
@@ -71,7 +72,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
 
   const i18n = useI18n();
 
-  const {id, lang, htmlAst, headings, tree, articleNode} = props.pageContext;
+  const {id, lang, htmlAst, html, headings, tree, articleNode} = props.pageContext;
 
   const {
     path, excerpt,
@@ -159,6 +160,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
             <Col md={8} sm={12}>
               <ArticleContentDisplay
                 htmlAst={htmlAst}
+                html={html}
                 headings={headings}
               />
             </Col>
