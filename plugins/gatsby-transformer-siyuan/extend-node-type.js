@@ -119,18 +119,11 @@ module.exports = function remarkExtendNodeType({
 
 
   return {
-    html: {
-      type: `String`,
-      async resolve(markdownNode, opt, context) {
-        return getHTML(markdownNode, context);
-      }
-    },
     headings: {
       type: [`MarkdownHeading`],
       args: {
         depth: `MarkdownHeadingLevels`
       },
-
       async resolve(markdownNode, {
         depth
       }, context) {

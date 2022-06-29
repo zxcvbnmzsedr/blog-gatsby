@@ -125,7 +125,7 @@ class SiYuan {
     return await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
       const {id, content, created} = siYuanBoxData;
       const {data} = await this.getData('export/exportMdContent', {id});
-      // const htmlResult = await getData('filetree/getDoc', {id, k: '', mode: 0, size: 99999});
+      const htmlResult = await this.getData('export/preview', {id});
 
       const contentType = data.hPath.split('/')[1];
       if (contentType === 'posts') {
@@ -146,8 +146,7 @@ class SiYuan {
             ...r,
             [item.name]: item.value,
           }
-        ), {})
-      ;
+        ), {});
       const template = attribute['custom-template']
       const slug = attribute['custom-slug']
       const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
@@ -156,7 +155,7 @@ class SiYuan {
       }
       return {
         ...siYuanBoxData,
-        html: '<div></div>',
+        html: htmlResult.data.html,
         title: content,
         template,
         slug: slug ? slug : data.hPath,
