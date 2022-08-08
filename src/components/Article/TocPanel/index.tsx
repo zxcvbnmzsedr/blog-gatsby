@@ -67,19 +67,14 @@ const TocPanel: React.FC<Props> = ({ headings, className }) => {
 
 
   useEffect(() => {
-
     const tocItemElements: HTMLElement[] = [];
-
     let currentIndex = 0;
-
     const setActive = (index: number): void => {
       tocItemElements[currentIndex].classList.remove("active");
       currentIndex = index;
       tocItemElements[index].classList.add("active");
     };
-
     const onScroll = (): void => {
-
       for (let i = 0; i < headings.length - 1; i++) {
         if (isWindowBetween(document.getElementById(headings[i + 1].slug))) {
           setActive(i);
@@ -96,7 +91,6 @@ const TocPanel: React.FC<Props> = ({ headings, className }) => {
       const tocEl = document.getElementById(`tocitem-${heading.slug}`);
       if (tocEl) {
         tocItemElements.push(tocEl);
-
       }
     });
 

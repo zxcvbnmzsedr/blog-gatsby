@@ -1,5 +1,6 @@
 const fetch = require('isomorphic-fetch');
 const path = require('path')
+const cheerio = require('cheerio');
 
 class SiYuan {
   constructor(token, host, box) {
@@ -116,6 +117,15 @@ class SiYuan {
     return res;
   }
 
+  headingTreeToList({result, children}) {
+    children.map(e => {
+      result.put({
+        id: e.id,
+        name: e.name
+      })
+    })
+  }
+
   /**
    *
    * @param box
@@ -125,14 +135,25 @@ class SiYuan {
     return await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
       const {id, content, created} = siYuanBoxData;
       const {data} = await this.getData('export/exportMdContent', {id});
-      // const htmlResult = await getData('filetree/getDoc', {id, k: '', mode: 0, size: 99999});
-
+      const htmlResult = await this.getData('export/preview', {id});
+      const html = htmlResult.data.html
+      const htmlParser = cheerio.load(html)
+      const headings = []
+      htmlParser('h1,h2,h3,h4,h5').each((index, item) => {
+        const i = htmlParser(item)
+        headings.push({
+          value: i.text(),
+          depth: 0 | item.name.slice(-1),
+          slug: i.attr('id')
+        })
+      });
       const contentType = data.hPath.split('/')[1];
       if (contentType === 'posts') {
         if (!data.content.trim() || data.content.trim() === `# ${content}`) {
           return
         }
       }
+
       const attributes = await this.getData('query/sql', {
         stmt: `select name,value from attributes where block_id = '${id}' union \n
                        SELECT type, group_concat(content) \n
@@ -142,12 +163,11 @@ class SiYuan {
                         group by type`
       });
       const attribute = attributes.data.reduce((r, item) => (
-          {
-            ...r,
-            [item.name]: item.value,
-          }
-        ), {})
-      ;
+        {
+          ...r,
+          [item.name]: item.value,
+        }
+      ), {});
       const template = attribute['custom-template']
       const slug = attribute['custom-slug']
       const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
@@ -156,9 +176,10 @@ class SiYuan {
       }
       return {
         ...siYuanBoxData,
-        html: '<div></div>',
+        html,
         title: content,
         template,
+        headings,
         slug: slug ? slug : data.hPath,
         raw: data.content,
         date: this.getFormatDate({date: created}),
@@ -169,12 +190,13 @@ class SiYuan {
   }
 
 }
+
 module.exports = {
   SiYuan
 }
 
 
-// const fs = require('fs')
-// const s = new SiYuan('noeyqg6qknhqvl5m','http://127.0.0.1:6806/api/','20220420112442-p6q6e8w')
-// s.getSiYuanTopic()
-//     .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))
+const fs = require('fs')
+const s = new SiYuan('noeyqg6qknhqvl5m', 'http://127.0.0.1:6806/api/', '20220420112442-p6q6e8w')
+s.getSiYuanPost()
+  .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))

@@ -31,6 +31,7 @@ interface ArticleNode {
     value: string;
   }[];
   htmlAst: string;
+  html: string;
 }
 
 interface ArticlesQueryResult {
@@ -74,6 +75,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
             absolute_path
           }
           htmlAst
+          html
           headings {
             depth
             value
@@ -154,6 +156,7 @@ export const createPages = async ({actions, graphql}: CreatePagesArgs) => {
           context: {
             id: node.frontmatter.id,
             htmlAst: node.htmlAst,
+            html: node.html,
             articleNode: node,
             tree: topicMap[node.field.topic],
             headings: node.headings.map((x) => ({
@@ -218,6 +221,7 @@ function createArticlePages(
       context: {
         id: node.frontmatter.id,
         htmlAst: node.htmlAst,
+        html: node.html,
         articleNode: node,
         headings: node.headings.map((x) => ({
           ...x,

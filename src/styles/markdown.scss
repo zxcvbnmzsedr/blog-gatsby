@@ -13,6 +13,13 @@
     overflow: auto;
   }
 
+  img {
+    background: cornsilk;
+  }
+  .mermaid {
+    background: cornsilk;
+  }
+
   blockquote {
     @extend .blockquote;
 

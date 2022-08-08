@@ -9,8 +9,10 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.15.4",
+    "cheerio": "^1.0.0-rc.12",
     "front-matter": "^4.0.2",
     "gatsby-core-utils": "^3.13.0",
+    "gatsby-remark-vscode": "^3.3.1",
     "gray-matter": "^4.0.3",
     "hast-util-raw": "^6.0.2",
     "hast-util-to-html": "^7.1.3",

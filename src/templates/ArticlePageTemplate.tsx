@@ -24,6 +24,7 @@ interface Props {
     id: string;
     lang: string;
     htmlAst: HtmlAst;
+    html: string;
     headings: Heading[];
     articleNode: ArticleNode;
   };
@@ -95,7 +96,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
   const i18n = useI18n();
   const articleStore = useStore(ArticleStore);
 
-  const { id, lang, htmlAst, headings,articleNode } = props.pageContext;
+  const { id, lang, html,htmlAst, headings,articleNode } = props.pageContext;
 
 
   useEffect(() => {
@@ -139,6 +140,7 @@ const ArticlePageTemplate: React.FC<Props> = (props) => {
             <Col md={9} sm={12}>
               <ArticleContentDisplay
                 htmlAst={htmlAst}
+                html={html}
                 headings={headings}
               />
             </Col>

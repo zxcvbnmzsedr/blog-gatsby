@@ -101,34 +101,29 @@ const headingLevels = [...Array(6).keys()].reduce((acc, i) => {
 }, {});
 
 module.exports = function remarkExtendNodeType({
-  type,
-  basePath,
-  getNode,
-  getNodesByType,
-  cache,
-  getCache,
-  reporter,
-  ...rest
-}, pluginOptions) {
+                                                 type,
+                                                 basePath,
+                                                 getNode,
+                                                 getNodesByType,
+                                                 cache,
+                                                 getCache,
+                                                 reporter,
+                                                 ...rest
+                                               }, pluginOptions) {
   if (type.name !== `SiYuan`) {
     return {};
   }
   const remarkOptions = {};
-  let remark = new Remark().data(`settings`, remarkOptions);
+  let remark = new Remark().data(`settings`, remarkOptions)
+  remark = remark.use(remarkGfm);
+
 
   return {
-    html: {
-      type: `String`,
-      async resolve(markdownNode, opt, context) {
-        return getHTML(markdownNode, context);
-      }
-    },
     headings: {
       type: [`MarkdownHeading`],
       args: {
         depth: `MarkdownHeadingLevels`
       },
-
       async resolve(markdownNode, {
         depth
       }, context) {
@@ -172,6 +167,7 @@ module.exports = function remarkExtendNodeType({
       }
     }
   }
+
   async function getHeadings(markdownNode, context) {
     const markdownCacheKey = getCacheKey(CACHE_TYPE_HEADINGS, markdownNode);
     const cachedHeadings = await getCacheWithNodeDependencyValidation(markdownCacheKey, markdownNode, context);
@@ -209,6 +205,7 @@ module.exports = function remarkExtendNodeType({
       return html;
     }
   }
+
   async function getCacheWithNodeDependencyValidation(cacheKey, markdownNode, context) {
     const depCacheKey = getCacheKey(CACHE_TYPE_NODE_DEPS, markdownNode);
     const dependencies = await cache.get(depCacheKey);
@@ -303,7 +300,7 @@ module.exports = function remarkExtendNodeType({
 
 
     for (const plugin of pluginOptions.plugins) {
-      const requiredPlugin = "4" === `4` ? plugin.module : require(plugin.resolve);
+      const requiredPlugin =require(plugin.resolve);
 
       if (typeof requiredPlugin.mutateSource === `function`) {
         await requiredPlugin.mutateSource({
@@ -314,7 +311,7 @@ module.exports = function remarkExtendNodeType({
           cache: getCache(plugin.name),
           getCache,
           ...rest
-        }, plugin.pluginOptions);
+        }, plugin.options);
       }
     }
     return parseString(markdownNode.raw, markdownNode, context);
@@ -353,7 +350,7 @@ module.exports = function remarkExtendNodeType({
     const inMemoryNodeDependencyCache = {}; // Use a for loop to run remark plugins serially.
 
     for (const plugin of pluginOptions.plugins) {
-      const requiredPlugin = "4" === `4` ? plugin.module : require(plugin.resolve); // Allow both exports = function(), and exports.default = function()
+      const requiredPlugin = require(plugin.resolve); // Allow both exports = function(), and exports.default = function()
 
       const defaultFunction = _.isFunction(requiredPlugin) ? requiredPlugin : _.isFunction(requiredPlugin.default) ? requiredPlugin.default : undefined;
 
@@ -372,7 +369,7 @@ module.exports = function remarkExtendNodeType({
           context,
           getRemarkFileDependency: queryFilter => getFileWithNodeDependencyTracking(inMemoryNodeDependencyCache, context, markdownNode, queryFilter),
           ...rest
-        }, plugin.pluginOptions);
+        }, plugin.options);
       }
     } // Set up dependency cache for this markdownNode
 
