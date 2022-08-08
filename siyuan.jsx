@@ -198,5 +198,51 @@ module.exports = {
 
 const fs = require('fs')
 const s = new SiYuan('noeyqg6qknhqvl5m', 'http://127.0.0.1:6806/api/', '20220420112442-p6q6e8w')
+
+function mkdirsSync(dirname) {
+  if (fs.existsSync(dirname)) {
+    return true;
+  } else {
+    if (mkdirsSync(path.dirname(dirname))) {
+      fs.mkdirSync(dirname);
+      return true;
+    }
+  }
+}
+
 s.getSiYuanPost()
-  .then(e => fs.writeFileSync(path.join('.', 'index.json'), JSON.stringify(e[1])))
+  .then(e => {
+      e.forEach(raw => {
+        if (raw) {
+          mkdirsSync(path.join('vuepress-starter', 'docs', raw.hpath))
+          fs.writeFileSync(path.join('vuepress-starter', 'docs', raw.hpath, 'README.md'), raw.raw)
+        }
+      })
+    }
+  )
+
+s.getSiYuanTopic().then(e => {
+  var sidebar = {}
+  addPath(e)
+  toSideBar(sidebar, e)
+  mkdirsSync(path.join('vuepress-starter', 'docs', '.vuepress'))
+
+  fs.writeFileSync(path.join('vuepress-starter', 'docs', '.vuepress', 'config.json'), JSON.stringify(sidebar))
+})
+
+function addPath(topicList) {
+  for (let index in topicList) {
+    var topic = topicList[index]
+    topic.path = topic.path + '/'
+    addPath(topic.children)
+  }
+}
+
+function toSideBar(sidebar, topicList) {
+  for (let index in topicList) {
+    var topic = topicList[index]
+    if (topic.level === 0) {
+      sidebar[topic.path] = topic.children
+    }
+  }
+}
