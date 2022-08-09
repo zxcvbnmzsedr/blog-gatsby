@@ -12,7 +12,61 @@
       "parentId": "",
       "path": "/topic/分布式解决方案/分布式理论/",
       "parentPath": "/topic/分布式解决方案",
+      "sort": 1,
       "children": [
+        {
+          "title": "三驾马车",
+          "id": "20220504221043-ndzz22d",
+          "type": "d",
+          "href": "/topic/分布式解决方案/分布式理论/三驾马车",
+          "parentId": "",
+          "path": "/topic/分布式解决方案/分布式理论/三驾马车/",
+          "parentPath": "/topic/分布式解决方案/分布式理论",
+          "sort": 0,
+          "children": [
+            {
+              "title": "The Google File System",
+              "id": "20220505103842-h8stgqv",
+              "type": "d",
+              "href": "/topic/分布式解决方案/分布式理论/三驾马车/The Google File System",
+              "parentId": "",
+              "path": "/topic/分布式解决方案/分布式理论/三驾马车/The Google File System/",
+              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
+              "sort": 1,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "BigTable中文翻译",
+              "id": "20220516160557-fxzscu9",
+              "type": "d",
+              "href": "/topic/分布式解决方案/分布式理论/三驾马车/BigTable中文翻译",
+              "parentId": "",
+              "path": "/topic/分布式解决方案/分布式理论/三驾马车/BigTable中文翻译/",
+              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
+              "sort": 2,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "MapReduce",
+              "id": "20220504221049-bsx93ro",
+              "type": "d",
+              "href": "/topic/分布式解决方案/分布式理论/三驾马车/MapReduce",
+              "parentId": "",
+              "path": "/topic/分布式解决方案/分布式理论/三驾马车/MapReduce/",
+              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
+              "sort": 3,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
         {
           "title": "理论基础",
           "id": "20220421202816-shcixtm",
@@ -21,6 +75,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/分布式理论/理论基础/",
           "parentPath": "/topic/分布式解决方案/分布式理论",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -33,6 +88,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/分布式理论/共识算法/",
           "parentPath": "/topic/分布式解决方案/分布式理论",
+          "sort": 2,
           "children": [
             {
               "title": "Raft算法",
@@ -70,56 +126,8 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/分布式理论/通讯协议-Gossip/",
           "parentPath": "/topic/分布式解决方案/分布式理论",
+          "sort": 3,
           "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "三驾马车",
-          "id": "20220504221043-ndzz22d",
-          "type": "d",
-          "href": "/topic/分布式解决方案/分布式理论/三驾马车",
-          "parentId": "",
-          "path": "/topic/分布式解决方案/分布式理论/三驾马车/",
-          "parentPath": "/topic/分布式解决方案/分布式理论",
-          "children": [
-            {
-              "title": "MapReduce",
-              "id": "20220504221049-bsx93ro",
-              "type": "d",
-              "href": "/topic/分布式解决方案/分布式理论/三驾马车/MapReduce",
-              "parentId": "",
-              "path": "/topic/分布式解决方案/分布式理论/三驾马车/MapReduce/",
-              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "The Google File System",
-              "id": "20220505103842-h8stgqv",
-              "type": "d",
-              "href": "/topic/分布式解决方案/分布式理论/三驾马车/The Google File System",
-              "parentId": "",
-              "path": "/topic/分布式解决方案/分布式理论/三驾马车/The Google File System/",
-              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "BigTable中文翻译",
-              "id": "20220516160557-fxzscu9",
-              "type": "d",
-              "href": "/topic/分布式解决方案/分布式理论/三驾马车/BigTable中文翻译",
-              "parentId": "",
-              "path": "/topic/分布式解决方案/分布式理论/三驾马车/BigTable中文翻译/",
-              "parentPath": "/topic/分布式解决方案/分布式理论/三驾马车",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
           "level": 2,
           "collapsable": false
         }
@@ -135,6 +143,7 @@
       "parentId": "",
       "path": "/topic/分布式解决方案/流量调度/",
       "parentPath": "/topic/分布式解决方案",
+      "sort": 2,
       "children": [
         {
           "title": "流量控制",
@@ -144,18 +153,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/流量调度/流量控制/",
           "parentPath": "/topic/分布式解决方案/流量调度",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "负载均衡",
-          "id": "20220429141638-us0mqmb",
-          "type": "d",
-          "href": "/topic/分布式解决方案/流量调度/负载均衡",
-          "parentId": "",
-          "path": "/topic/分布式解决方案/流量调度/负载均衡/",
-          "parentPath": "/topic/分布式解决方案/流量调度",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -168,6 +166,20 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/流量调度/服务路由/",
           "parentPath": "/topic/分布式解决方案/流量调度",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "负载均衡",
+          "id": "20220429141638-us0mqmb",
+          "type": "d",
+          "href": "/topic/分布式解决方案/流量调度/负载均衡",
+          "parentId": "",
+          "path": "/topic/分布式解决方案/流量调度/负载均衡/",
+          "parentPath": "/topic/分布式解决方案/流量调度",
+          "sort": 3,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -184,7 +196,34 @@
       "parentId": "",
       "path": "/topic/分布式解决方案/数据调度/",
       "parentPath": "/topic/分布式解决方案",
+      "sort": 3,
       "children": [
+        {
+          "title": "分布式缓存",
+          "id": "20220429141810-k5iup7v",
+          "type": "d",
+          "href": "/topic/分布式解决方案/数据调度/分布式缓存",
+          "parentId": "",
+          "path": "/topic/分布式解决方案/数据调度/分布式缓存/",
+          "parentPath": "/topic/分布式解决方案/数据调度",
+          "sort": 1,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "数据库",
+          "id": "20220429141819-ylczf3x",
+          "type": "d",
+          "href": "/topic/分布式解决方案/数据调度/数据库",
+          "parentId": "",
+          "path": "/topic/分布式解决方案/数据调度/数据库/",
+          "parentPath": "/topic/分布式解决方案/数据调度",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
         {
           "title": "分布式事务",
           "id": "20220421194022-xmjo91m",
@@ -193,6 +232,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/数据调度/分布式事务/",
           "parentPath": "/topic/分布式解决方案/数据调度",
+          "sort": 4,
           "children": [
             {
               "title": "事务分类",
@@ -202,6 +242,7 @@
               "parentId": "",
               "path": "/topic/分布式解决方案/数据调度/分布式事务/事务分类/",
               "parentPath": "/topic/分布式解决方案/数据调度/分布式事务",
+              "sort": 2,
               "children": [
                 {
                   "title": "刚性事务的实现",
@@ -211,6 +252,7 @@
                   "parentId": "",
                   "path": "/topic/分布式解决方案/数据调度/分布式事务/事务分类/刚性事务的实现/",
                   "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/事务分类",
+                  "sort": 1,
                   "children": [],
                   "level": 4,
                   "collapsable": false
@@ -223,6 +265,7 @@
                   "parentId": "",
                   "path": "/topic/分布式解决方案/数据调度/分布式事务/事务分类/柔性事务的实现/",
                   "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/事务分类",
+                  "sort": 2,
                   "children": [],
                   "level": 4,
                   "collapsable": false
@@ -235,6 +278,7 @@
                   "parentId": "",
                   "path": "/topic/分布式解决方案/数据调度/分布式事务/事务分类/总体的⽅案对⽐/",
                   "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/事务分类",
+                  "sort": 3,
                   "children": [],
                   "level": 4,
                   "collapsable": false
@@ -251,6 +295,7 @@
               "parentId": "",
               "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/",
               "parentPath": "/topic/分布式解决方案/数据调度/分布式事务",
+              "sort": 3,
               "children": [
                 {
                   "title": "Seata解决方案",
@@ -260,6 +305,7 @@
                   "parentId": "",
                   "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案/",
                   "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架",
+                  "sort": 2,
                   "children": [
                     {
                       "title": "AT模式",
@@ -269,6 +315,7 @@
                       "parentId": "",
                       "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案/AT模式/",
                       "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案",
+                      "sort": 1,
                       "children": [],
                       "level": 5,
                       "collapsable": false
@@ -281,6 +328,7 @@
                       "parentId": "",
                       "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案/TCC模式/",
                       "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案",
+                      "sort": 2,
                       "children": [],
                       "level": 5,
                       "collapsable": false
@@ -293,6 +341,7 @@
                       "parentId": "",
                       "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案/Sega模式/",
                       "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案",
+                      "sort": 3,
                       "children": [],
                       "level": 5,
                       "collapsable": false
@@ -305,6 +354,7 @@
                       "parentId": "",
                       "path": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案/XA模式/",
                       "parentPath": "/topic/分布式解决方案/数据调度/分布式事务/Seata框架/Seata解决方案",
+                      "sort": 4,
                       "children": [],
                       "level": 5,
                       "collapsable": false
@@ -318,30 +368,6 @@
               "collapsable": false
             }
           ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "分布式缓存",
-          "id": "20220429141810-k5iup7v",
-          "type": "d",
-          "href": "/topic/分布式解决方案/数据调度/分布式缓存",
-          "parentId": "",
-          "path": "/topic/分布式解决方案/数据调度/分布式缓存/",
-          "parentPath": "/topic/分布式解决方案/数据调度",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "数据库",
-          "id": "20220429141819-ylczf3x",
-          "type": "d",
-          "href": "/topic/分布式解决方案/数据调度/数据库",
-          "parentId": "",
-          "path": "/topic/分布式解决方案/数据调度/数据库/",
-          "parentPath": "/topic/分布式解决方案/数据调度",
-          "children": [],
           "level": 2,
           "collapsable": false
         },
@@ -381,6 +407,7 @@
       "parentId": "",
       "path": "/topic/分布式解决方案/服务治理/",
       "parentPath": "/topic/分布式解决方案",
+      "sort": 4,
       "children": [
         {
           "title": "服务注册和发现",
@@ -390,18 +417,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/服务治理/服务注册和发现/",
           "parentPath": "/topic/分布式解决方案/服务治理",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "服务监控",
-          "id": "20220429141957-p3p01fn",
-          "type": "d",
-          "href": "/topic/分布式解决方案/服务治理/服务监控",
-          "parentId": "",
-          "path": "/topic/分布式解决方案/服务治理/服务监控/",
-          "parentPath": "/topic/分布式解决方案/服务治理",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -414,6 +430,20 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/服务治理/链路追踪/",
           "parentPath": "/topic/分布式解决方案/服务治理",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "服务监控",
+          "id": "20220429141957-p3p01fn",
+          "type": "d",
+          "href": "/topic/分布式解决方案/服务治理/服务监控",
+          "parentId": "",
+          "path": "/topic/分布式解决方案/服务治理/服务监控/",
+          "parentPath": "/topic/分布式解决方案/服务治理",
+          "sort": 3,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -426,6 +456,7 @@
           "parentId": "",
           "path": "/topic/分布式解决方案/服务治理/服务降级和熔断/",
           "parentPath": "/topic/分布式解决方案/服务治理",
+          "sort": 4,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -442,6 +473,7 @@
       "parentId": "",
       "path": "/topic/分布式解决方案/高并发架构/",
       "parentPath": "/topic/分布式解决方案",
+      "sort": 5,
       "children": [],
       "level": 1,
       "collapsable": false
@@ -460,6 +492,7 @@
       "parentId": "",
       "path": "/topic/Java并发工具包/并发基础/",
       "parentPath": "/topic/Java并发工具包",
+      "sort": 1,
       "children": [
         {
           "title": "线程基础",
@@ -469,19 +502,8 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/并发基础/线程基础/",
           "parentPath": "/topic/Java并发工具包/并发基础",
+          "sort": 1,
           "children": [
-            {
-              "title": "waitnotifynotifyAll",
-              "id": "20220421194023-1yi0nux",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发基础/线程基础/waitnotifynotifyAll",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发基础/线程基础/waitnotifynotifyAll/",
-              "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
             {
               "title": "Thread的状态",
               "id": "20220421194023-ol9lplx",
@@ -490,18 +512,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程基础/Thread的状态/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "Thread的实现方式",
-              "id": "20220421194023-v6obecl",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发基础/线程基础/Thread的实现方式",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发基础/线程基础/Thread的实现方式/",
-              "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 1,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -514,6 +525,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程基础/进程与线程/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 2,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -526,6 +538,33 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程基础/正确停止线程的方式/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 3,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "Thread的实现方式",
+              "id": "20220421194023-v6obecl",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发基础/线程基础/Thread的实现方式",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发基础/线程基础/Thread的实现方式/",
+              "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 4,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "waitnotifynotifyAll",
+              "id": "20220421194023-1yi0nux",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发基础/线程基础/waitnotifynotifyAll",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发基础/线程基础/waitnotifynotifyAll/",
+              "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 5,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -538,6 +577,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程基础/生产者消费者模型/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程基础",
+              "sort": 6,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -554,6 +594,7 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/并发基础/线程安全/",
           "parentPath": "/topic/Java并发工具包/并发基础",
+          "sort": 2,
           "children": [
             {
               "title": "线程不安全",
@@ -563,6 +604,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程安全/线程不安全/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程安全",
+              "sort": 1,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -575,6 +617,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程安全/线程安全/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程安全",
+              "sort": 7,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -587,6 +630,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发基础/线程安全/需要注意线程安全问题的情况/",
               "parentPath": "/topic/Java并发工具包/并发基础/线程安全",
+              "sort": 17,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -607,7 +651,300 @@
       "parentId": "",
       "path": "/topic/Java并发工具包/并发工具/",
       "parentPath": "/topic/Java并发工具包",
+      "sort": 2,
       "children": [
+        {
+          "title": "线程协作",
+          "id": "20220421225409-vum430h",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/线程协作",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/线程协作/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 1,
+          "children": [
+            {
+              "title": "Semaphore信号量",
+              "id": "20220421194023-zk5fktn",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/线程协作/Semaphore信号量",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/线程协作/Semaphore信号量/",
+              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
+              "sort": 2,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "CountDownLatch详解",
+              "id": "20220421194023-m0tc081",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/线程协作/CountDownLatch详解",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/线程协作/CountDownLatch详解/",
+              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
+              "sort": 16,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "使用CompletableFuture解决旅游平台问题",
+              "id": "20220421194023-7xbmrhw",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/线程协作/使用CompletableFuture解决旅游平台问题",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/线程协作/使用CompletableFuture解决旅游平台问题/",
+              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
+              "sort": 27,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "使用CyclicBarrier解决团建问题",
+              "id": "20220421194023-2t11ew0",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/线程协作/使用CyclicBarrier解决团建问题",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/线程协作/使用CyclicBarrier解决团建问题/",
+              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
+              "sort": 30,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "Future",
+          "id": "20220421225357-mgk8fm8",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/Future",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/Future/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 2,
+          "children": [
+            {
+              "title": "Future主要功能",
+              "id": "20220421194023-tc7cnvu",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/Future/Future主要功能",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/Future/Future主要功能/",
+              "parentPath": "/topic/Java并发工具包/并发工具/Future",
+              "sort": 2,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "FutureTask源码分析",
+              "id": "20220421194023-lcf6hel",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/Future/FutureTask源码分析",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/Future/FutureTask源码分析/",
+              "parentPath": "/topic/Java并发工具包/并发工具/Future",
+              "sort": 3,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "ThreadLocal",
+          "id": "20220421225340-rez89hu",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/ThreadLocal",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/ThreadLocal/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 3,
+          "children": [
+            {
+              "title": "ThreadLocal内存泄漏",
+              "id": "20220421194023-skqpi80",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal内存泄漏",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal内存泄漏/",
+              "parentPath": "/topic/Java并发工具包/并发工具/ThreadLocal",
+              "sort": 18,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "ThreadLocal使用场景",
+              "id": "20220421194023-5y0rwt1",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal使用场景",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal使用场景/",
+              "parentPath": "/topic/Java并发工具包/并发工具/ThreadLocal",
+              "sort": 28,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "原子类",
+          "id": "20220421225252-idqz1wx",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/原子类",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/原子类/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 4,
+          "children": [
+            {
+              "title": "原子类的作用概览",
+              "id": "20220421194024-q0d2887",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/原子类/原子类的作用概览",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/原子类/原子类的作用概览/",
+              "parentPath": "/topic/Java并发工具包/并发工具/原子类",
+              "sort": 1,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "原子类的性能分析",
+              "id": "20220421194024-x4a73dp",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/原子类/原子类的性能分析",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/原子类/原子类的性能分析/",
+              "parentPath": "/topic/Java并发工具包/并发工具/原子类",
+              "sort": 5,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "阻塞队列",
+          "id": "20220421225150-nu224ql",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/阻塞队列",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/阻塞队列/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 5,
+          "children": [
+            {
+              "title": "常见的阻塞队列",
+              "id": "20220421194024-9ltr7q3",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/阻塞队列/常见的阻塞队列",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/阻塞队列/常见的阻塞队列/",
+              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
+              "sort": 1,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "阻塞队列的常用方法",
+              "id": "20220421194024-f1qdcm3",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/阻塞队列/阻塞队列的常用方法",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/阻塞队列/阻塞队列的常用方法/",
+              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
+              "sort": 2,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "什么是阻塞队列",
+              "id": "20220421194023-4d0fgjl",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/阻塞队列/什么是阻塞队列",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/阻塞队列/什么是阻塞队列/",
+              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
+              "sort": 29,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "并发容器",
+          "id": "20220421225042-g34phsd",
+          "type": "d",
+          "href": "/topic/Java并发工具包/并发工具/并发容器",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/并发工具/并发容器/",
+          "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 6,
+          "children": [
+            {
+              "title": "HashMap",
+              "id": "20220421194023-chqzo14",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/并发容器/HashMap",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/并发容器/HashMap/",
+              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
+              "sort": 1,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "CopyOnWriteArrayList",
+              "id": "20220421194022-gkzupas",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/并发容器/CopyOnWriteArrayList",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/并发容器/CopyOnWriteArrayList/",
+              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
+              "sort": 34,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "ConcurrentHashMap详解",
+              "id": "20220421194022-5ml6ohm",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/并发容器/ConcurrentHashMap详解",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/并发容器/ConcurrentHashMap详解/",
+              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
+              "sort": 35,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            }
+          ],
+          "level": 2,
+          "collapsable": false
+        },
         {
           "title": "线程池",
           "id": "20220421224850-czk1iq2",
@@ -616,19 +953,8 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/并发工具/线程池/",
           "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 7,
           "children": [
-            {
-              "title": "ForkJoin框架",
-              "id": "20220421194023-elf7igk",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程池/ForkJoin框架",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程池/ForkJoin框架/",
-              "parentPath": "/topic/Java并发工具包/并发工具/线程池",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
             {
               "title": "为什么多线程会带来性能问题",
               "id": "20220421194023-n21nz3d",
@@ -637,18 +963,20 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发工具/线程池/为什么多线程会带来性能问题/",
               "parentPath": "/topic/Java并发工具包/并发工具/线程池",
+              "sort": 1,
               "children": [],
               "level": 3,
               "collapsable": false
             },
             {
-              "title": "线程池线程复用原理",
-              "id": "20220421194024-csc9ehx",
+              "title": "线程池的优势",
+              "id": "20220421194024-vgrsujq",
               "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程池/线程池线程复用原理",
+              "href": "/topic/Java并发工具包/并发工具/线程池/线程池的优势",
               "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程池/线程池线程复用原理/",
+              "path": "/topic/Java并发工具包/并发工具/线程池/线程池的优势/",
               "parentPath": "/topic/Java并发工具包/并发工具/线程池",
+              "sort": 2,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -661,6 +989,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发工具/线程池/创建线程池的参数/",
               "parentPath": "/topic/Java并发工具包/并发工具/线程池",
+              "sort": 3,
               "children": [
                 {
                   "title": "如何设置线程数",
@@ -679,13 +1008,27 @@
               "collapsable": false
             },
             {
-              "title": "线程池的优势",
-              "id": "20220421194024-vgrsujq",
+              "title": "线程池线程复用原理",
+              "id": "20220421194024-csc9ehx",
               "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程池/线程池的优势",
+              "href": "/topic/Java并发工具包/并发工具/线程池/线程池线程复用原理",
               "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程池/线程池的优势/",
+              "path": "/topic/Java并发工具包/并发工具/线程池/线程池线程复用原理/",
               "parentPath": "/topic/Java并发工具包/并发工具/线程池",
+              "sort": 4,
+              "children": [],
+              "level": 3,
+              "collapsable": false
+            },
+            {
+              "title": "ForkJoin框架",
+              "id": "20220421194023-elf7igk",
+              "type": "d",
+              "href": "/topic/Java并发工具包/并发工具/线程池/ForkJoin框架",
+              "parentId": "",
+              "path": "/topic/Java并发工具包/并发工具/线程池/ForkJoin框架/",
+              "parentPath": "/topic/Java并发工具包/并发工具/线程池",
+              "sort": 5,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -702,31 +1045,8 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/并发工具/各种锁/",
           "parentPath": "/topic/Java并发工具包/并发工具",
+          "sort": 9,
           "children": [
-            {
-              "title": "lock的常用方法",
-              "id": "20220421194023-d5u43he",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/各种锁/lock的常用方法",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/各种锁/lock的常用方法/",
-              "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "synchronized和Lock的对比",
-              "id": "20220421194023-wyopjqc",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/各种锁/synchronized和Lock的对比",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/各种锁/synchronized和Lock的对比/",
-              "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
             {
               "title": "锁的种类和特点",
               "id": "20220421194024-5l8t6o8",
@@ -735,27 +1055,17 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/",
               "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
+              "sort": 2,
               "children": [
                 {
-                  "title": "乐观锁和悲观锁",
-                  "id": "20220421194023-puex63d",
+                  "title": "公平锁非公平锁",
+                  "id": "20220421194024-ysp8l1x",
                   "type": "d",
-                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/乐观锁和悲观锁",
+                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/公平锁非公平锁",
                   "parentId": "",
-                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/乐观锁和悲观锁/",
+                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/公平锁非公平锁/",
                   "parentPath": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点",
-                  "children": [],
-                  "level": 4,
-                  "collapsable": false
-                },
-                {
-                  "title": "共享锁独占锁",
-                  "id": "20220421194024-pfoblt6",
-                  "type": "d",
-                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/共享锁独占锁",
-                  "parentId": "",
-                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/共享锁独占锁/",
-                  "parentPath": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点",
+                  "sort": 1,
                   "children": [],
                   "level": 4,
                   "collapsable": false
@@ -768,18 +1078,33 @@
                   "parentId": "",
                   "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/自旋锁非自旋锁/",
                   "parentPath": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点",
+                  "sort": 4,
                   "children": [],
                   "level": 4,
                   "collapsable": false
                 },
                 {
-                  "title": "公平锁非公平锁",
-                  "id": "20220421194024-ysp8l1x",
+                  "title": "共享锁独占锁",
+                  "id": "20220421194024-pfoblt6",
                   "type": "d",
-                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/公平锁非公平锁",
+                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/共享锁独占锁",
                   "parentId": "",
-                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/公平锁非公平锁/",
+                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/共享锁独占锁/",
                   "parentPath": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点",
+                  "sort": 7,
+                  "children": [],
+                  "level": 4,
+                  "collapsable": false
+                },
+                {
+                  "title": "乐观锁和悲观锁",
+                  "id": "20220421194023-puex63d",
+                  "type": "d",
+                  "href": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/乐观锁和悲观锁",
+                  "parentId": "",
+                  "path": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点/乐观锁和悲观锁/",
+                  "parentPath": "/topic/Java并发工具包/并发工具/各种锁/锁的种类和特点",
+                  "sort": 17,
                   "children": [],
                   "level": 4,
                   "collapsable": false
@@ -796,276 +1121,33 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/并发工具/各种锁/JVM锁优化/",
               "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "并发容器",
-          "id": "20220421225042-g34phsd",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/并发容器",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/并发容器/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "ConcurrentHashMap详解",
-              "id": "20220421194022-5ml6ohm",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/并发容器/ConcurrentHashMap详解",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/并发容器/ConcurrentHashMap详解/",
-              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
+              "sort": 3,
               "children": [],
               "level": 3,
               "collapsable": false
             },
             {
-              "title": "CopyOnWriteArrayList",
-              "id": "20220421194022-gkzupas",
+              "title": "synchronized和Lock的对比",
+              "id": "20220421194023-wyopjqc",
               "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/并发容器/CopyOnWriteArrayList",
+              "href": "/topic/Java并发工具包/并发工具/各种锁/synchronized和Lock的对比",
               "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/并发容器/CopyOnWriteArrayList/",
-              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
+              "path": "/topic/Java并发工具包/并发工具/各种锁/synchronized和Lock的对比/",
+              "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
+              "sort": 4,
               "children": [],
               "level": 3,
               "collapsable": false
             },
             {
-              "title": "HashMap",
-              "id": "20220421194023-chqzo14",
+              "title": "lock的常用方法",
+              "id": "20220421194023-d5u43he",
               "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/并发容器/HashMap",
+              "href": "/topic/Java并发工具包/并发工具/各种锁/lock的常用方法",
               "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/并发容器/HashMap/",
-              "parentPath": "/topic/Java并发工具包/并发工具/并发容器",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "阻塞队列",
-          "id": "20220421225150-nu224ql",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/阻塞队列",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/阻塞队列/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "什么是阻塞队列",
-              "id": "20220421194023-4d0fgjl",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/阻塞队列/什么是阻塞队列",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/阻塞队列/什么是阻塞队列/",
-              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "常见的阻塞队列",
-              "id": "20220421194024-9ltr7q3",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/阻塞队列/常见的阻塞队列",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/阻塞队列/常见的阻塞队列/",
-              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "阻塞队列的常用方法",
-              "id": "20220421194024-f1qdcm3",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/阻塞队列/阻塞队列的常用方法",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/阻塞队列/阻塞队列的常用方法/",
-              "parentPath": "/topic/Java并发工具包/并发工具/阻塞队列",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "原子类",
-          "id": "20220421225252-idqz1wx",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/原子类",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/原子类/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "原子类的作用概览",
-              "id": "20220421194024-q0d2887",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/原子类/原子类的作用概览",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/原子类/原子类的作用概览/",
-              "parentPath": "/topic/Java并发工具包/并发工具/原子类",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "原子类的性能分析",
-              "id": "20220421194024-x4a73dp",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/原子类/原子类的性能分析",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/原子类/原子类的性能分析/",
-              "parentPath": "/topic/Java并发工具包/并发工具/原子类",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "ThreadLocal",
-          "id": "20220421225340-rez89hu",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/ThreadLocal",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/ThreadLocal/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "ThreadLocal使用场景",
-              "id": "20220421194023-5y0rwt1",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal使用场景",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal使用场景/",
-              "parentPath": "/topic/Java并发工具包/并发工具/ThreadLocal",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "ThreadLocal内存泄漏",
-              "id": "20220421194023-skqpi80",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal内存泄漏",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/ThreadLocal/ThreadLocal内存泄漏/",
-              "parentPath": "/topic/Java并发工具包/并发工具/ThreadLocal",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "Future",
-          "id": "20220421225357-mgk8fm8",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/Future",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/Future/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "FutureTask源码分析",
-              "id": "20220421194023-lcf6hel",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/Future/FutureTask源码分析",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/Future/FutureTask源码分析/",
-              "parentPath": "/topic/Java并发工具包/并发工具/Future",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "Future主要功能",
-              "id": "20220421194023-tc7cnvu",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/Future/Future主要功能",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/Future/Future主要功能/",
-              "parentPath": "/topic/Java并发工具包/并发工具/Future",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            }
-          ],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "线程协作",
-          "id": "20220421225409-vum430h",
-          "type": "d",
-          "href": "/topic/Java并发工具包/并发工具/线程协作",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/并发工具/线程协作/",
-          "parentPath": "/topic/Java并发工具包/并发工具",
-          "children": [
-            {
-              "title": "使用CyclicBarrier解决团建问题",
-              "id": "20220421194023-2t11ew0",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程协作/使用CyclicBarrier解决团建问题",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程协作/使用CyclicBarrier解决团建问题/",
-              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "CountDownLatch详解",
-              "id": "20220421194023-m0tc081",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程协作/CountDownLatch详解",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程协作/CountDownLatch详解/",
-              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "Semaphore信号量",
-              "id": "20220421194023-zk5fktn",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程协作/Semaphore信号量",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程协作/Semaphore信号量/",
-              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
-              "children": [],
-              "level": 3,
-              "collapsable": false
-            },
-            {
-              "title": "使用CompletableFuture解决旅游平台问题",
-              "id": "20220421194023-7xbmrhw",
-              "type": "d",
-              "href": "/topic/Java并发工具包/并发工具/线程协作/使用CompletableFuture解决旅游平台问题",
-              "parentId": "",
-              "path": "/topic/Java并发工具包/并发工具/线程协作/使用CompletableFuture解决旅游平台问题/",
-              "parentPath": "/topic/Java并发工具包/并发工具/线程协作",
+              "path": "/topic/Java并发工具包/并发工具/各种锁/lock的常用方法/",
+              "parentPath": "/topic/Java并发工具包/并发工具/各种锁",
+              "sort": 33,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -1086,19 +1168,8 @@
       "parentId": "",
       "path": "/topic/Java并发工具包/底层原理/",
       "parentPath": "/topic/Java并发工具包",
+      "sort": 3,
       "children": [
-        {
-          "title": "AQS框架",
-          "id": "20220421194022-1td53tx",
-          "type": "d",
-          "href": "/topic/Java并发工具包/底层原理/AQS框架",
-          "parentId": "",
-          "path": "/topic/Java并发工具包/底层原理/AQS框架/",
-          "parentPath": "/topic/Java并发工具包/底层原理",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
         {
           "title": "CAS原理",
           "id": "20220421194022-1yd15d4",
@@ -1107,6 +1178,20 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/底层原理/CAS原理/",
           "parentPath": "/topic/Java并发工具包/底层原理",
+          "sort": 1,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "AQS框架",
+          "id": "20220421194022-1td53tx",
+          "type": "d",
+          "href": "/topic/Java并发工具包/底层原理/AQS框架",
+          "parentId": "",
+          "path": "/topic/Java并发工具包/底层原理/AQS框架/",
+          "parentPath": "/topic/Java并发工具包/底层原理",
+          "sort": 2,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1119,6 +1204,7 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/底层原理/伪共享/",
           "parentPath": "/topic/Java并发工具包/底层原理",
+          "sort": 3,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1131,6 +1217,7 @@
           "parentId": "",
           "path": "/topic/Java并发工具包/底层原理/java内存模型/",
           "parentPath": "/topic/Java并发工具包/底层原理",
+          "sort": 4,
           "children": [
             {
               "title": "Java内存模型介绍",
@@ -1140,6 +1227,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/底层原理/java内存模型/Java内存模型介绍/",
               "parentPath": "/topic/Java并发工具包/底层原理/java内存模型",
+              "sort": 25,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -1152,6 +1240,7 @@
               "parentId": "",
               "path": "/topic/Java并发工具包/底层原理/java内存模型/happens-before规则/",
               "parentPath": "/topic/Java并发工具包/底层原理/java内存模型",
+              "sort": 32,
               "children": [],
               "level": 3,
               "collapsable": false
@@ -1171,107 +1260,24 @@
       "path": "/topic/redis/"
     },
     {
-      "title": "Redis分布式缓存",
-      "id": "20220428141727-3x1i5zp",
+      "title": "Redis为什么这么快",
+      "id": "20220428141727-jbyo2wp",
       "type": "d",
-      "href": "/topic/redis/Redis分布式缓存",
+      "href": "/topic/redis/Redis为什么这么快",
       "parentId": "",
-      "path": "/topic/redis/Redis分布式缓存/",
+      "path": "/topic/redis/Redis为什么这么快/",
       "parentPath": "/topic/redis",
+      "sort": 1,
       "children": [
         {
-          "title": "缓存穿透",
-          "id": "20220428141728-64iljj5",
+          "title": "redis单线程的问题",
+          "id": "20220428141728-w6wf4kq",
           "type": "d",
-          "href": "/topic/redis/Redis分布式缓存/缓存穿透",
+          "href": "/topic/redis/Redis为什么这么快/redis单线程的问题",
           "parentId": "",
-          "path": "/topic/redis/Redis分布式缓存/缓存穿透/",
-          "parentPath": "/topic/redis/Redis分布式缓存",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "缓存雪崩",
-          "id": "20220428141728-9ti4duq",
-          "type": "d",
-          "href": "/topic/redis/Redis分布式缓存/缓存雪崩",
-          "parentId": "",
-          "path": "/topic/redis/Redis分布式缓存/缓存雪崩/",
-          "parentPath": "/topic/redis/Redis分布式缓存",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "缓存预热",
-          "id": "20220428141728-fz10tn2",
-          "type": "d",
-          "href": "/topic/redis/Redis分布式缓存/缓存预热",
-          "parentId": "",
-          "path": "/topic/redis/Redis分布式缓存/缓存预热/",
-          "parentPath": "/topic/redis/Redis分布式缓存",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "缓存击穿",
-          "id": "20220428141728-p93afgy",
-          "type": "d",
-          "href": "/topic/redis/Redis分布式缓存/缓存击穿",
-          "parentId": "",
-          "path": "/topic/redis/Redis分布式缓存/缓存击穿/",
-          "parentPath": "/topic/redis/Redis分布式缓存",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        }
-      ],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "Redis集群",
-      "id": "20220428141727-awm7yu5",
-      "type": "d",
-      "href": "/topic/redis/Redis集群",
-      "parentId": "",
-      "path": "/topic/redis/Redis集群/",
-      "parentPath": "/topic/redis",
-      "children": [
-        {
-          "title": "Redis数据淘汰策略",
-          "id": "20220428141727-oaw8wmd",
-          "type": "d",
-          "href": "/topic/redis/Redis集群/Redis数据淘汰策略",
-          "parentId": "",
-          "path": "/topic/redis/Redis集群/Redis数据淘汰策略/",
-          "parentPath": "/topic/redis/Redis集群",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "Redis数据删除策略",
-          "id": "20220428141727-pvzi1zo",
-          "type": "d",
-          "href": "/topic/redis/Redis集群/Redis数据删除策略",
-          "parentId": "",
-          "path": "/topic/redis/Redis集群/Redis数据删除策略/",
-          "parentPath": "/topic/redis/Redis集群",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "redis持久化",
-          "id": "20220428141728-ahu8hnn",
-          "type": "d",
-          "href": "/topic/redis/Redis集群/redis持久化",
-          "parentId": "",
-          "path": "/topic/redis/Redis集群/redis持久化/",
-          "parentPath": "/topic/redis/Redis集群",
+          "path": "/topic/redis/Redis为什么这么快/redis单线程的问题/",
+          "parentPath": "/topic/redis/Redis为什么这么快",
+          "sort": 11,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1288,15 +1294,17 @@
       "parentId": "",
       "path": "/topic/redis/Redis基本数据结构/",
       "parentPath": "/topic/redis",
+      "sort": 2,
       "children": [
         {
-          "title": "Hash的底层实现",
-          "id": "20220428141727-g51ewzt",
+          "title": "String的底层实现",
+          "id": "20220428141728-d2hmuxd",
           "type": "d",
-          "href": "/topic/redis/Redis基本数据结构/Hash的底层实现",
+          "href": "/topic/redis/Redis基本数据结构/String的底层实现",
           "parentId": "",
-          "path": "/topic/redis/Redis基本数据结构/Hash的底层实现/",
+          "path": "/topic/redis/Redis基本数据结构/String的底层实现/",
           "parentPath": "/topic/redis/Redis基本数据结构",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1309,6 +1317,20 @@
           "parentId": "",
           "path": "/topic/redis/Redis基本数据结构/List的底层实现/",
           "parentPath": "/topic/redis/Redis基本数据结构",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "Hash的底层实现",
+          "id": "20220428141727-g51ewzt",
+          "type": "d",
+          "href": "/topic/redis/Redis基本数据结构/Hash的底层实现",
+          "parentId": "",
+          "path": "/topic/redis/Redis基本数据结构/Hash的底层实现/",
+          "parentPath": "/topic/redis/Redis基本数据结构",
+          "sort": 3,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1321,18 +1343,7 @@
           "parentId": "",
           "path": "/topic/redis/Redis基本数据结构/Set的底层实现/",
           "parentPath": "/topic/redis/Redis基本数据结构",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "String的底层实现",
-          "id": "20220428141728-d2hmuxd",
-          "type": "d",
-          "href": "/topic/redis/Redis基本数据结构/String的底层实现",
-          "parentId": "",
-          "path": "/topic/redis/Redis基本数据结构/String的底层实现/",
-          "parentPath": "/topic/redis/Redis基本数据结构",
+          "sort": 4,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1345,6 +1356,7 @@
           "parentId": "",
           "path": "/topic/redis/Redis基本数据结构/ZSet的底层实现/",
           "parentPath": "/topic/redis/Redis基本数据结构",
+          "sort": 5,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1354,22 +1366,63 @@
       "collapsable": false
     },
     {
-      "title": "Redis为什么这么快",
-      "id": "20220428141727-jbyo2wp",
+      "title": "Redis分布式缓存",
+      "id": "20220428141727-3x1i5zp",
       "type": "d",
-      "href": "/topic/redis/Redis为什么这么快",
+      "href": "/topic/redis/Redis分布式缓存",
       "parentId": "",
-      "path": "/topic/redis/Redis为什么这么快/",
+      "path": "/topic/redis/Redis分布式缓存/",
       "parentPath": "/topic/redis",
+      "sort": 3,
       "children": [
         {
-          "title": "redis单线程的问题",
-          "id": "20220428141728-w6wf4kq",
+          "title": "缓存击穿",
+          "id": "20220428141728-p93afgy",
           "type": "d",
-          "href": "/topic/redis/Redis为什么这么快/redis单线程的问题",
+          "href": "/topic/redis/Redis分布式缓存/缓存击穿",
           "parentId": "",
-          "path": "/topic/redis/Redis为什么这么快/redis单线程的问题/",
-          "parentPath": "/topic/redis/Redis为什么这么快",
+          "path": "/topic/redis/Redis分布式缓存/缓存击穿/",
+          "parentPath": "/topic/redis/Redis分布式缓存",
+          "sort": 1,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "缓存穿透",
+          "id": "20220428141728-64iljj5",
+          "type": "d",
+          "href": "/topic/redis/Redis分布式缓存/缓存穿透",
+          "parentId": "",
+          "path": "/topic/redis/Redis分布式缓存/缓存穿透/",
+          "parentPath": "/topic/redis/Redis分布式缓存",
+          "sort": 3,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "缓存雪崩",
+          "id": "20220428141728-9ti4duq",
+          "type": "d",
+          "href": "/topic/redis/Redis分布式缓存/缓存雪崩",
+          "parentId": "",
+          "path": "/topic/redis/Redis分布式缓存/缓存雪崩/",
+          "parentPath": "/topic/redis/Redis分布式缓存",
+          "sort": 4,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "缓存预热",
+          "id": "20220428141728-fz10tn2",
+          "type": "d",
+          "href": "/topic/redis/Redis分布式缓存/缓存预热",
+          "parentId": "",
+          "path": "/topic/redis/Redis分布式缓存/缓存预热/",
+          "parentPath": "/topic/redis/Redis分布式缓存",
+          "sort": 7,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1386,6 +1439,7 @@
       "parentId": "",
       "path": "/topic/redis/Redis的分布式锁/",
       "parentPath": "/topic/redis",
+      "sort": 4,
       "children": [
         {
           "title": "看门狗模式",
@@ -1395,6 +1449,7 @@
           "parentId": "",
           "path": "/topic/redis/Redis的分布式锁/看门狗模式/",
           "parentPath": "/topic/redis/Redis的分布式锁",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1407,6 +1462,60 @@
           "parentId": "",
           "path": "/topic/redis/Redis的分布式锁/Redlock/",
           "parentPath": "/topic/redis/Redis的分布式锁",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        }
+      ],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "Redis集群",
+      "id": "20220428141727-awm7yu5",
+      "type": "d",
+      "href": "/topic/redis/Redis集群",
+      "parentId": "",
+      "path": "/topic/redis/Redis集群/",
+      "parentPath": "/topic/redis",
+      "sort": 6,
+      "children": [
+        {
+          "title": "Redis数据淘汰策略",
+          "id": "20220428141727-oaw8wmd",
+          "type": "d",
+          "href": "/topic/redis/Redis集群/Redis数据淘汰策略",
+          "parentId": "",
+          "path": "/topic/redis/Redis集群/Redis数据淘汰策略/",
+          "parentPath": "/topic/redis/Redis集群",
+          "sort": 5,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "redis持久化",
+          "id": "20220428141728-ahu8hnn",
+          "type": "d",
+          "href": "/topic/redis/Redis集群/redis持久化",
+          "parentId": "",
+          "path": "/topic/redis/Redis集群/redis持久化/",
+          "parentPath": "/topic/redis/Redis集群",
+          "sort": 8,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "Redis数据删除策略",
+          "id": "20220428141727-pvzi1zo",
+          "type": "d",
+          "href": "/topic/redis/Redis集群/Redis数据删除策略",
+          "parentId": "",
+          "path": "/topic/redis/Redis集群/Redis数据删除策略/",
+          "parentPath": "/topic/redis/Redis集群",
+          "sort": 13,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1429,6 +1538,7 @@
       "parentId": "",
       "path": "/topic/LeetCode/双指针/",
       "parentPath": "/topic/LeetCode",
+      "sort": 1,
       "children": [
         {
           "title": "26.删除有序数组中的重复项",
@@ -1438,54 +1548,7 @@
           "parentId": "",
           "path": "/topic/LeetCode/双指针/26.删除有序数组中的重复项/",
           "parentPath": "/topic/LeetCode/双指针",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "167.两数之和 II - 输入有序数组",
-          "id": "20220525102345-x1qv0hd",
-          "type": "d",
-          "href": "/topic/LeetCode/双指针/167.两数之和 II - 输入有序数组",
-          "parentId": "",
-          "path": "/topic/LeetCode/双指针/167.两数之和 II - 输入有序数组/",
-          "parentPath": "/topic/LeetCode/双指针",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "344.反转字符串",
-          "id": "20220525113022-ufcs2tw",
-          "type": "d",
-          "href": "/topic/LeetCode/双指针/344.反转字符串",
-          "parentId": "",
-          "path": "/topic/LeetCode/双指针/344.反转字符串/",
-          "parentPath": "/topic/LeetCode/双指针",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "27.移除元素",
-          "id": "20220525153219-w5kh1q6",
-          "type": "d",
-          "href": "/topic/LeetCode/双指针/27.移除元素",
-          "parentId": "",
-          "path": "/topic/LeetCode/双指针/27.移除元素/",
-          "parentPath": "/topic/LeetCode/双指针",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "283.移动零",
-          "id": "20220527150244-12ux6m1",
-          "type": "d",
-          "href": "/topic/LeetCode/双指针/283.移动零",
-          "parentId": "",
-          "path": "/topic/LeetCode/双指针/283.移动零/",
-          "parentPath": "/topic/LeetCode/双指针",
+          "sort": 1,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1498,6 +1561,46 @@
           "parentId": "",
           "path": "/topic/LeetCode/双指针/80.删除有序数组中的重复项2/",
           "parentPath": "/topic/LeetCode/双指针",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "27.移除元素",
+          "id": "20220525153219-w5kh1q6",
+          "type": "d",
+          "href": "/topic/LeetCode/双指针/27.移除元素",
+          "parentId": "",
+          "path": "/topic/LeetCode/双指针/27.移除元素/",
+          "parentPath": "/topic/LeetCode/双指针",
+          "sort": 3,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "167.两数之和 II - 输入有序数组",
+          "id": "20220525102345-x1qv0hd",
+          "type": "d",
+          "href": "/topic/LeetCode/双指针/167.两数之和 II - 输入有序数组",
+          "parentId": "",
+          "path": "/topic/LeetCode/双指针/167.两数之和 II - 输入有序数组/",
+          "parentPath": "/topic/LeetCode/双指针",
+          "sort": 4,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "283.移动零",
+          "id": "20220527150244-12ux6m1",
+          "type": "d",
+          "href": "/topic/LeetCode/双指针/283.移动零",
+          "parentId": "",
+          "path": "/topic/LeetCode/双指针/283.移动零/",
+          "parentPath": "/topic/LeetCode/双指针",
+          "sort": 5,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1510,18 +1613,20 @@
           "parentId": "",
           "path": "/topic/LeetCode/双指针/125.验证回文串/",
           "parentPath": "/topic/LeetCode/双指针",
+          "sort": 6,
           "children": [],
           "level": 2,
           "collapsable": false
         },
         {
-          "title": "345.反转字符串中的元音字母",
-          "id": "20220530112952-3xwls5z",
+          "title": "344.反转字符串",
+          "id": "20220525113022-ufcs2tw",
           "type": "d",
-          "href": "/topic/LeetCode/双指针/345.反转字符串中的元音字母",
+          "href": "/topic/LeetCode/双指针/344.反转字符串",
           "parentId": "",
-          "path": "/topic/LeetCode/双指针/345.反转字符串中的元音字母/",
+          "path": "/topic/LeetCode/双指针/344.反转字符串/",
           "parentPath": "/topic/LeetCode/双指针",
+          "sort": 7,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1534,6 +1639,20 @@
           "parentId": "",
           "path": "/topic/LeetCode/双指针/11.盛最多水的容器/",
           "parentPath": "/topic/LeetCode/双指针",
+          "sort": 8,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "345.反转字符串中的元音字母",
+          "id": "20220530112952-3xwls5z",
+          "type": "d",
+          "href": "/topic/LeetCode/双指针/345.反转字符串中的元音字母",
+          "parentId": "",
+          "path": "/topic/LeetCode/双指针/345.反转字符串中的元音字母/",
+          "parentPath": "/topic/LeetCode/双指针",
+          "sort": 9,
           "children": [],
           "level": 2,
           "collapsable": false
@@ -1549,115 +1668,6 @@
       "path": "/topic/系统设计/"
     },
     {
-      "title": "每个程序员都应该知道的延迟数字",
-      "id": "20220524194105-29b5zns",
-      "type": "d",
-      "href": "/topic/系统设计/每个程序员都应该知道的延迟数字",
-      "parentId": "",
-      "path": "/topic/系统设计/每个程序员都应该知道的延迟数字/",
-      "parentPath": "/topic/系统设计",
-      "children": [],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "4S分析法",
-      "id": "20220531175247-wjawyqd",
-      "type": "d",
-      "href": "/topic/系统设计/4S分析法",
-      "parentId": "",
-      "path": "/topic/系统设计/4S分析法/",
-      "parentPath": "/topic/系统设计",
-      "children": [],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "Flux架构",
-      "id": "20220630203113-cjoqcbf",
-      "type": "d",
-      "href": "/topic/系统设计/Flux架构",
-      "parentId": "",
-      "path": "/topic/系统设计/Flux架构/",
-      "parentPath": "/topic/系统设计",
-      "children": [],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "Http进化史",
-      "id": "20220701132636-sffchc7",
-      "type": "d",
-      "href": "/topic/系统设计/Http进化史",
-      "parentId": "",
-      "path": "/topic/系统设计/Http进化史/",
-      "parentPath": "/topic/系统设计",
-      "children": [],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "样例",
-      "id": "20220523161014-1vkr1si",
-      "type": "d",
-      "href": "/topic/系统设计/样例",
-      "parentId": "",
-      "path": "/topic/系统设计/样例/",
-      "parentPath": "/topic/系统设计",
-      "children": [
-        {
-          "title": "短链系统",
-          "id": "20220523142856-tm0dduf",
-          "type": "d",
-          "href": "/topic/系统设计/样例/短链系统",
-          "parentId": "",
-          "path": "/topic/系统设计/样例/短链系统/",
-          "parentPath": "/topic/系统设计/样例",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "微博架构设计",
-          "id": "20220524140048-zkiqvui",
-          "type": "d",
-          "href": "/topic/系统设计/样例/微博架构设计",
-          "parentId": "",
-          "path": "/topic/系统设计/样例/微博架构设计/",
-          "parentPath": "/topic/系统设计/样例",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        },
-        {
-          "title": "秒杀",
-          "id": "20220616202141-hy1nbif",
-          "type": "d",
-          "href": "/topic/系统设计/样例/秒杀",
-          "parentId": "",
-          "path": "/topic/系统设计/样例/秒杀/",
-          "parentPath": "/topic/系统设计/样例",
-          "children": [],
-          "level": 2,
-          "collapsable": false
-        }
-      ],
-      "level": 1,
-      "collapsable": false
-    },
-    {
-      "title": "负载均衡方案",
-      "id": "20220808155141-ef43mzy",
-      "type": "d",
-      "href": "/topic/系统设计/负载均衡方案",
-      "parentId": "",
-      "path": "/topic/系统设计/负载均衡方案/",
-      "parentPath": "/topic/系统设计",
-      "children": [],
-      "level": 1,
-      "collapsable": false
-    },
-    {
       "title": "概念",
       "id": "20220615132453-664g7l0",
       "type": "d",
@@ -1665,6 +1675,7 @@
       "parentId": "",
       "path": "/topic/系统设计/概念/",
       "parentPath": "/topic/系统设计",
+      "sort": 1,
       "children": [],
       "level": 1,
       "collapsable": false
@@ -1677,6 +1688,125 @@
       "parentId": "",
       "path": "/topic/系统设计/系统常见故障/",
       "parentPath": "/topic/系统设计",
+      "sort": 2,
+      "children": [],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "负载均衡方案",
+      "id": "20220808155141-ef43mzy",
+      "type": "d",
+      "href": "/topic/系统设计/负载均衡方案",
+      "parentId": "",
+      "path": "/topic/系统设计/负载均衡方案/",
+      "parentPath": "/topic/系统设计",
+      "sort": 3,
+      "children": [],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "Http进化史",
+      "id": "20220701132636-sffchc7",
+      "type": "d",
+      "href": "/topic/系统设计/Http进化史",
+      "parentId": "",
+      "path": "/topic/系统设计/Http进化史/",
+      "parentPath": "/topic/系统设计",
+      "sort": 4,
+      "children": [],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "4S分析法",
+      "id": "20220531175247-wjawyqd",
+      "type": "d",
+      "href": "/topic/系统设计/4S分析法",
+      "parentId": "",
+      "path": "/topic/系统设计/4S分析法/",
+      "parentPath": "/topic/系统设计",
+      "sort": 5,
+      "children": [],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "样例",
+      "id": "20220523161014-1vkr1si",
+      "type": "d",
+      "href": "/topic/系统设计/样例",
+      "parentId": "",
+      "path": "/topic/系统设计/样例/",
+      "parentPath": "/topic/系统设计",
+      "sort": 6,
+      "children": [
+        {
+          "title": "短链系统",
+          "id": "20220523142856-tm0dduf",
+          "type": "d",
+          "href": "/topic/系统设计/样例/短链系统",
+          "parentId": "",
+          "path": "/topic/系统设计/样例/短链系统/",
+          "parentPath": "/topic/系统设计/样例",
+          "sort": 1,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "微博架构设计",
+          "id": "20220524140048-zkiqvui",
+          "type": "d",
+          "href": "/topic/系统设计/样例/微博架构设计",
+          "parentId": "",
+          "path": "/topic/系统设计/样例/微博架构设计/",
+          "parentPath": "/topic/系统设计/样例",
+          "sort": 2,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        },
+        {
+          "title": "秒杀",
+          "id": "20220616202141-hy1nbif",
+          "type": "d",
+          "href": "/topic/系统设计/样例/秒杀",
+          "parentId": "",
+          "path": "/topic/系统设计/样例/秒杀/",
+          "parentPath": "/topic/系统设计/样例",
+          "sort": 4,
+          "children": [],
+          "level": 2,
+          "collapsable": false
+        }
+      ],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "每个程序员都应该知道的延迟数字",
+      "id": "20220524194105-29b5zns",
+      "type": "d",
+      "href": "/topic/系统设计/每个程序员都应该知道的延迟数字",
+      "parentId": "",
+      "path": "/topic/系统设计/每个程序员都应该知道的延迟数字/",
+      "parentPath": "/topic/系统设计",
+      "sort": 7,
+      "children": [],
+      "level": 1,
+      "collapsable": false
+    },
+    {
+      "title": "Flux架构",
+      "id": "20220630203113-cjoqcbf",
+      "type": "d",
+      "href": "/topic/系统设计/Flux架构",
+      "parentId": "",
+      "path": "/topic/系统设计/Flux架构/",
+      "parentPath": "/topic/系统设计",
+      "sort": 8,
       "children": [],
       "level": 1,
       "collapsable": false

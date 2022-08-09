@@ -46,7 +46,7 @@ class SiYuan {
       }
     }
   }
-  getTreeNode = (data) => {
+  getTreeNode = (data, sortData) => {
     return {
       title: data['content'],
       id: data['id'],
@@ -55,6 +55,7 @@ class SiYuan {
       parentId: data['parent_id'],
       path: data['hpath'],
       parentPath: path.join(data['hpath'], '..'),
+      sort: sortData[data['id']],
       children: []
     }
   }
@@ -91,14 +92,13 @@ class SiYuan {
   }
 
   async getSiYuanTopic() {
-    const topicList = await this.getData('query/sql', {stmt: `select id,hpath,path as filePath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${this.box}' and (type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
+    const topicList = await this.getData('query/sql', {stmt: `select id,hpath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${this.box}' and (type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
     const res = []
 
-    // const sortData = await this.getData('file/getFile', {path: `/data/${this.box}/.siyuan/sort.json`})
+    const sortData = await this.getData('file/getFile', {path: `/data/${this.box}/.siyuan/sort.json`})
     for (const topic of topicList.data) {
       const topicData = await this.getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${this.box}' and (type = 'd') and hpath like '${topic.hpath}%'`});
-      const sortData = await this.getData('file/getFile', {path: `/data/${this.box}${topic.filePath}`})
-      const treeList = topicData.data.map(e => this.getTreeNode(e)).sort((a, b) => a.sort - b.sort);
+      const treeList = topicData.data.map(e => this.getTreeNode(e, sortData)).sort((a, b) => a.sort - b.sort);
       const pathTree = this.parseTreeForPath(treeList.filter(({type}) => type === 'd'), topic.hpath)
 
       this.merge(pathTree, treeList)
