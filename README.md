@@ -1,4 +1,4 @@
-通过Gatsby生成博客站点
+通过Vuepress生成博客站点
 
 [点击这里查看生成后的效果](https://www.ztianzeng.com)
 

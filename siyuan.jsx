@@ -46,7 +46,7 @@ class SiYuan {
       }
     }
   }
-  getTreeNode = (data, sortData) => {
+  getTreeNode = (data) => {
     return {
       title: data['content'],
       id: data['id'],
@@ -55,7 +55,6 @@ class SiYuan {
       parentId: data['parent_id'],
       path: data['hpath'],
       parentPath: path.join(data['hpath'], '..'),
-      sort: sortData[data['id']],
       children: []
     }
   }
@@ -92,13 +91,14 @@ class SiYuan {
   }
 
   async getSiYuanTopic() {
-    const topicList = await this.getData('query/sql', {stmt: `select id,hpath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${this.box}' and (type = 'h' or type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
+    const topicList = await this.getData('query/sql', {stmt: `select id,hpath,path as filePath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${this.box}' and (type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
     const res = []
 
-    const sortData = await this.getData('file/getFile', {path: `/data/${this.box}/.siyuan/sort.json`})
+    // const sortData = await this.getData('file/getFile', {path: `/data/${this.box}/.siyuan/sort.json`})
     for (const topic of topicList.data) {
-      const topicData = await this.getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${this.box}' and (type ='h' or type = 'd') and hpath like '${topic.hpath}%'`});
-      const treeList = topicData.data.map(e => this.getTreeNode(e, sortData)).sort((a, b) => a.sort - b.sort);
+      const topicData = await this.getData('query/sql', {stmt: `select sort,content, created, type, hpath, parent_id,id from blocks where box = '${this.box}' and (type = 'd') and hpath like '${topic.hpath}%'`});
+      const sortData = await this.getData('file/getFile', {path: `/data/${this.box}${topic.filePath}`})
+      const treeList = topicData.data.map(e => this.getTreeNode(e)).sort((a, b) => a.sort - b.sort);
       const pathTree = this.parseTreeForPath(treeList.filter(({type}) => type === 'd'), topic.hpath)
 
       this.merge(pathTree, treeList)
@@ -170,7 +170,8 @@ class SiYuan {
       ), {});
       const template = attribute['custom-template']
       const slug = attribute['custom-slug']
-      const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
+      const tags = []
+      // const tags = data.hPath.split('/').slice(2, -1).filter(e => e !== '')
       if (attribute['tag']) {
         tags.push.apply(tags, attribute['tag'].split(','));
       }
@@ -197,7 +198,10 @@ module.exports = {
 
 
 const fs = require('fs')
-const s = new SiYuan('noeyqg6qknhqvl5m', 'http://127.0.0.1:6806/api/', '20220420112442-p6q6e8w')
+const s = new SiYuan('noeyqg6qknhqvl5m',
+  'http://127.0.0.1:6806/api/',
+  '20220420112442-p6q6e8w'
+)
 
 function mkdirsSync(dirname) {
   if (fs.existsSync(dirname)) {
@@ -212,10 +216,13 @@ function mkdirsSync(dirname) {
 
 s.getSiYuanPost()
   .then(e => {
+      fs.rmSync(path.join('.', 'docs', 'topic'), {recursive: true})
+      fs.rmSync(path.join('.', 'docs', 'posts'), {recursive: true})
       e.forEach(raw => {
-        if (raw) {
-          mkdirsSync(path.join('vuepress-starter', 'docs', raw.hpath))
-          fs.writeFileSync(path.join('vuepress-starter', 'docs', raw.hpath, 'README.md'), raw.raw)
+        if (raw && (raw.hpath.indexOf('posts') !== -1 || raw.hpath.indexOf('topic') !== -1)) {
+          parswRaw(raw)
+          mkdirsSync(path.join('.', 'docs', raw.hpath))
+          fs.writeFileSync(path.join('.', 'docs', raw.hpath, 'README.md'), raw.raw)
         }
       })
     }
@@ -225,15 +232,38 @@ s.getSiYuanTopic().then(e => {
   var sidebar = {}
   addPath(e)
   toSideBar(sidebar, e)
-  mkdirsSync(path.join('vuepress-starter', 'docs', '.vuepress'))
-
-  fs.writeFileSync(path.join('vuepress-starter', 'docs', '.vuepress', 'config.json'), JSON.stringify(sidebar))
+  mkdirsSync(path.join('.', 'docs', '.vuepress'))
+  fs.writeFileSync(path.join('.', 'docs', '.vuepress', 'topic.json'), JSON.stringify(sidebar))
 })
+
+function parswRaw(raw) {
+  var head = `---`
+  head += `\ntitle: ${raw.title}`
+  head += `\ndate: ${raw.date}`
+  head += `\npermalink: ${encodeURI(raw.hpath)}`
+  if (raw.contentType === 'posts') {
+    head += `\ncategories:`
+    head += `\n- ${raw.contentType}`
+  }
+  if (raw.contentType === 'topic') {
+    head += `\ntopic:`
+    head += `\n- ${raw.contentType}`
+  }
+  if (raw.tags) {
+    head += `\ntags: `
+    for (var i = 1, len = raw.tags.length; i < len; i++) {
+      head += `\n- ${raw.tags[i]}`
+    }
+  }
+  head += `\n---`
+  raw.raw = head + '\n' + raw.raw
+}
 
 function addPath(topicList) {
   for (let index in topicList) {
     var topic = topicList[index]
     topic.path = topic.path + '/'
+    topic.collapsable = false
     addPath(topic.children)
   }
 }
@@ -242,7 +272,12 @@ function toSideBar(sidebar, topicList) {
   for (let index in topicList) {
     var topic = topicList[index]
     if (topic.level === 0) {
-      sidebar[topic.path] = topic.children
+      sidebar[topic.path] = []
+      sidebar[topic.path].push({
+        "title": topic.title,
+        "path": topic.path
+      })
+      sidebar[topic.path].push(...topic.children);
     }
   }
 }

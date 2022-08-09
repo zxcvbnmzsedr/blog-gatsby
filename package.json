@@ -10,12 +10,18 @@
   "license": "MIT",
   "main": "n/a",
   "scripts": {
-    "start": "node siyuan.jsx && cd vuepress-starter && yarn docs:dev"
+    "start": "node siyuan.jsx && yarn docs:dev",
+    "build": "node siyuan.jsx && yarn docs:build",
+    "docs:dev": "vuepress dev ./docs",
+    "docs:build": "vuepress build ./docs"
   },
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0"
+    "isomorphic-fetch": "^3.0.0",
+    "@vuepress/plugin-blog": "^1.9.4",
+    "vuepress": "^1.9.7"
   },
   "devDependencies": {
-    "cheerio": "^1.0.0-rc.12"
+    "cheerio": "^1.0.0-rc.12",
+    "vuepress-theme-vdoing": "^1.12.7"
   }
 }
