@@ -13,12 +13,14 @@
     "start": "node siyuan.jsx && yarn docs:dev",
     "build": "node siyuan.jsx && yarn docs:build",
     "docs:dev": "vuepress dev ./docs",
-    "docs:build": "vuepress build ./docs"
+    "docs:build": "vuepress build --no-cache --dest ./dist ./docs ",
+    "deploy": "yarn build && gh-pages -d dist -t true -b master -e docs -r https://github.com/zxcvbnmzsedr/zxcvbnmzsedr.github.io.git"
   },
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0",
     "@vuepress/plugin-blog": "^1.9.4",
-    "vuepress": "^1.9.7"
+    "isomorphic-fetch": "^3.0.0",
+    "vuepress": "^1.9.7",
+    "vuepress-plugin-baidu-tongji-analytics": "^1.0.2"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
