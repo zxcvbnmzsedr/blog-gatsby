@@ -51,4 +51,4 @@ kubeadm certs check-expiration
 
 　　![](https://image.ztianzeng.com/uPic/20220606104802.png)
 
-　　
+　　‍

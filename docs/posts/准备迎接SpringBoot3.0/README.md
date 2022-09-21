@@ -6,7 +6,9 @@ categories:
 - posts
 tags: 
 ---
-在2018年2月28号，发布了第一个`Spring Boot2.0`的版本。在最近发布了`Spring Boot2.7`的版本。
+‍
+
+　　在2018年2月28号，发布了第一个`Spring Boot2.0`的版本。在最近发布了`Spring Boot2.7`的版本。
 
 　　到目前为止，`Spring Boot 2.x `已经维护了超过4年了，总共发布了95个版本。
 
@@ -118,7 +120,7 @@ tags:
 
 　　由商业支持请求触发的任何版本都将始终以开源方式发布，这样商业客户也可以帮助开源社区。
 
-　　
+　　‍
 
 > 翻译自: [https://spring.io/blog/2022/05/24/preparing-for-spring-boot-3-0](https://spring.io/blog/2022/05/24/preparing-for-spring-boot-3-0)
 >

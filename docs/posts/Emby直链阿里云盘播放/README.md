@@ -32,6 +32,6 @@ tags:
 
 　　需要修改一下 nginx/conf.d/emby.js,将密码啥的给替换成自己的，然后用docker-compose up -d 启动即可。
 
-　　
+　　‍
 
-　　
+　　‍

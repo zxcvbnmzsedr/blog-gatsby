@@ -351,7 +351,7 @@ public CompletableFuture<PutMessageResult> asyncPutHalfMessage(MessageExtBrokerI
 
 ## Broker处理事务消息的二次提交
 
-　　
+　　‍
 
 ```java
 public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand request) throws

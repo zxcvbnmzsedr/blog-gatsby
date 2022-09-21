@@ -70,4 +70,4 @@ isTop: false
    `rc-update add AdguardHome`
    `rc-service  AdguardHome start`
 
-　　
+　　‍

@@ -17,6 +17,16 @@ module.exports = {
   title: '天增的博客',
   description: '一期一会，世当珍惜',
   plugins: [
+    [
+      'rss-feed',
+      {
+        username: 'ztianzeng',
+        hostname: 'https://www.ztianzeng.com',
+        selector: '.content__post', // extract content to content:encoded
+        count: 100,
+        filter: (page) => /^post/.test(page.relativePath),
+      },
+    ],
     ['vuepress-plugin-baidu-tongji-analytics', {
       key: '305970e09045d4afbab60ece95d61930'
     }]
@@ -48,7 +58,11 @@ module.exports = {
       {
         text: 'Github',
         link: 'https://github.com/zxcvbnmzsedr',
-      }
+      },
+      {
+        text: 'Github',
+        link: '/rss.xml',
+      },
     ],
     sidebar: config
   }

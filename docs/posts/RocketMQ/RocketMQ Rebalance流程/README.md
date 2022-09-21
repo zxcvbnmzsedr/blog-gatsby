@@ -87,7 +87,7 @@ public interface AllocateMessageQueueStrategy {
 3. 全局这个消费者组可以分配的队列集合
 4. 当前这个消费者组消费者集合（值是消费者实例的唯一id）
 
-　　
+　　‍
 
 　　试想下，假设要你去做一个分配队列的算法，实际上最关键的就是两个视图：
 
@@ -101,7 +101,7 @@ public interface AllocateMessageQueueStrategy {
 
 　　实际上，这就是rocketmq默认的分配方案。
 
-　　
+　　‍
 
 　　但现在唯一的问题在于，我们刚刚说的，我们没有一个中心节点统一地做分配，所以RocketMQ需要做一定的修改。
 
@@ -151,7 +151,7 @@ public List<MessageQueue> allocate(String consumerGroup, String currentCID, List
 
 　　**由于订阅多个Topic时可能会出现分配不均，这是在RocketMQ中我们为什么不建议同一个消费者组订阅多个Topic的重要原因。在这一点上，Kafka与不RocketMQ同，其是将所有Topic下的所有队列合并在一起，进行Rebalance，因此相对会更加平均。**
 
-　　
+　　‍
 
 # 触发时机
 
@@ -163,4 +163,4 @@ public List<MessageQueue> allocate(String consumerGroup, String currentCID, List
 
     由于Broker只会通知一次，不保证client一定会收到变更事件通知，需要通过定时触发避免`Rebalance`通知丢失
 
-　　
+　　‍

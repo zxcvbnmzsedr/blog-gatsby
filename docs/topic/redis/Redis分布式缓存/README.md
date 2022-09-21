@@ -243,6 +243,6 @@ categories:
 
 　　OK，到此呢，我们已经实现了**“数据库和缓存强一致性”**，这个系列就先这样啦，等我学到了更好的方案，再来分享~
 
-　　
+　　‍
 
 　　https://blog.kido.site/2018/11/24/db-and-cache-preface/

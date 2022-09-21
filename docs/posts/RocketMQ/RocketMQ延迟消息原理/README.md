@@ -176,7 +176,7 @@ public CompletableFuture<PutMessageResult> asyncPutMessage(final MessageExtBroke
 
 　　通过IDEA 查看 `TopicValidator#RMQ_SYS_SCHEDULE_TOPIC`,可以发现在`ScheduleMessageService`中有去扫描这个Topic，看这个类名大概也能够猜出，是延迟投递的核心实现类。
 
-　　
+　　‍
 
 ```java
 // ScheduleMessageService.java
@@ -237,4 +237,4 @@ public void start() {
 * 从消息tagsCode中解析出消息应当被投递的时间，与当前时间做比较，判断是否应该进行投递
 * 若到达了投递时间，则构建一个新的消息，并从消息属性中恢复出原始的topic，queueId，并清除消息延迟属性，从新进行消息投递
 
-　　
+　　‍

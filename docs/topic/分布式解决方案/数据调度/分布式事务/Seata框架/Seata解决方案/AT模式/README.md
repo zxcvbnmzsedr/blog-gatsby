@@ -56,7 +56,7 @@ Seata AT模式是最早⽀持的模式。AT模式是指Automatic (Branch) Transa
 
 　　tx1 先开始，开启本地事务，拿到本地锁，更新操作 m = 1000 - 100 = 900。本地事务提交前，先拿到该记录的 **全局锁** ，本地提交释放本地锁。 tx2 后开始，开启本地事务，拿到本地锁，更新操作 m = 900 - 100 = 800。本地事务提交前，尝试拿该记录的 **全局锁** ，tx1 全局提交前，该记录的全局锁被 tx1 持有，tx2 需要重试等待 **全局锁** 。
 
-　　
+　　‍
 
 　　![seata_at-1](https://image.ztianzeng.com/uPic/seata_at-1.png)
 
@@ -82,4 +82,4 @@ Seata AT模式是最早⽀持的模式。AT模式是指Automatic (Branch) Transa
 
 　　出于总体性能上的考虑，Seata 目前的方案并没有对所有 SELECT 语句都进行代理，仅针对 FOR UPDATE 的 SELECT 语句。
 
-　　
+　　‍

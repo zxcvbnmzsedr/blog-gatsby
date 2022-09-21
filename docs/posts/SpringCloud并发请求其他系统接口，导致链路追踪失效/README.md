@@ -90,7 +90,7 @@ ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder.g
 RequestContextHolder.setRequestAttributes(sra, true);
 ```
 
-　　
+　　‍
 
 # InheritableThreadLocal是怎么做到主子线程共享的
 
@@ -153,4 +153,4 @@ private Thread(ThreadGroup g, Runnable target, String name,
 
 　　就是通过`ThreadLocalMap`的构造方法，将父类的值一个一个拷贝到子线程中,然后新创建的`inheritableThreadLocals`就有了值，我们也就能通过这个对象，将父线程的值给拿过来了，自然也就完成了主子线程的传递
 
-　　
+　　‍

@@ -65,7 +65,7 @@ tags:
 
 　　/usr/local/squid/bin/squidclient -h具体的IP -p80 mgr:info
 
-　　
+　　‍
 
 　　如果看到很多的TCP_MEM_HIT ，这表明该文件是从内存缓存读取的，squid已经起作用了！你再用浏览器打开该文件，应该是快如闪电了。。呵呵，大功告成了！还有其他类型的HIT，如TCP_HIT等等，这些是从磁盘读取的，我觉得加速的意义不大，只不过缓解了apache的压力而已。
 

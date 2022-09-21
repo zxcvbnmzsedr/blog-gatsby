@@ -128,7 +128,7 @@ categories:
     update stock_info set stock = stock - 1 where commodity_id = 1 and seckill_id = 1
     ```
 
-　　
+　　‍
 
 # Scala扩展设计
 
@@ -138,13 +138,13 @@ categories:
 
 　　我们上文直接采用MySQL，来应对查询，校验，扣减这一系列操作。但是这种粗暴的处理方式，在并发场景下会有超卖的问题。
 
-　　
+　　‍
 
 　　假如有两个线程进来，在第一步的时候都查询了库存，都认为当前线程持有库存。
 
 　　于是在扣减库存的时候，会把库存库存减少两次，会造成数据库中的数据和预期的不一致。
 
-　　
+　　‍
 
 　　这种情况，我们可以开启事务进行处理, 在查询的时候使用for update 开启排他锁，以保证一个时间内，只有一个线程可以参与库存扣减
 
@@ -174,7 +174,7 @@ update stock_info set stock = stock - 1 where commodity_id = 1 and seckill_id = 
 
 　　将库存信息放到Redis中，在Redis中做库存的校验。在活动上线之前，在Redis中提前做库存的预热，查询、校验、扣减先在Redis中处理好之后，再丢到MySQL进行处理。
 
-　　
+　　‍
 
 　　在活动开始之前，从数据库读取秒杀活动，然后用下面的命令将商品库存预热到redis中
 
@@ -217,7 +217,7 @@ end
 
 　　![](https://image.ztianzeng.com/uPic/20220628135500.png)
 
-　　
+　　‍
 
 ## 分布式事务
 
@@ -250,6 +250,6 @@ sequenceDiagram
 
 　　使用限流机制、验证码机制、或者接入三方风控等。
 
-　　
+　　‍
 
-　　
+　　‍

@@ -603,6 +603,6 @@ categories:
 
 　　[12] Chandramohan A. Thekkath, Timothy Mann, and Edward K. Lee. Frangipani: A scalable distributed file system. In Proceedings of the 16th ACM Symposium on Operating System Principles, pages 224–237, Saint-Malo, France, October 1997.
 
-　　
+　　‍
 
 　　转载: https://mrcroxx.github.io/posts/paper-reading/gfs-sosp2003/

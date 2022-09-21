@@ -10,7 +10,7 @@ tags:
 
 　　Java由于虚拟机的机制，没有办法使用系统的证书去进行解密，因此需要通过指定证书地址，进行手动配置。（类似于Android和IOS的信任证书）
 
-　　
+　　‍
 
 　　下面这段代码是构造SSL证书的方法：
 
@@ -56,4 +56,4 @@ private SSLSocketFactory buildSslSocketFactory() {
  }
 ```
 
-　　
+　　‍

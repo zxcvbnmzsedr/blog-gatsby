@@ -10,7 +10,7 @@ tags:
 
 　　索引下推通俗一点讲就是 `在Service层把查询工作下推到引擎层去处理`。其下推的目的是为了减少回表次数，提高查询效率，节约IO开销。
 
-　　
+　　‍
 
 ## MySQL的查询逻辑
 
@@ -63,3 +63,5 @@ explain select * from user where name linke '张%' and age = 10
 ```
 
 　　就能看到Extra一列中，Using index condition。这就是用到索引下推。
+
+　　‍

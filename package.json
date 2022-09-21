@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
+    "vuepress-plugin-rss-feed": "^1.0.1",
     "vuepress-theme-vdoing": "^1.12.7"
   }
 }
