@@ -60,8 +60,8 @@ module.exports = {
         link: 'https://github.com/zxcvbnmzsedr',
       },
       {
-        text: 'Github',
-        link: '/rss.xml',
+        text: 'Rss',
+        link: 'https://www.ztianzeng.com/rss.xml',
       },
     ],
     sidebar: config
