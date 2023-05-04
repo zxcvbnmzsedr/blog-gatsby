@@ -11,14 +11,15 @@ categories:
   - 双指针
   - 验证回文串
 ---
+# 125.验证回文串
+
 LeetCode: [https://leetcode.cn/problems/valid-palindrome/](https://leetcode.cn/problems/valid-palindrome/)
 
-　　题目描述: 验证只考虑字母和数字字符的回文串
+题目描述: 验证只考虑字母和数字字符的回文串
 
 > 输入: "A man, a plan, a canal: Panama"  
 > 输出: true  
 > 解释："amanaplanacanalpanama" 是回文串
->
 
 * 声明左右指针
 * 将左右指针移动到有效的符号位置

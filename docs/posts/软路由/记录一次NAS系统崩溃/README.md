@@ -6,54 +6,56 @@ categories:
 - posts
 tags: 
 ---
-　　由于之前没有考虑到nas的强大，在不断的装docker之后，磁盘竟然满了，后面扩容就一不小心将扩展分区给删除了，虽然成功的扩容了磁盘，但只成功运行了几天，后面一次断点重启，就直接导致无法开机（grub的问题），因为里面就一些电影文件，所以索性心一横直接重装了系统。
+# 记录一次NAS系统崩溃
 
-　　我重新审视了一下我自己的需求，无非是影音文件的共享，顺带装个逼，又考虑到J3160这颗垃圾U着实撑不起场面，所以就抛弃了之前用OMV5装docker这种庞大臃肿的方案，能原生的就原生去装。
+由于之前没有考虑到nas的强大，在不断的装docker之后，磁盘竟然满了，后面扩容就一不小心将扩展分区给删除了，虽然成功的扩容了磁盘，但只成功运行了几天，后面一次断点重启，就直接导致无法开机（grub的问题），因为里面就一些电影文件，所以索性心一横直接重装了系统。
 
-　　OMV5的插件比OMV4少了太多，原生插件堪称基类，基本上都是docker的方案来解决，既然如此，那么用OMV6其实并没有太大的区别，反正都没啥插件，还能体验新系统，所以就折腾起OMV6了。
+我重新审视了一下我自己的需求，无非是影音文件的共享，顺带装个逼，又考虑到J3160这颗垃圾U着实撑不起场面，所以就抛弃了之前用OMV5装docker这种庞大臃肿的方案，能原生的就原生去装。
 
-　　再次记录一下装OMV6的过程。
+OMV5的插件比OMV4少了太多，原生插件堪称基类，基本上都是docker的方案来解决，既然如此，那么用OMV6其实并没有太大的区别，反正都没啥插件，还能体验新系统，所以就折腾起OMV6了。
 
-　　使用ISO傻瓜式安装过程就不在此叙述了~~~~
+再次记录一下装OMV6的过程。
+
+使用ISO傻瓜式安装过程就不在此叙述了~~~~
 
 ## 安装完之后的问题
 
 ### 中文乱码
 
-　　安装完，第一件要解决的就是中文乱码问题。
+安装完，第一件要解决的就是中文乱码问题。
 
-　　装完之后使用`local`e命令输出的编码是`zh_CN.UTF-8` 不知道为啥会导致ls 查看中文目录的时候乱码。
+装完之后使用`local`e命令输出的编码是`zh_CN.UTF-8` 不知道为啥会导致ls 查看中文目录的时候乱码。
 
-　　解决方案: 使用 `dpkg-reconfigure locales` 重新配置编码方式 为 `en_US.UTF-8`
+解决方案: 使用 `dpkg-reconfigure locales` 重新配置编码方式 为 `en_US.UTF-8`
 
 ### smb协议兼容问题
 
-　　我用小米电视连接smb的时候，始终无法连接上，网上查询得知小米电视采用的是`SMB1.0`的协议 ,然后OMV6的需要手动修改一下SMB支持的最低版本
+我用小米电视连接smb的时候，始终无法连接上，网上查询得知小米电视采用的是`SMB1.0`的协议 ,然后OMV6的需要手动修改一下SMB支持的最低版本
 
-　　在图形化界面的SMB设置那里设置 `server min protocol = CORE`
+在图形化界面的SMB设置那里设置 `server min protocol = CORE`
 
-　　![image-20220108225924680](https://image.ztianzeng.com/uPic/image-20220108225924680.png)
+![image-20220108225924680](https://image.ztianzeng.com/uPic/image-20220108225924680.png)
 
 ## 需要安装的软件
 
-　　这些软件原本我是采用docker进行安装，现在都改为原生安装
+这些软件原本我是采用docker进行安装，现在都改为原生安装
 
-　　为了这颗破U，能省则省
+为了这颗破U，能省则省
 
 ### airconnect
 
-　　目的为了能将苹果的音频投放到我的小爱音箱
+目的为了能将苹果的音频投放到我的小爱音箱
 
-　　从 https://github.com/philippe44/AirConnect 下载对应架构的 airupnp
+从 https://github.com/philippe44/AirConnect 下载对应架构的 airupnp
 
-　　我的是 airupnp-x86-64,
+我的是 airupnp-x86-64,
 
 ```shell
 wget https://github.com/philippe44/AirConnect/raw/master/bin/airupnp-x86-64
 mv airupnp-x86-64 /usr/bin/air
 ```
 
-　　设置服务
+设置服务
 
 ```shell
 vim /usr/lib/systemd/system/air.service	
@@ -80,13 +82,13 @@ systemctl status air
 
 ### webdav
 
-　　将smb转为更加通用的webdav协议
+将smb转为更加通用的webdav协议
 
-　　用的是[https://github.com/hacdias/webdav](https://github.com/hacdias/webdav)，发现这个用go写的，最为轻量才几M
+用的是[https://github.com/hacdias/webdav](https://github.com/hacdias/webdav)，发现这个用go写的，最为轻量才几M
 
-　　下载对应架构的webdav执行文件，放到/usr/bin目录下面
+下载对应架构的webdav执行文件，放到/usr/bin目录下面
 
-　　配置文件说明:
+配置文件说明:
 
 ```shell
 # 监听任意网卡，多网卡可指定对应ip
@@ -120,9 +122,9 @@ users:
     scope: /srv/dev-disk-by-uuid-c78a92c0-7c20-4480-b997-1f88c9d0cd4d/
 ```
 
-　　更多的就去找官网吧，我将这个文件保存为 /home/webdav/webdav.config.yml （个人习惯保存在home目录下）
+更多的就去找官网吧，我将这个文件保存为 /home/webdav/webdav.config.yml （个人习惯保存在home目录下）
 
-　　将webdav 配置成服务
+将webdav 配置成服务
 
 ```shell
 [Unit]
@@ -148,11 +150,11 @@ systemctl status webdav
 
 ### 远程挂载webdav
 
-　　因为有大佬将阿里云盘封装成webdav协议，所以我们可以通过挂载webdav的方式将阿里云盘作为我们的本地盘.
+因为有大佬将阿里云盘封装成webdav协议，所以我们可以通过挂载webdav的方式将阿里云盘作为我们的本地盘.
 
-　　原本的挂载阿里云盘的服务使用docker部署的，着实太重，后面我就给迁移到了openwrt上面去了，就不在nas上进行挂载了，nas上只需要挂载阿里云盘的webdav服务即可，挂载教程 https://github.com/messense/aliyundrive-webdav
+原本的挂载阿里云盘的服务使用docker部署的，着实太重，后面我就给迁移到了openwrt上面去了，就不在nas上进行挂载了，nas上只需要挂载阿里云盘的webdav服务即可，挂载教程 https://github.com/messense/aliyundrive-webdav
 
-　　~~nas上挂载webdav的方法是采用davfs2~~
+~~nas上挂载webdav的方法是采用davfs2~~
 
 ```shell
 ## 安装davfs2
@@ -161,11 +163,11 @@ systemctl status webdav
  mount  -t davfs -o noexec http://192.168.31.3:8080 /srv/dev-disk-by-uuid-c78a92c0-7c20-4480-b997-1f88c9d0cd4d/aliyun/
 ```
 
-　　~~如果想要开机自动挂载 WebDAV，并且自动输入用户名和密码，需要将`/etc/davfs2/davfs2.conf` 中的 `use_lock` 解除注释，并将值修改为 `0`，接下来在 ` /etc/davfs2/secrets` 末尾添加 `WebDAV地址 用户名 密码`，最后在 `/etc/fstab` 末尾添加 `WebDAV地址 /mnt/webdav davfs rw,user,_netdev 0 0`。~~
+~~如果想要开机自动挂载 WebDAV，并且自动输入用户名和密码，需要将~~​~~`/etc/davfs2/davfs2.conf`~~​~~​ 中的 ​~~​~~`use_lock`~~​~~​ 解除注释，并将值修改为 ​~~​~~`0`~~​~~，接下来在 ​~~​~~`​ /etc/davfs2/secrets`~~​~~​ 末尾添加 ​~~​~~`WebDAV地址 用户名 密码`~~​~~，最后在 ​~~​~~`/etc/fstab`~~​~~​ 末尾添加 ​~~​~~`WebDAV地址 /mnt/webdav davfs rw,user,_netdev 0 0`~~​~~。~~
 
-　　使用过程中发现，davfs2挂载的时候会出现无法播放以及网络资源占用的莫名情况，故改为rclone挂载。
+使用过程中发现，davfs2挂载的时候会出现无法播放以及网络资源占用的莫名情况，故改为rclone挂载。
 
-　　安装rclone:
+安装rclone:
 
 ```shell
 curl https://rclone.org/install.sh | sudo bash
@@ -173,15 +175,15 @@ rclone
 ## 根据命令行给出的提示进行配置操作
 ```
 
-　　修改`/etc/fuse.conf`,加上`user_allow_other` 表示允许非root用户可以登录
+修改`/etc/fuse.conf`,加上`user_allow_other` 表示允许非root用户可以登录
 
-　　挂载文件的命令:
+挂载文件的命令:
 
 ```shell
 rclone mount ali:/ /srv/dev-disk-by-uuid-c78a92c0-7c20-4480-b997-1f88c9d0cd4d/aliyun --cache-dir /tmp --allow-other --vfs-cache-mode full --allow-non-empty  
 ```
 
-　　注册成服务
+注册成服务
 
 ```
 command="mount ali:/ /srv/dev-disk-by-uuid-c78a92c0-7c20-4480-b997-1f88c9d0cd4d/aliyun --cache-dir /tmp --allow-other --vfs-cache-mode full --allow-non-empty"
@@ -203,11 +205,11 @@ EOF
 
 ### 内网穿透
 
-　　我发现国内某头部厂商基于`ngork`提供了一个不限速的内网穿透工具，为了它能存活的久一点，我就不透露它的名字了。
+我发现国内某头部厂商基于`ngork`提供了一个不限速的内网穿透工具，为了它能存活的久一点，我就不透露它的名字了。
 
-　　因为是基于`ngork`，使用`nohup`无法使其在后台运行，使用`screen`能够后台运行但是无法开机启动，因此我们需要安装`supervisord`来控制进程的启动
+因为是基于`ngork`，使用`nohup`无法使其在后台运行，使用`screen`能够后台运行但是无法开机启动，因此我们需要安装`supervisord`来控制进程的启动
 
-　　安装: supervisor
+安装: supervisor
 
 ```shell
 apt-cache show supervisor
@@ -215,7 +217,7 @@ apt install supervisor
 supervisord -v
 ```
 
-　　设置启动服务
+设置启动服务
 
 ```shell
 vi /etc/supervisor/conf.d/ngrok.conf
@@ -246,7 +248,7 @@ stdout_logfile_backups = 20
 stdout_logfile = /var/log/supervisor/ngrok.log
 ```
 
-　　运行:
+运行:
 
 ```shell
 # 加载 ngrok 服务
@@ -255,9 +257,9 @@ supervisorctl start ngrok
 
 ### zidr 管理文件
 
-　　这也是一个神器
+这也是一个神器
 
-　　nginx配置，直接使用omv的php 的socket进行通讯:
+nginx配置，直接使用omv的php 的socket进行通讯:
 
 ```nginx
 server {
@@ -295,7 +297,7 @@ server {
     }
 ```
 
-　　创建路径:
+创建路径:
 
 ```shell
 mkdir -p  /data/wwwroot/default && cd /data/wwwroot/default

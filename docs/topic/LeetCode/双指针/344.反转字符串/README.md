@@ -11,13 +11,14 @@ categories:
   - 双指针
   - 反转字符串
 ---
+# 344.反转字符串
+
 LeetCode链接:[ https://leetcode.cn/problems/reverse-string/](https://leetcode.cn/problems/reverse-string/)
 
-　　题目描述: 原地反转字符数组char[s]
+题目描述: 原地反转字符数组char[s]
 
 > 输入：s = ["h","e","l","l","o"]  
 > 输出：["o","l","l","e","h"]
->
 
 * 申明左右指针，左边代表首字母，右边代表位字母
 * 首字母与倒数第一个字母交换

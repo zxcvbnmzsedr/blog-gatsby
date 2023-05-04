@@ -10,9 +10,11 @@ categories:
   - 系统设计
   - 每个程序员都应该知道的延迟数字
 ---
+# 每个程序员都应该知道的延迟数字
+
 在一些情况下对系统设计的时候，需要做出对系统性能的保守估计。
 
-　　Jeff Dean （谷歌的巨佬，分布式系统的奠基人）在[分布式系统的PPT](https://link.zhihu.com/?target=https%3A//www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf)中列出了"Latency Numbers Every Programmer Should Know"(每个程序员都应该了解的数字)，对计算机中的各类的操作的耗时做了大致的估计。
+Jeff Dean （谷歌的巨佬，分布式系统的奠基人）在[分布式系统的PPT](https://link.zhihu.com/?target=https%3A//www.cs.cornell.edu/projects/ladis2009/talks/dean-keynote-ladis2009.pdf)中列出了"Latency Numbers Every Programmer Should Know"(每个程序员都应该了解的数字)，对计算机中的各类的操作的耗时做了大致的估计。
 
 |操作|延迟|
 | -----------------------------------| --------------------------|
@@ -32,7 +34,7 @@ categories:
 |磁盘寻址|2,000,000 ns (2 ms)|
 |从美国发送到欧洲的数据包|150,000,000 ns（150 ms）|
 
-　　基于上述数字的指标：
+基于上述数字的指标：
 
 * 从磁盘以 30 MB/s 的速度顺序读取
 * 以 100 MB/s 从 1 Gbps 的以太网顺序读取
@@ -41,10 +43,10 @@ categories:
 * 每秒能绕地球 6-7 圈
 * 数据中心内每秒有 2,000 次往返
 
-　　Jeff Dean给出这些数字的重点是在于了解这些操作之间的数量级和比例，而不是具体的数字。
+Jeff Dean给出这些数字的重点是在于了解这些操作之间的数量级和比例，而不是具体的数字。
 
-　　因为计算机会随着科技的发展，变得越来越快。
+因为计算机会随着科技的发展，变得越来越快。
 
-　　伯克利大学有个[动态网页](https://colin-scott.github.io/personal_website/research/interactive_latency.html)，可以查看每年各个操作耗时的变化
+伯克利大学有个[动态网页](https://colin-scott.github.io/personal_website/research/interactive_latency.html)，可以查看每年各个操作耗时的变化
 
-　　![](https://image.ztianzeng.com/uPic/20220524195143.png)
+![](https://image.ztianzeng.com/uPic/20220524195143.png)

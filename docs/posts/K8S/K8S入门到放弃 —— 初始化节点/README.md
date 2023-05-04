@@ -6,9 +6,11 @@ categories:
 - posts
 tags: 
 ---
+# K8S入门到放弃 —— 初始化节点
+
 ---
 
-　　title: 'K8S入门到放弃 —— 初始化节点'
+title: 'K8S入门到放弃 —— 初始化节点'
 date: 2021-06-02 13:40:09
 tags: [K8S]
 published: true
@@ -18,7 +20,7 @@ isTop: false
 
 ---
 
-　　执行下面操作之前先执行[前置环境](/post/k8s-ru-men-dao-fang-qi-qian-zhi-huan-jing-zhun-bei/)
+执行下面操作之前先执行[前置环境](/post/k8s-ru-men-dao-fang-qi-qian-zhi-huan-jing-zhun-bei/)
 
 # 初始化master节点
 
@@ -54,7 +56,7 @@ cp -i /etc/kubernetes/admin.conf /root/.kube/config
 
 ## 初始化完成后安装网络插件
 
-　　只有安装网络插件之后，pod直接才能够正常进行通讯
+只有安装网络插件之后，pod直接才能够正常进行通讯
 
 ### 安装calico插件
 
@@ -82,7 +84,7 @@ echo "${APISERVER_IP}    ${APISERVER_NAME}" >> /etc/hosts
 
 ```
 
-　　如果显示过期了，则重新生成token进行请求
+如果显示过期了，则重新生成token进行请求
 
 ```
 # 生成证书
@@ -109,10 +111,10 @@ echo "${MASTER_IP}    ${APISERVER_NAME}" >> /etc/hosts
 kubeadm join apiserver.demo:6443 --token mpfjma.4vjjg8flqihor4vt     --discovery-token-ca-cert-hash sha256:6f7a8e40a810323672de5eee6f4d19aa2dbdb38411845a1bf5dd63485c43d303
 ```
 
-　　正常情况下，这个时候能够可以在master节点上通过下面这个命令
+正常情况下，这个时候能够可以在master节点上通过下面这个命令
 
 ```
 kubectl get nodes
 ```
 
-　　获取到对应的节点信息以及状态
+获取到对应的节点信息以及状态

@@ -11,8 +11,10 @@ categories:
   - Redis的分布式锁
   - 看门狗模式
 ---
-　　![img](https://www.shiyitopo.tech/uPic/e0ecde8897f3a08baed00866f0c6525dd539ecaa.png@942w_593h_progressive.webp)
+# 看门狗模式
 
-　　看门狗的工作模式如上图所示。
+![img](https://www.shiyitopo.tech/uPic/e0ecde8897f3a08baed00866f0c6525dd539ecaa.png@942w_593h_progressive.webp)
 
-　　本质就是当某个线程获取到锁之后，在业务结束之前，需要定时对目标所的过期时间持续延期，以此来确保解锁的时候业务状态是正确的。
+看门狗的工作模式如上图所示。
+
+本质就是当某个线程获取到锁之后，在业务结束之前，需要定时对目标所的过期时间持续延期，以此来确保解锁的时候业务状态是正确的。

@@ -12,28 +12,30 @@ categories:
   - 各种锁
   - synchronized和Lock的对比
 ---
+# synchronized和Lock的对比
+
 ## 相同点
 
 ### 用来保护资源安全
 
-　　最基本的作用
+最基本的作用
 
 ### 都可以保证可见性
 
-　　对于 synchronized 而言，线程 A 在进入 synchronized 块之前或在 synchronized 块内进行操作，对于后续的获得同一个 monitor 锁的线程 B 是可见的，也就是线程 B 是可以看到线程 A 之前的操作的，这也体现了 happens-before 针对 synchronized 的一个原则。
+对于 synchronized 而言，线程 A 在进入 synchronized 块之前或在 synchronized 块内进行操作，对于后续的获得同一个 monitor 锁的线程 B 是可见的，也就是线程 B 是可以看到线程 A 之前的操作的，这也体现了 happens-before 针对 synchronized 的一个原则。
 
-　　![绘图2](https://www.shiyitopo.tech/uPic/%E7%BB%98%E5%9B%BE2.png)
+![绘图2](https://www.shiyitopo.tech/uPic/%E7%BB%98%E5%9B%BE2.png)
 
-　　而对于 Lock 而言，它和 synchronized 是一样，都可以保证可见性，如图所示，在解锁之前的所有操作对加锁之后的所有操作都是可见的。
+而对于 Lock 而言，它和 synchronized 是一样，都可以保证可见性，如图所示，在解锁之前的所有操作对加锁之后的所有操作都是可见的。
 
-　　![LockHappensBefor](https://www.shiyitopo.tech/uPic/LockHappensBefor.png)
+![LockHappensBefor](https://www.shiyitopo.tech/uPic/LockHappensBefor.png)
 
 ### 都可重入
 
-　　可重入指的是某个线程如果已经获得了一个锁，现在试图再次请求这个它已经获得的锁，如果它无需提前释放这个锁，而是直接可以继续使用持有的这个锁。
+可重入指的是某个线程如果已经获得了一个锁，现在试图再次请求这个它已经获得的锁，如果它无需提前释放这个锁，而是直接可以继续使用持有的这个锁。
 如果必须释放锁后才能再次申请这个锁，就是不可重入的。
 
-　　而 synchronized 和 ReentrantLock 都具有可重入的特性。
+而 synchronized 和 ReentrantLock 都具有可重入的特性。
 
 ## 不同点
 
@@ -81,25 +83,25 @@ categories:
 
 ### synchronized锁不够灵活
 
-　　一旦 synchronized 锁已经被某个线程获得了，此时其他线程如果还想获得，那它只能被阻塞，直到持有锁的线程运行完毕或者发生异常从而释放这个锁。如果持有锁的线程持有很长时间才释放，那么整个程序的运行效率就会降低，而且如果持有锁的线程永远不释放锁，那么尝试获取锁的线程只能永远等下去。
+一旦 synchronized 锁已经被某个线程获得了，此时其他线程如果还想获得，那它只能被阻塞，直到持有锁的线程运行完毕或者发生异常从而释放这个锁。如果持有锁的线程持有很长时间才释放，那么整个程序的运行效率就会降低，而且如果持有锁的线程永远不释放锁，那么尝试获取锁的线程只能永远等下去。
 
-　　相比之下，Lock 类在等锁的过程中，如果使用的是 lockInterruptibly 方法，那么如果觉得等待的时间太长了不想再继续等待，可以中断退出，也可以用 tryLock() 等方法尝试获取锁，如果获取不到锁也可以做别的事，更加灵活。
+相比之下，Lock 类在等锁的过程中，如果使用的是 lockInterruptibly 方法，那么如果觉得等待的时间太长了不想再继续等待，可以中断退出，也可以用 tryLock() 等方法尝试获取锁，如果获取不到锁也可以做别的事，更加灵活。
 
 ### synchronized锁同时只能被一个线程拥有，Lock没有这个限制
 
-　　例如在读写锁中的读锁，是可以同时被多个线程持有的，可是 synchronized 做不到。
+例如在读写锁中的读锁，是可以同时被多个线程持有的，可是 synchronized 做不到。
 
-　　Lock 根据实现不同，有不同的原理，例如 ReentrantLock 内部是通过 AQS 来获取和释放锁的。
+Lock 根据实现不同，有不同的原理，例如 ReentrantLock 内部是通过 AQS 来获取和释放锁的。
 
 ### 是否可以设置公平锁
 
-　　公平锁是指多个线程在等待同一个锁时，根据先来后到的原则依次获得锁。
+公平锁是指多个线程在等待同一个锁时，根据先来后到的原则依次获得锁。
 
-　　ReentrantLock 等 Lock 实现类可以根据自己的需要来设置公平或非公平，synchronized 则不能设置。
+ReentrantLock 等 Lock 实现类可以根据自己的需要来设置公平或非公平，synchronized 则不能设置。
 
 ### 性能区别
 
-　　在 Java 5 以及之前，synchronized 的性能比较低，但是到了 Java 6 以后，发生了变化，因为 JDK 对 synchronized 进行了很多优化，比如自适应自旋、锁消除、锁粗化、轻量级锁、偏向锁等，所以后期的 Java 版本里的 synchronized 的性能并不比 Lock 差。
+在 Java 5 以及之前，synchronized 的性能比较低，但是到了 Java 6 以后，发生了变化，因为 JDK 对 synchronized 进行了很多优化，比如自适应自旋、锁消除、锁粗化、轻量级锁、偏向锁等，所以后期的 Java 版本里的 synchronized 的性能并不比 Lock 差。
 
 ## [如何选择](lock的常用方法.md)
 

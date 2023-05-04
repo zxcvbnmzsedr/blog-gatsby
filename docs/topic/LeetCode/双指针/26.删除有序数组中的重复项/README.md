@@ -11,16 +11,17 @@ categories:
   - 双指针
   - 删除有序数组中的重复项
 ---
+# 26.删除有序数组中的重复项
+
 LeetCode链接: [https://leetcode.cn/problems/remove-duplicates-from-sorted-array/](https://leetcode.cn/problems/remove-duplicates-from-sorted-array/)
 
-　　题目描述：升序数组，删除重复元素
+题目描述：升序数组，删除重复元素
 
 > 输入：nums = [1,1,2]  
 > 输出：2, nums = [1,2,_]  
 > 解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。
->
 
-　　这道题可以采用快慢指针。
+这道题可以采用快慢指针。
 
 * 如果nums[fast] != nums[slow], 则slow++，将fast的值赋值于slow
 * 否则fast自顾自往前走即可
@@ -41,9 +42,9 @@ public int removeDuplicates(int[] nums) {
     }
 ```
 
-　　**复杂度分析**
+**复杂度分析**
 
 * 时间复杂度：$O(n﻿)$，其中 $n$ 是数组的长度。快指针和慢指针最多各移动 $n$ 次。
 * 空间复杂度：$O(1﻿)$。只需要使用常数的额外空间。
 
-　　‍
+‍

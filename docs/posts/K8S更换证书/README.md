@@ -6,12 +6,13 @@ categories:
 - posts
 tags: 
 ---
+# K8S更换证书
+
 kubeadm默认安装的证书有效期只有一年，过期只有整个集群都没有办法正常运行。一直在报错:
 
 > Get "https://[10.96.0.1]:443/apis/crd.projectcalico.org/v1/clusterinformations/default": x509: certificate has expired or is not yet valid: current time 2022-06-05T22:31:49-04:00 is after 2022-06-02T11:30:48Z]
->
 
-　　需要对证书进行更换
+需要对证书进行更换
 
 # 检查过期时间
 
@@ -19,11 +20,11 @@ kubeadm默认安装的证书有效期只有一年，过期只有整个集群都�
 kubeadm certs check-expiration
 ```
 
-　　![](https://image.ztianzeng.com/uPic/20220606104802.png)
+![](https://image.ztianzeng.com/uPic/20220606104802.png)
 
 # 证书备份
 
-　　备份是一个好习惯
+备份是一个好习惯
 
 ```shell
 cp -rp /etc/kubernetes /etc/kubernetes.bak
@@ -35,7 +36,7 @@ cp -rp /etc/kubernetes /etc/kubernetes.bak
 kubeadm certs renew all
 ```
 
-　　![](https://image.ztianzeng.com/uPic/20220606104753.png)
+![](https://image.ztianzeng.com/uPic/20220606104753.png)
 
 # 重启kubelet
 
@@ -49,6 +50,6 @@ systemctl restart kubelet
 kubeadm certs check-expiration
 ```
 
-　　![](https://image.ztianzeng.com/uPic/20220606104802.png)
+![](https://image.ztianzeng.com/uPic/20220606104802.png)
 
-　　‍
+‍

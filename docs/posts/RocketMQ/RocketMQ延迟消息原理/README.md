@@ -6,11 +6,13 @@ categories:
 - posts
 tags: 
 ---
+# RocketMQ延迟消息原理
+
 RocketMQ提供了延迟消息的功能，消息在发送到RocketMQ服务端之后不会马上投递，而是根据消息中的属性延迟固定时间之后才会投递到消费者那。
 
 # 使用场景
 
-　　电商里，提交了一个订单就可以发送一个延时消息，1h后去检查这个订单的状态，如果还是未付款就取消订单释放库存。
+电商里，提交了一个订单就可以发送一个延时消息，1h后去检查这个订单的状态，如果还是未付款就取消订单释放库存。
 
 ## 启动消费者等待传入订阅消息
 
@@ -41,7 +43,6 @@ public class ScheduledMessageConsumer {
 ## 发送延迟消息
 
 > 现在RocketMq并不支持任意时间的延时，需要设置几个固定的延时等级，从1s到2h分别对应着等级1到18 消息消费失败会进入延时消息队列，消息发送时间与设置的延时等级和重试次数有关
->
 
 ```java
 public class ScheduledMessageProducer {
@@ -66,11 +67,11 @@ public class ScheduledMessageProducer {
 
 # 原理分析
 
-　　Productor发送没啥好说的，与事务消息队列相比简单太多，与正常发送相比仅仅设置了一个`DelayTimeLevel`的属性。
+Productor发送没啥好说的，与事务消息队列相比简单太多，与正常发送相比仅仅设置了一个`DelayTimeLevel`的属性。
 
 ## broker接收流程
 
-　　消息从`SendMessageProcessor#asyncProcessRequest` 进来之后，会一步步向下执行
+消息从`SendMessageProcessor#asyncProcessRequest` 进来之后，会一步步向下执行
 
 ```java
 // SendMessageProcessor.java
@@ -99,7 +100,7 @@ public class ScheduledMessageProducer {
 
 ```
 
-　　然后会调用到`DefaultMessageStore#asyncPutMessage`
+然后会调用到`DefaultMessageStore#asyncPutMessage`
 
 ```java
 // DefaultMessageStore#asyncPutMessage.java
@@ -141,7 +142,7 @@ public CompletableFuture<PutMessageResult> asyncPutMessage(MessageExtBrokerInner
     }
 ```
 
-　　最后通过RocketMQ的`CommitLog`将消息存储起来，延迟消息的秘密也在这里将会得到解答
+最后通过RocketMQ的`CommitLog`将消息存储起来，延迟消息的秘密也在这里将会得到解答
 
 ```java
 public CompletableFuture<PutMessageResult> asyncPutMessage(final MessageExtBrokerInner msg) {
@@ -170,13 +171,13 @@ public CompletableFuture<PutMessageResult> asyncPutMessage(final MessageExtBroke
     }
 ```
 
-　　RocketMQ实现延迟队列的方式大致和事务消息类似，让消息重写到一个`Consumer`无法监听的`Topic`中，这样就能够将延迟消息给保存下来
+RocketMQ实现延迟队列的方式大致和事务消息类似，让消息重写到一个`Consumer`无法监听的`Topic`中，这样就能够将延迟消息给保存下来
 
 ## 延迟投递原理
 
-　　通过IDEA 查看 `TopicValidator#RMQ_SYS_SCHEDULE_TOPIC`,可以发现在`ScheduleMessageService`中有去扫描这个Topic，看这个类名大概也能够猜出，是延迟投递的核心实现类。
+通过IDEA 查看 `TopicValidator#RMQ_SYS_SCHEDULE_TOPIC`,可以发现在`ScheduleMessageService`中有去扫描这个Topic，看这个类名大概也能够猜出，是延迟投递的核心实现类。
 
-　　‍
+‍
 
 ```java
 // ScheduleMessageService.java
@@ -222,11 +223,11 @@ public void start() {
     }
 ```
 
-　　通过线程启动了一个`DeliverDelayedMessageTimerTask`来调度延迟消息。
+通过线程启动了一个`DeliverDelayedMessageTimerTask`来调度延迟消息。
 
-　　就是通过Java自带的延迟队列，来掉队队列中的消息，满足时间了则进行投递，将定时任务的Topic中移除，放入它原本的Topic中。
+就是通过Java自带的延迟队列，来掉队队列中的消息，满足时间了则进行投递，将定时任务的Topic中移除，放入它原本的Topic中。
 
-　　这样客户端就能够接收到消息的信息。
+这样客户端就能够接收到消息的信息。
 
 # 总结
 
@@ -237,4 +238,4 @@ public void start() {
 * 从消息tagsCode中解析出消息应当被投递的时间，与当前时间做比较，判断是否应该进行投递
 * 若到达了投递时间，则构建一个新的消息，并从消息属性中恢复出原始的topic，queueId，并清除消息延迟属性，从新进行消息投递
 
-　　‍
+‍

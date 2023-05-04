@@ -14,6 +14,8 @@ categories:
   - Seata解决方案
   - TCC模式
 ---
+# TCC模式
+
 TCC 与 Seata AT 事务⼀样都是两阶段事务，它与 AT 事务的主要区别为：
 
 * TCC 对业务代码侵⼊严重
@@ -24,18 +26,18 @@ TCC 与 Seata AT 事务⼀样都是两阶段事务，它与 AT 事务的主要�
 
   不必对数据加全局锁，允许多个事务同时操作数据。
 
-　　![ecaeda572495e4ea5e308fb938a38fd5](https://image.ztianzeng.com/uPic/ecaeda572495e4ea5e308fb938a38fd5.png)
+![ecaeda572495e4ea5e308fb938a38fd5](https://image.ztianzeng.com/uPic/ecaeda572495e4ea5e308fb938a38fd5.png)
 
-　　Seata TCC整体是`两阶段提交`的模型。
+Seata TCC整体是`两阶段提交`的模型。
 
-　　⼀个分布式的全局事务，全局事务是由若⼲分⽀事务组成的，分⽀事务要满⾜`两阶段提交`的模型要求，即需要每个分⽀事务都具备⾃⼰的：
+⼀个分布式的全局事务，全局事务是由若⼲分⽀事务组成的，分⽀事务要满⾜`两阶段提交`的模型要求，即需要每个分⽀事务都具备⾃⼰的：
 
 * ⼀阶段 prepare ⾏为
 * ⼆阶段 commit 或 rollback ⾏为
 
-　　![](https://image.ztianzeng.com/uPic/20220427100423.png)
+![](https://image.ztianzeng.com/uPic/20220427100423.png)
 
-　　TCC 模式，不依赖于底层数据资源的事务⽀持：
+TCC 模式，不依赖于底层数据资源的事务⽀持：
 
 * ⼀阶段 prepare ⾏为：调⽤ ⾃定义 的 prepare 逻辑。
 
@@ -43,49 +45,49 @@ TCC 与 Seata AT 事务⼀样都是两阶段事务，它与 AT 事务的主要�
 
 * ⼆阶段 rollback ⾏为：调⽤ ⾃定义 的 rollback 逻辑。
 
-　　TCC 模式，是指⽀持把`⾃定义`的分⽀事务纳⼊到全局事务的管理中。
+TCC 模式，是指⽀持把`⾃定义`的分⽀事务纳⼊到全局事务的管理中。
 
-　　‍
+‍
 
 # 第⼀阶段 Try
 
-　　以账户服务为例，当下订单时要扣减⽤户账户⾦额：
+以账户服务为例，当下订单时要扣减⽤户账户⾦额：
 
-　　假如⽤户购买 100 元商品，要扣减 100 元。
+假如⽤户购买 100 元商品，要扣减 100 元。
 
-　　![](https://image.ztianzeng.com/uPic/20220427100935.png)
+![](https://image.ztianzeng.com/uPic/20220427100935.png)
 
-　　TCC 事务⾸先对这100元的扣减⾦额进⾏预留，或者说是先冻结这100元
+TCC 事务⾸先对这100元的扣减⾦额进⾏预留，或者说是先冻结这100元
 
-　　![](https://image.ztianzeng.com/uPic/20220427101002.png)
+![](https://image.ztianzeng.com/uPic/20220427101002.png)
 
 # 第⼆阶段 Confirm
 
-　　如果第⼀阶段能够顺利完成，那么说明“扣减⾦额”业务(分⽀事务)最终肯定 是可以成功的。
+如果第⼀阶段能够顺利完成，那么说明“扣减⾦额”业务(分⽀事务)最终肯定 是可以成功的。
 
-　　当全局事务提交时， TC会控制当前分⽀事务进⾏提交，如 果提交失败，TC 会反复尝试，直到提交成功为⽌。
+当全局事务提交时， TC会控制当前分⽀事务进⾏提交，如 果提交失败，TC 会反复尝试，直到提交成功为⽌。
 
-　　当全局事务提交时，就可以使⽤冻结的⾦额来最终实现业务数据操作：
+当全局事务提交时，就可以使⽤冻结的⾦额来最终实现业务数据操作：
 
-　　![](https://image.ztianzeng.com/uPic/20220427101024.png)
+![](https://image.ztianzeng.com/uPic/20220427101024.png)
 
 # 第⼆阶段 Cancel
 
-　　如果全局事务回滚，就把冻结的⾦额进⾏解冻，恢复到以前的状态，TC 会 控制当前分⽀事务回滚，如果回滚失败，TC 会反复尝试，直到回滚完成为⽌。
+如果全局事务回滚，就把冻结的⾦额进⾏解冻，恢复到以前的状态，TC 会 控制当前分⽀事务回滚，如果回滚失败，TC 会反复尝试，直到回滚完成为⽌。
 
-　　![image.png](assets/image-20220427101106-zhsw0mu.png)
+![image.png](assets/image-20220427101106-zhsw0mu.png)
 
 # 多个事务并发的情况
 
-　　多个TCC全局事务允许并发，它们执⾏扣减⾦额时，只需要冻结各⾃的⾦额即可：
+多个TCC全局事务允许并发，它们执⾏扣减⾦额时，只需要冻结各⾃的⾦额即可：
 
-　　![](https://image.ztianzeng.com/uPic/20220427101229.png)
+![](https://image.ztianzeng.com/uPic/20220427101229.png)
 
 # SpringCloud集成TCC
 
 ### 定义TCC接口
 
-　　由于我们使用的是 SpringCloud + Feign，Feign的调用基于http，因此此处我们使用`@LocalTCC`便可。值得注意的是，`@LocalTCC`一定需要注解在接口上，此接口可以是寻常的业务接口，只要实现了TCC的两阶段提交对应方法便可，TCC相关注解如下：
+由于我们使用的是 SpringCloud + Feign，Feign的调用基于http，因此此处我们使用`@LocalTCC`便可。值得注意的是，`@LocalTCC`一定需要注解在接口上，此接口可以是寻常的业务接口，只要实现了TCC的两阶段提交对应方法便可，TCC相关注解如下：
 
 * `@LocalTCC` 适用于SpringCloud+Feign模式下的TCC
 * `@TwoPhaseBusinessAction` 注解try方法，其中name为当前tcc方法的bean名称，写方法名便可（全局唯一），commitMethod指向提交方法，rollbackMethod指向事务回滚方法。指定好三个方法之后，seata会根据全局事务的成功或失败，去帮我们自动调用提交方法或者回滚方法。
@@ -140,7 +142,7 @@ public interface TccService {
 
 ### TCC接口的业务实现
 
-　　为了保证代码的简洁，此处将路由层与业务层结合讲解，实际项目则不然。
+为了保证代码的简洁，此处将路由层与业务层结合讲解，实际项目则不然。
 
 * 在try方法中使用`@Transational`可以直接通过spring事务回滚关系型数据库中的操作，而非关系型数据库等中间件的回滚操作可以交给rollbackMethod方法处理。
 * 使用context.getActionContext("params")便可以得到一阶段try中定义的参数，在二阶段对此参数进行业务回滚操作。

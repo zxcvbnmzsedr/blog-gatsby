@@ -6,16 +6,18 @@ categories:
 - posts
 tags: 
 ---
+# 使用yt-dlp下载youyube视频并转换成MP3
+
 yt-dlp是从youtube-dl中fork出来的一个分支，担负着继续维护的重任。
 yt-dlp继承了youtube-dl所有的命令，并且还修复了youtube-dl下载速度过慢的bug。
 
-　　本文介绍了如何使用yt-dlp，将youtube的视频转化为mp3.
+本文介绍了如何使用yt-dlp，将youtube的视频转化为mp3.
 
-　　项目github页面: https://github.com/yt-dlp/yt-dlp
+项目github页面: https://github.com/yt-dlp/yt-dlp
 
 ## 基本环境
 
-　　在mac下，只需要brew命令，即可完成安装
+在mac下，只需要brew命令，即可完成安装
 
 ```shell
 # 安装基本命令
@@ -32,7 +34,7 @@ brew install aria2
 yt-dlp --ignore-errors  --output "%(title)s.%(ext)s" --audio-quality 160K --extract-audio  --audio-format mp3 --proxy 127.0.0.1:6152  --cookies cookies.txt --external-downloader aria2c --external-downloader-args "-x 4" --playlist-start 94 --yes-playlist ''
 ```
 
-　　命令说明：
+命令说明：
 
 + --ignore-errors 如果发生错误，请继续下载。例如，跳过已删除的播放列表中的视频或跳过您所在国家/地区不可用的视频。
 + --proxy 使用代理进行下载

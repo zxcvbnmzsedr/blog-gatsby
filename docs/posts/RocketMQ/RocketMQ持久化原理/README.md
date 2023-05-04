@@ -6,24 +6,26 @@ categories:
 - posts
 tags: 
 ---
+# RocketMQ持久化原理
+
 消息的持久化是RocketMQ中最为复杂和重要的一部分，由于持久化机制的存在才能够实现RocketMQ的高可靠性。
 
-　　**图1**展示了RocketMQ的整体的工作逻辑
+**图1**展示了RocketMQ的整体的工作逻辑
 
-　　![](https://image.ztianzeng.com/uPic/20220507104147.png "图1 整体工作流程")
+![](https://image.ztianzeng.com/uPic/20220507104147.png "图1 整体工作流程")
 
 1. Productor按照顺序写入`CommitLog`
 2. Consumer顺序读取`ConsumeQueue`进行消费, `ConsumeQueue`是`CommitLog`基于`Topic`的索引文件
 
-　　RocketMQ通过文件来作为中介，来衔接Productor和Consumer之间的消息传递，其流程还是比较简单的。
+RocketMQ通过文件来作为中介，来衔接Productor和Consumer之间的消息传递，其流程还是比较简单的。
 
 # ComitLog
 
-　　comitLog是RocketMQ存储消息的地方，Productor的发送消息都会写入到这个文件里面。
+comitLog是RocketMQ存储消息的地方，Productor的发送消息都会写入到这个文件里面。
 
-　　对应的实现类就叫做CommitLog。
+对应的实现类就叫做CommitLog。
 
-　　CommitLog是通过MMAP的方式来操作文件，以加快文件处理速度，代码在`asyncPutMessages`
+CommitLog是通过MMAP的方式来操作文件，以加快文件处理速度，代码在`asyncPutMessages`
 
 ```java
 // CommitLog.java
@@ -70,9 +72,9 @@ public CompletableFuture<PutMessageResult> asyncPutMessages(final MessageExtBatc
     }
 ```
 
-　　`asyncPutMessages` 追加msg信息还是比较好理解的，会调用到一个自己封装的`MappedFile`
+`asyncPutMessages` 追加msg信息还是比较好理解的，会调用到一个自己封装的`MappedFile`
 
-　　在`MappedFile`的构造函数中，通过JDK提供的文件NIO，初始化了`mappedByteBuffer`
+在`MappedFile`的构造函数中，通过JDK提供的文件NIO，初始化了`mappedByteBuffer`
 
 ```java
 // MappedFile.java
@@ -88,11 +90,11 @@ private void init(final String fileName, final int fileSize) throws IOException 
     
 ```
 
-　　然后调用`MappedFile`的`appendMessagesInner`来进行文件的追加，最终又会回到`CommitLog`中的内部类`DefaultAppendMessageCallback`完成文件的写入。
+然后调用`MappedFile`的`appendMessagesInner`来进行文件的追加，最终又会回到`CommitLog`中的内部类`DefaultAppendMessageCallback`完成文件的写入。
 
 # ComitLog结构
 
-　　启动一个Productor，向着Broker中发送一条msg，msg结构如下
+启动一个Productor，向着Broker中发送一条msg，msg结构如下
 
 ```java
 Message msg = new Message("TopicTest",
@@ -101,13 +103,13 @@ Message msg = new Message("TopicTest",
                     "Hello world".getBytes(RemotingHelper.DEFAULT_CHARSET));
 ```
 
-　　然后我们用UltraEdit查看一下位于`${home}/store/commitlog`下的`00000000000000000000` 文件
+然后我们用UltraEdit查看一下位于`${home}/store/commitlog`下的`00000000000000000000` 文件
 
-　　![](https://image.ztianzeng.com/uPic/20220507160040.png)
+![](https://image.ztianzeng.com/uPic/20220507160040.png)
 
-　　可以明显的看到这个CommitLog文件里面明显有我们上传的msg信息。它具体的写入逻辑在`CommitLog`中的内部类`DefaultAppendMessageCallback#doAppend`。
+可以明显的看到这个CommitLog文件里面明显有我们上传的msg信息。它具体的写入逻辑在`CommitLog`中的内部类`DefaultAppendMessageCallback#doAppend`。
 
-　　这个代码非常的长，主要盯住`byteBuffer` 这个对象，看看往里面`put`了什么东西
+这个代码非常的长，主要盯住`byteBuffer` 这个对象，看看往里面`put`了什么东西
 
 ```java
 /**
@@ -126,7 +128,7 @@ public AppendMessageResult doAppend(final long fileFromOffset, final ByteBuffer 
 
 ## 第一个put
 
-　　通过IDEA工具，可以看到第一个`byteBuffer`的`put`处理，是用于判断文件是否结束的
+通过IDEA工具，可以看到第一个`byteBuffer`的`put`处理，是用于判断文件是否结束的
 
 ```java
 // 如果消息的长度+用于控制文件结束的8个空白字符 > 剩余胡亮
@@ -150,13 +152,13 @@ if ((msgLen + END_FILE_MIN_BLANK_LENGTH) > maxBlank) {
 
 ## 第二个put
 
-　　第二个Put的时候，`put`了一个`preEncodeBuffer` 进去
+第二个Put的时候，`put`了一个`preEncodeBuffer` 进去
 
 ```java
 byteBuffer.put(preEncodeBuffer);
 ```
 
-　　所以，重点就回到了`preEncodeBuffer`是怎么构造出来的
+所以，重点就回到了`preEncodeBuffer`是怎么构造出来的
 
 ```java
 // CommitLog.java
@@ -164,7 +166,7 @@ byteBuffer.put(preEncodeBuffer);
 ByteBuffer preEncodeBuffer = msgInner.getEncodedBuff();
 ```
 
-　　继续倒过来看，可以看到`MessageExtEncoder`中设置有`encode`方法来对进来的消息体进行设置
+继续倒过来看，可以看到`MessageExtEncoder`中设置有`encode`方法来对进来的消息体进行设置
 
 ```java
 // 1 TOTALSIZE
@@ -240,18 +242,17 @@ if (propertiesLength > 0)
 > 18. Topic: 主题内容
 > 19. PropertiesLength: 消息属性长度，表示消息属性长度不能超过65536个字符，2字节
 > 20. Properties: 消息属性
->
 
-　　最后把这个消息体给put到byteBuffer中去，就完成了文件的写入。
+最后把这个消息体给put到byteBuffer中去，就完成了文件的写入。
 
 # 消息丢失
 
-　　为了加快读写速度，RocketMQ采用了MMAP来进行写入
+为了加快读写速度，RocketMQ采用了MMAP来进行写入
 
 1. 将数据文件通过MMAP技术，映射文件到OS的虚拟内存中
 2. MMAP技术在写入消息时，会写入到PageCache中，然后异步刷盘到实际的磁盘中
 
-　　写入PageCache的时候，假如说这个时候发生了断电，导致数据没有及时刷到磁盘中就会发生消息丢失
+写入PageCache的时候，假如说这个时候发生了断电，导致数据没有及时刷到磁盘中就会发生消息丢失
 
 ## 解决方案
 
@@ -273,10 +274,10 @@ if (propertiesLength > 0)
   > 注：master 配置：flushDiskType = SYNC_FLUSH
   >
 
-  此时若 master 突然` 宕机且不可恢复` ，那么还未复制到 `slave` 的消息将会丢失。
+  此时若 master 突然`​ 宕机且不可恢复` ，那么还未复制到 `slave` 的消息将会丢失。
 
   为了进一步提高消息的可靠性，我们可以采用同步的复制方式，`master` 节点将会同步等待 `slave` 节点复制完成，才会返回确认响应
 
-　　虽然上述配置提高消息的高可靠性，但是会降低性能 ，生产实践中需要综合选择。
+虽然上述配置提高消息的高可靠性，但是会降低性能 ，生产实践中需要综合选择。
 
-　　‍
+‍

@@ -6,6 +6,8 @@ categories:
 - posts
 tags: 
 ---
+# 七牛云自定义处理图片
+
 由于七牛云提供的图片处理服务无法满足业务需求，因此是需要，自定义数据处理服务，对图片进行处理。
 目前支持两种类型的处理:
 
@@ -174,4 +176,4 @@ func main() {
 }
 ```
 
-　　github: https://github.com/zxcvbnmzsedr/ufop-golang-demo
+github: https://github.com/zxcvbnmzsedr/ufop-golang-demo

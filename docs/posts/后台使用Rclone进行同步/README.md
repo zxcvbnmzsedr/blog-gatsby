@@ -6,19 +6,21 @@ categories:
 - posts
 tags: 
 ---
-　　[Rclone](https://rclone.org/) 是一个杰出的、开源的文件同步工具。
+# 后台使用Rclone进行同步
 
-　　支持了很多不同网盘的同步服务，然而，在使用Rclone进行同步的时候，像Dropbox或者Onedriver一样，在保存文件的时候进行无感知的同步，Github有个issue详细讨论了这个问题[https://github.com/rclone/rclone/issues/249](https://github.com/rclone/rclone/issues/249)
+[Rclone](https://rclone.org/) 是一个杰出的、开源的文件同步工具。
 
-　　办法总比困难多，为了解决这个问题，通常的做法是使用Cron脚本，定时执行Sync的命令，以达到无感知同步的功能。
+支持了很多不同网盘的同步服务，然而，在使用Rclone进行同步的时候，像Dropbox或者Onedriver一样，在保存文件的时候进行无感知的同步，Github有个issue详细讨论了这个问题[https://github.com/rclone/rclone/issues/249](https://github.com/rclone/rclone/issues/249)
 
-　　我们可以改善使用Cron同步文件的行为，linux中有监控文件改变的脚本[inotifywait](https://linux.die.net/man/1/inotifywait) , 安装方式在 [https://command-not-found.com/inotifywait](https://command-not-found.com/inotifywait)
+办法总比困难多，为了解决这个问题，通常的做法是使用Cron脚本，定时执行Sync的命令，以达到无感知同步的功能。
 
-　　将inotifywait 注册成系统服务，这样即使在系统重启之后也能够继续保持同步。
+我们可以改善使用Cron同步文件的行为，linux中有监控文件改变的脚本[inotifywait](https://linux.die.net/man/1/inotifywait) , 安装方式在 [https://command-not-found.com/inotifywait](https://command-not-found.com/inotifywait)
 
-　　‍
+将inotifywait 注册成系统服务，这样即使在系统重启之后也能够继续保持同步。
 
-　　下面是脚本内容:
+‍
+
+下面是脚本内容:
 
 ```bash
 #!/bin/bash
@@ -153,4 +155,4 @@ fi
 
 ```
 
-　　‍
+‍

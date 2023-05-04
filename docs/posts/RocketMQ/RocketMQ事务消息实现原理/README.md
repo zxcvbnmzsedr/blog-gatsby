@@ -6,6 +6,8 @@ categories:
 - posts
 tags: 
 ---
+# RocketMQ事务消息实现原理
+
 RocketMQ提供了事务消息的功能，采用了2PC+事务回查来实现事务，最终能通过RocketMQ提供的事务消息，能够简单方便的实现分布式事务。
 
 # 概念介绍
@@ -22,11 +24,11 @@ RocketMQ提供了事务消息的功能，采用了2PC+事务回查来实现事�
 
 ## 交互流程
 
-　　事务消息交互流程如下图所示。
+事务消息交互流程如下图所示。
 
-　　![RSb0i0](https://image.ztianzeng.com/uPic/RSb0i0.jpg)
+![RSb0i0](https://image.ztianzeng.com/uPic/RSb0i0.jpg)
 
-　　事务消息发送步骤如下：
+事务消息发送步骤如下：
 
 1. 生产者将半事务消息发送至RocketMQ服务端。
 2. RocketMQ服务端将消息持久化成功之后，向生产者返回Ack确认消息已经发送成功，此时消息为半事务消息。
@@ -37,7 +39,7 @@ RocketMQ提供了事务消息的功能，采用了2PC+事务回查来实现事�
     * 二次确认结果为Rollback：服务端将回滚事务，不会将半事务消息投递给消费者。
 5. 在断网或者是生产者应用重启的特殊情况下，若服务端未收到发送者提交的二次确认结果，或服务端收到的二次确认结果为Unknown未知状态，经过固定时间后，服务端将对消息生产者即生产者集群中任一生产者实例发起消息回查。
 
-　　事务消息回查步骤如下：
+事务消息回查步骤如下：
 
 1. 生产者收到消息回查后，需要检查对应消息的本地事务执行的最终结果。
 2. 生产者根据检查得到的本地事务的最终状态再次提交二次确认，服务端仍按照步骤4对半事务消息进行处理。
@@ -53,14 +55,14 @@ RocketMQ提供了事务消息的功能，采用了2PC+事务回查来实现事�
 
 # 原理分析
 
-　　整个事务消息，分为两大块，发送流程和回查流程: 
+整个事务消息，分为两大块，发送流程和回查流程: 
 
 * 发送流程：发送half message(半消息)，执行本地事务，发送事务执行结果
 * 定时任务回查流程：MQ定时任务扫描半消息，回查本地事务，发送事务执行结果
 
 ## Productor发送消息
 
-　　发送端的代码:
+发送端的代码:
 
 ```java
 public class TransactionProducer {
@@ -127,7 +129,7 @@ public class TransactionProducer {
 }
 ```
 
-　　从代码中可以看出，发送半消息是通过`TransactionMQProducer`的`sendMessageInTransaction`来进行发送
+从代码中可以看出，发送半消息是通过`TransactionMQProducer`的`sendMessageInTransaction`来进行发送
 
 ```java
 public TransactionSendResult sendMessageInTransaction(final Message msg,
@@ -143,12 +145,12 @@ public TransactionSendResult sendMessageInTransaction(final Message msg,
 }
 ```
 
-　　`transactionListener` 是消息回查的类，它提供了两个方法
+`transactionListener` 是消息回查的类，它提供了两个方法
 
 * executeLocalTransaction: 执行本地事务
 * checkLocalTransaction: 回查本地事务
 
-　　`TransactionMQProducer`的`sendMessageInTransaction`最终会进入到`DefaultMQProducerImpl.sendMessageInTransaction`
+`TransactionMQProducer`的`sendMessageInTransaction`最终会进入到`DefaultMQProducerImpl.sendMessageInTransaction`
 
 ```java
 public TransactionSendResult sendMessageInTransaction(final Message msg,
@@ -239,14 +241,14 @@ public TransactionSendResult sendMessageInTransaction(final Message msg,
     }
 ```
 
-　　这个方法的功能: 
+这个方法的功能: 
 
 1. 给消息追加上事务消息相关的`tag`,用于broker区分普通消息和事务消息
 2. 调用`this.send(msg)`发送半消息
 3. 发送成功由用户自己编写的`transactionListener`，执行本地事务
 4. 事务结束之后，执行`endTransaction`，告诉`broker`执行`commit/rollback`
 
-　　在`transactionListener`执行完之后有三种情况: `UNKNOW`、`COMMIT`、`RollBack`，然后调用`endTransaction`来结束事务
+在`transactionListener`执行完之后有三种情况: `UNKNOW`、`COMMIT`、`RollBack`，然后调用`endTransaction`来结束事务
 
 ```java
 public void endTransaction(
@@ -294,9 +296,9 @@ public void endTransaction(
 
 ## Broker处理半消息（第一次send）
 
-　　Broker端通过`SendMessageProcessor.processRequest()`方法接收处理 Producer 发送的半消息
+Broker端通过`SendMessageProcessor.processRequest()`方法接收处理 Producer 发送的半消息
 
-　　最后会调用到`SendMessageProcessor.asyncSendMessage()`，判断消息类型，进行消息存储。
+最后会调用到`SendMessageProcessor.asyncSendMessage()`，判断消息类型，进行消息存储。
 
 ```java
 private CompletableFuture<RemotingCommand> asyncSendMessage(ChannelHandlerContext ctx, RemotingCommand request,
@@ -323,7 +325,7 @@ private CompletableFuture<RemotingCommand> asyncSendMessage(ChannelHandlerContex
     }
 ```
 
-　　存储半消息的核心代码: 
+存储半消息的核心代码: 
 
 ```java
 public CompletableFuture<PutMessageResult> asyncPutHalfMessage(MessageExtBrokerInner messageInner) {
@@ -345,13 +347,13 @@ public CompletableFuture<PutMessageResult> asyncPutHalfMessage(MessageExtBrokerI
     }
 ```
 
-　　在这一步，备份消息的原主题名称与原队列ID，然后取消事务消息的消息标签，重新设置消息的主题为：RMQ_SYS_TRANS_HALF_TOPIC，队列ID固定为0。
+在这一步，备份消息的原主题名称与原队列ID，然后取消事务消息的消息标签，重新设置消息的主题为：RMQ_SYS_TRANS_HALF_TOPIC，队列ID固定为0。
 
-　　与其他普通消息区分开，然后完成消息持久化。到这里，Broker 就初步处理完了 Producer 发送的事务半消息。
+与其他普通消息区分开，然后完成消息持久化。到这里，Broker 就初步处理完了 Producer 发送的事务半消息。
 
 ## Broker处理事务消息的二次提交
 
-　　‍
+‍
 
 ```java
 public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand request) throws
@@ -411,7 +413,7 @@ public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand
     }
 ```
 
-　　其流程大概如下:
+其流程大概如下:
 
 * 根据commitlogOffset找到消息
 * 如果是提交动作，就恢复原消息的主题与队列，再次存入commitlog文件进而转到消息消费队列，供消费者消费，然后将原预处理消息存入一个新的主题RMQ_SYS_TRANS_OP_HALF_TOPIC，代表该消息已被处理
@@ -419,9 +421,9 @@ public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand
 
 ## 半消息事务回查
 
-　　两段式协议发送与提交回滚消息，执行完本地事务消息的状态为`UNKNOW`时，结束事务不做任何操作。通过事务状态定时回查得到发送端的事务状态是`rollback`或`commit`。
+两段式协议发送与提交回滚消息，执行完本地事务消息的状态为`UNKNOW`时，结束事务不做任何操作。通过事务状态定时回查得到发送端的事务状态是`rollback`或`commit`。
 
-　　通过`TransactionalMessageCheckService`线程定时去检测`RMQ_SYS_TRANS_HALF_TOPIC`主题中的消息，回查消息的事务状态。
+通过`TransactionalMessageCheckService`线程定时去检测`RMQ_SYS_TRANS_HALF_TOPIC`主题中的消息，回查消息的事务状态。
 
 * RMQ_SYS_TRANS_HALF_TOPIC
 
@@ -455,32 +457,32 @@ public RemotingCommand processRequest(ChannelHandlerContext ctx, RemotingCommand
     }
 ```
 
-　　时序图如下:
+时序图如下:
 
-　　![](https://image.ztianzeng.com/uPic/20220506195258.png)
+![](https://image.ztianzeng.com/uPic/20220506195258.png)
 
 # 异常情况
 
 ## Producer发送半消息失败
 
-　　在发送成功之后才会执行本地事务，所以半消息发送失败之后就直接退出发送流程了。
+在发送成功之后才会执行本地事务，所以半消息发送失败之后就直接退出发送流程了。
 
-　　发送失败会抛出异常信息，可以自己针对异常信息再做进一步处理，是重试还是回滚上一步操作。
-
-## 半消息发送成功，没收到MQ返回的响应
-
-　　本地事务执行失败，本地事务会进行回滚。
-
-　　然后，发送rollback给MQ，MQ会删除之前发送的半消息，也就不会继续调用下游服务了。
+发送失败会抛出异常信息，可以自己针对异常信息再做进一步处理，是重试还是回滚上一步操作。
 
 ## 半消息发送成功，没收到MQ返回的响应
 
-　　发送半消息成功，但是没有收到MQ返回的响应，让我们系统误以为MQ消息发送失败，执行回滚逻辑。但是实际上MQ这个时候已经保存成功了。
+本地事务执行失败，本地事务会进行回滚。
 
-　　这种情况下，就需要通过MQ的回查逻辑`TransactionalMessageCheckService`定时扫描半消息队列，然后回查本地事务的状态
+然后，发送rollback给MQ，MQ会删除之前发送的半消息，也就不会继续调用下游服务了。
+
+## 半消息发送成功，没收到MQ返回的响应
+
+发送半消息成功，但是没有收到MQ返回的响应，让我们系统误以为MQ消息发送失败，执行回滚逻辑。但是实际上MQ这个时候已经保存成功了。
+
+这种情况下，就需要通过MQ的回查逻辑`TransactionalMessageCheckService`定时扫描半消息队列，然后回查本地事务的状态
 
 # 总结
 
-　　RocketMQ实现事务消息的原理是通过改写`Topic`和`queueId`，将消息重写到对Consumer不可见的队列中，然后在Productor执行完本地事务之后，提交事务状态再决定将半事务消息`Commit`或者`Rollback`。
+RocketMQ实现事务消息的原理是通过改写`Topic`和`queueId`，将消息重写到对Consumer不可见的队列中，然后在Productor执行完本地事务之后，提交事务状态再决定将半事务消息`Commit`或者`Rollback`。
 
-　　如果由于某种情况，服务宕机或者网络抖动等原因，Broker没有收到Productor的事务状态请求，则会进入到补偿阶段，通过定时任务扫描半事务消息进行事务回查。
+如果由于某种情况，服务宕机或者网络抖动等原因，Broker没有收到Productor的事务状态请求，则会进入到补偿阶段，通过定时任务扫描半事务消息进行事务回查。

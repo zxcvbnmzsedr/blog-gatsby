@@ -13,6 +13,8 @@ categories:
   - Seata框架
   - Seata解决方案
 ---
-　　Seata 会有 4 种分布式事务解决⽅案，分别是 AT 模式、TCC 模式、Saga模式和 XA 模式。
+# Seata解决方案
 
-　　‍
+Seata 会有 4 种分布式事务解决⽅案，分别是 AT 模式、TCC 模式、Saga模式和 XA 模式。
+
+‍

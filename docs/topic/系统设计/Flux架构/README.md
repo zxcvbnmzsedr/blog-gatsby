@@ -10,4 +10,6 @@ categories:
   - 系统设计
   - Flux架构
 ---
-　　‍
+# Flux架构
+
+‍

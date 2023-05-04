@@ -12,4 +12,6 @@ categories:
   - 共识算法
   - Raft算法
 ---
-　　‍
+# Raft算法
+
+‍

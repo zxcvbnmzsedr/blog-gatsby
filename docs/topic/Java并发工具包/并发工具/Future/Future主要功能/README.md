@@ -12,6 +12,8 @@ categories:
   - Future
   - Future主要功能
 ---
+# Future主要功能
+
 > Future 最主要的作用是，比如当做一定运算的时候，运算过程可能比较耗时，有时会去查数据库，或是繁重的计算，比如压缩、加密等。
 >
 > 在这种情况下，如果我们一直在原地等待方法返回，显然是不明智的，整体程序的运行效率会大大降低。
@@ -19,13 +21,12 @@ categories:
 > 我们可以把运算的过程放到子线程去执行，再通过 Future 去控制子线程执行的计算过程，最后获取到计算结果。
 >
 > 这样一来就可以把整个程序的运行效率提高，是一种异步的思想。
->
 
 ## Future接口
 
-　　Future代表着未来的计算结果。
+Future代表着未来的计算结果。
 
-　　有一系列方法，比如检查检查计算结果是否完成，或者获取计算的结果。
+有一系列方法，比如检查检查计算结果是否完成，或者获取计算的结果。
 
 ```java
 public interface Future<V> {
@@ -47,7 +48,7 @@ public interface Future<V> {
 
 ### cancel方法: 取消任务执行
 
-　　调用cancel方法有三种情况:
+调用cancel方法有三种情况:
 
 1. 任务还没有开始，直接取消
 2. 任务已经完成，或者已经被取消过了会返回false。
@@ -57,22 +58,22 @@ public interface Future<V> {
 
 ### isCancelled() 方法:判断是否被取消
 
-　　和cancel配合使用，比较简单
+和cancel配合使用，比较简单
 
 ### isDown():判断是否执行完毕
 
-　　返回有两种情况:
+返回有两种情况:
 
 1. 返回值为false代表未完成
 2. 返回值为true,有两种情况
    + 任务抛出了异常
    + 任务正常执行完毕
 
-　　最特殊的就是返回为true的情况，不代表任务是成功执行的，只代表执行完毕了。
+最特殊的就是返回为true的情况，不代表任务是成功执行的，只代表执行完毕了。
 
 ### get(): 获取结果
 
-　　get 方法最主要的作用就是获取任务执行的结果，该方法在执行时的行为取决于 Callable 任务的状态，可能会发生以下 5 种情况。
+get 方法最主要的作用就是获取任务执行的结果，该方法在执行时的行为取决于 Callable 任务的状态，可能会发生以下 5 种情况。
 
 1. **执行get的时候，任务已经执行完毕**
 
@@ -94,11 +95,11 @@ public interface Future<V> {
 
 ## 基础实现
 
-　　FutureTask为Future提供了基础实现。FutureTask常用来封装Callable和Runable，也可以作为一个任务提交到线程池中执行。
+FutureTask为Future提供了基础实现。FutureTask常用来封装Callable和Runable，也可以作为一个任务提交到线程池中执行。
 
-　　来看一下代码实现:
+来看一下代码实现:
 
-　　传入callable作为构造函数，实际的执行逻辑在callable中
+传入callable作为构造函数，实际的执行逻辑在callable中
 
 ```java
 public class FutureTask<V> implements RunnableFuture<V>{
@@ -112,7 +113,7 @@ public class FutureTask<V> implements RunnableFuture<V>{
 }
 ```
 
-　　可以看到，它实现了一个接口，这个接口叫作 **RunnableFuture**。我们再来看一下 RunnableFuture 接口的代码实现：
+可以看到，它实现了一个接口，这个接口叫作 **RunnableFuture**。我们再来看一下 RunnableFuture 接口的代码实现：
 
 ```java
 public interface RunnableFuture<V> extends Runnable, Future<V> {
@@ -120,15 +121,15 @@ public interface RunnableFuture<V> extends Runnable, Future<V> {
 }
 ```
 
-　　他们的关系入下图所示:
+他们的关系入下图所示:
 
-　　![image-20211207205138417](https://www.shiyitopo.tech/uPic/image-20211207205138417.png)
+![image-20211207205138417](https://www.shiyitopo.tech/uPic/image-20211207205138417.png)
 
-　　从此可以看出，FutureTask既可以作为Runable被线程执行，又可以作为Future得到Callable的返回值。
+从此可以看出，FutureTask既可以作为Runable被线程执行，又可以作为Future得到Callable的返回值。
 
 ### FutureTask示例
 
-　　直接使用:
+直接使用:
 
 ```java
 public class FutureDemo {
@@ -157,7 +158,7 @@ public class FutureDemo {
 }
 ```
 
-　　还有配合线程的使用:
+还有配合线程的使用:
 
 + 第一种方式: Future + ExecutorService
 + 第二种方式: FutureTask + ExecutorService

@@ -12,13 +12,15 @@ categories:
   - 线程协作
   - CountDownLatch详解
 ---
+# CountDownLatch详解
+
 ## 介绍
 
-　　CountDownLatch是由AQS实现的，用来同步一个或多个任务的并发工具类。
+CountDownLatch是由AQS实现的，用来同步一个或多个任务的并发工具类。
 
-　　利用它可以实现类似计数器的功能，比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能。
+利用它可以实现类似计数器的功能，比如有一个任务A，它要等待其他4个任务执行完毕之后才能执行，此时就可以利用CountDownLatch来实现这种功能。
 
-　　就像下面的这个例子，主线程会阻塞到`Thread-1`、和`Thread-2`都执行完成之后，才能往下执行
+就像下面的这个例子，主线程会阻塞到`Thread-1`、和`Thread-2`都执行完成之后，才能往下执行
 
 ```java
 public class Test {
@@ -56,7 +58,7 @@ public class Test {
         } catch (InterruptedException e) { e.printStackTrace();   }    }}
 ```
 
-　　输出结果:
+输出结果:
 
 ```java
 等待2个子线程执行完毕...

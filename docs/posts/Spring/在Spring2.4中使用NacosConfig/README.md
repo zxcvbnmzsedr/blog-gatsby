@@ -6,15 +6,17 @@ categories:
 - posts
 tags: 
 ---
-　　因为spring cloud alibaba没有进行升级，导致在spring2.4下，无法通过最新的方式引用配置文件。
+# 在Spring2.4中使用NacosConfig
 
-　　心中甚是不爽，因此基于最新的配置规则，给nacos打了个布丁。
+因为spring cloud alibaba没有进行升级，导致在spring2.4下，无法通过最新的方式引用配置文件。
+
+心中甚是不爽，因此基于最新的配置规则，给nacos打了个布丁。
 
 # 修改原始配置文件
 
-　　将原本的工程的application.yml改成这样，重点是optional:nacos 后面的一定要是nacos
+将原本的工程的application.yml改成这样，重点是optional:nacos 后面的一定要是nacos
 
-　　别的就基本遵循nacos原本的配置就好了，该是啥样就啥样
+别的就基本遵循nacos原本的配置就好了，该是啥样就啥样
 
 ```yml
 spring:
@@ -180,10 +182,10 @@ public class NacosServerConfigDataResource extends ConfigDataResource {
 
 # 后续
 
-　　创建好这些文件，如果不出意外的话应该能够将工程运行起来
+创建好这些文件，如果不出意外的话应该能够将工程运行起来
 
-　　主要核心就是继承 ConfigDataLocationResolver 和 ConfigDataLoader
+主要核心就是继承 ConfigDataLocationResolver 和 ConfigDataLoader
 
-　　ConfigDataLocationResolver 用于冷启动时，初始化各种参数，打包成一个ConfigDataResource交由给ConfigDataLoader使用
+ConfigDataLocationResolver 用于冷启动时，初始化各种参数，打包成一个ConfigDataResource交由给ConfigDataLoader使用
 
-　　ConfigDataLoader则是通过ConfigDataResource进行配置文件的加载，加载到Environment中供应用程式使用
+ConfigDataLoader则是通过ConfigDataResource进行配置文件的加载，加载到Environment中供应用程式使用

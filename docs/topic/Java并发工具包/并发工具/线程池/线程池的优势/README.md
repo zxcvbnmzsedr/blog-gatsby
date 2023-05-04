@@ -12,6 +12,8 @@ categories:
   - 线程池
   - 线程池的优势
 ---
+# 线程池的优势
+
 线程池的诞生，是为了解决在大量线程下效率不见提升反而降低的情况。
 
 ## 如何提升运行效率
@@ -39,6 +41,6 @@ categories:
 
 ## 线程池的思想
 
-　　![img](https://www.shiyitopo.tech/uPic/CgotOV3bmEOAaIncAABOPHpwdNY412.png)
+![img](https://www.shiyitopo.tech/uPic/CgotOV3bmEOAaIncAABOPHpwdNY412.png)
 
-　　首先创建了一个线程池，线程池中有 5 个线程，然后线程池将 10000 个任务分配给这 5 个线程，这 5 个线程反复领取任务并执行，直到所有任务执行完毕，这就是线程池的思想。
+首先创建了一个线程池，线程池中有 5 个线程，然后线程池将 10000 个任务分配给这 5 个线程，这 5 个线程反复领取任务并执行，直到所有任务执行完毕，这就是线程池的思想。

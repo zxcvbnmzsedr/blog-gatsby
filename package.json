@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@vuepress/plugin-blog": "^1.9.4",
+    "adm-zip": "^0.5.10",
     "isomorphic-fetch": "^3.0.0",
     "vuepress": "^1.9.7",
     "vuepress-plugin-baidu-tongji-analytics": "^1.0.2"

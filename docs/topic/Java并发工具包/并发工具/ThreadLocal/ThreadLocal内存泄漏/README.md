@@ -12,25 +12,27 @@ categories:
   - ThreadLocal
   - ThreadLocal内存泄漏
 ---
+# ThreadLocal内存泄漏
+
 ## ThreadLocal的实现原理
 
-　　ThreadLocal的保存变量，是维护在Thread中的。
+ThreadLocal的保存变量，是维护在Thread中的。
 
-　　但是由于每个线程在访问ThreadLocal对象之后，都会在Thread中的Map中留下ThreadLocal对象与具体实例的引用，如果不删除这些引用则这些ThreadLocal则不能进行回收，会造成内存泄漏
+但是由于每个线程在访问ThreadLocal对象之后，都会在Thread中的Map中留下ThreadLocal对象与具体实例的引用，如果不删除这些引用则这些ThreadLocal则不能进行回收，会造成内存泄漏
 
-　　![ThreadLocal](https://www.shiyitopo.tech/uPic/ThreadLocal.png)
+![ThreadLocal](https://www.shiyitopo.tech/uPic/ThreadLocal.png)
 
-　　![img](https://www.shiyitopo.tech/uPic/Cgq2xl5Pld-AHFhJAADLtGXmSxc833.png)
+![img](https://www.shiyitopo.tech/uPic/Cgq2xl5Pld-AHFhJAADLtGXmSxc833.png)
 
 ## 内存泄漏的案例
 
-　　网上有一段说明ThreadLocal内存泄漏非常好的代码。
+网上有一段说明ThreadLocal内存泄漏非常好的代码。
 
-　　通过线程池去持有ThreadLocal对象，由于线程池的特性，线程被用完之后不会被释放。
+通过线程池去持有ThreadLocal对象，由于线程池的特性，线程被用完之后不会被释放。
 
-　　因此，总是存在<ThreadLocal,LocalVariable>的强引用，file static修饰的变量不会被释放，所以即使TreadLocalMap的key是弱引用，但由于强引用的存在，弱引用一直会有值，不会被GC回收。
+因此，总是存在<ThreadLocal,LocalVariable>的强引用，file static修饰的变量不会被释放，所以即使TreadLocalMap的key是弱引用，但由于强引用的存在，弱引用一直会有值，不会被GC回收。
 
-　　内存泄漏的大小 = `核心线程数 * LocalVariable`
+内存泄漏的大小 = `核心线程数 * LocalVariable`
 
 ```java
 public class ThreadLocalDemo {
@@ -64,7 +66,7 @@ public class ThreadLocalDemo {
 }
 ```
 
-　　所以, 为了避免出现内存泄露的情况, ThreadLocal提供了一个清除线程中对象的方法, 即 remove, 其实内部实现就是调用 ThreadLocalMap 的remove方法
+所以, 为了避免出现内存泄露的情况, ThreadLocal提供了一个清除线程中对象的方法, 即 remove, 其实内部实现就是调用 ThreadLocalMap 的remove方法
 
 ```java
 private void remove(ThreadLocal<?> key) {
@@ -84,4 +86,4 @@ private void remove(ThreadLocal<?> key) {
 
 ```
 
-　　找到Key对应的Entry, 并且清除Entry的Key(ThreadLocal)置空, 随后清除过期的Entry即可避免内存泄露。
+找到Key对应的Entry, 并且清除Entry的Key(ThreadLocal)置空, 随后清除过期的Entry即可避免内存泄露。

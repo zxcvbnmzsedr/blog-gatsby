@@ -12,27 +12,29 @@ categories:
   - 并发容器
   - ConcurrentHashMap详解
 ---
+# ConcurrentHashMap详解
+
 ConcurrentHashMap是JUC包中提供的一个高性能并且线程安全的map集合。
 
-　　相对于Hashtable这种, 对操作进行synchronized加锁的，ConcurrentHashMap却是用分段锁或者cas来操作的极大地提高了效率。
+相对于Hashtable这种, 对操作进行synchronized加锁的，ConcurrentHashMap却是用分段锁或者cas来操作的极大地提高了效率。
 
-　　ConcurrentHashMap在JDK 1.7和1.8中的实现并不相同，所以我们分开来说。
+ConcurrentHashMap在JDK 1.7和1.8中的实现并不相同，所以我们分开来说。
 
 ## ConcurrentHashMap_JDK7
 
-　　在JDK1.5~1.7版本，Java使用了分段锁机制实现ConcurrentHashMap。
+在JDK1.5~1.7版本，Java使用了分段锁机制实现ConcurrentHashMap。
 
-　　分段锁，简单来说就是将Hash表划分成多段——Segment数组，每段单独进行上锁，每个段这个时候就相当于一个线程安全的HashTable。
+分段锁，简单来说就是将Hash表划分成多段——Segment数组，每段单独进行上锁，每个段这个时候就相当于一个线程安全的HashTable。
 
-　　在进行put的时候，根据Hash算法定位到某个Segment元素上，然后对此Segment进行加锁即可，避免了整个Hash表加锁。
+在进行put的时候，根据Hash算法定位到某个Segment元素上，然后对此Segment进行加锁即可，避免了整个Hash表加锁。
 
 ### 数据结构
 
-　　在不指定的时候，ConcurrentHashMap会将默认初始化一个长度为16的segment数组。
+在不指定的时候，ConcurrentHashMap会将默认初始化一个长度为16的segment数组。
 
-　　ConcurrentHashMap本质上是一个Segment 数组，Segment通过继承 ReentrantLock 来进行加锁，所以每次需要加锁的操作锁住的是一个 segment，这样只要保证每个 Segment 是线程安全的，也就实现了全局的线程安全。
+ConcurrentHashMap本质上是一个Segment 数组，Segment通过继承 ReentrantLock 来进行加锁，所以每次需要加锁的操作锁住的是一个 segment，这样只要保证每个 Segment 是线程安全的，也就实现了全局的线程安全。
 
-　　![ConcurrentHashMap](https://www.shiyitopo.tech/uPic/ConcurrentHashMap.png)
+![ConcurrentHashMap](https://www.shiyitopo.tech/uPic/ConcurrentHashMap.png)
 
 ### 初始化
 
@@ -93,9 +95,9 @@ ConcurrentHashMap是JUC包中提供的一个高性能并且线程安全的map集
     }
 ```
 
-　　初始化完成，我们得到了一个 Segment 数组。
+初始化完成，我们得到了一个 Segment 数组。
 
-　　我们就当是用 new ConcurrentHashMap() 无参构造函数进行初始化的，那么初始化完成后:
+我们就当是用 new ConcurrentHashMap() 无参构造函数进行初始化的，那么初始化完成后:
 
 - Segment 数组长度为 16，不可以扩容
 - Segment[i] 的默认大小为 2，负载因子是 0.75，得出初始阈值为 1.5，也就是以后插入第一个元素不会触发扩容，插入第二个会进行第一次扩容
@@ -104,7 +106,7 @@ ConcurrentHashMap是JUC包中提供的一个高性能并且线程安全的map集
 
 ### put过程分析
 
-　　ConcurrentHashMap是通过key的hash寻找两次进行插入，第一次是找出Segment，第二次是找出具体的Hash
+ConcurrentHashMap是通过key的hash寻找两次进行插入，第一次是找出Segment，第二次是找出具体的Hash
 
 ```java
  public V put(K key, V value) {
@@ -127,7 +129,7 @@ ConcurrentHashMap是JUC包中提供的一个高性能并且线程安全的map集
     }
 ```
 
-　　Segment暴露出来的put方法:
+Segment暴露出来的put方法:
 
 ```java
 final V put(K key, int hash, V value, boolean onlyIfAbsent) {
@@ -193,9 +195,9 @@ final V put(K key, int hash, V value, boolean onlyIfAbsent) {
 
 ### 初始化槽: ensureSegment
 
-　　ConcurrentHashMap 初始化的时候会初始化第一个槽 segment[0]，对于其他槽来说，在插入第一个值的时候进行初始化。
+ConcurrentHashMap 初始化的时候会初始化第一个槽 segment[0]，对于其他槽来说，在插入第一个值的时候进行初始化。
 
-　　这里需要考虑并发，因为很可能会有多个线程同时进来初始化同一个槽 segment[k]，不过只要有一个成功了就可以。
+这里需要考虑并发，因为很可能会有多个线程同时进来初始化同一个槽 segment[k]，不过只要有一个成功了就可以。
 
 ```java
 private Segment<K,V> ensureSegment(int k) {
@@ -229,13 +231,13 @@ private Segment<K,V> ensureSegment(int k) {
 }   
 ```
 
-　　总的来说，ensureSegment(int k) 比较简单，对于并发操作使用 CAS 进行控制。
+总的来说，ensureSegment(int k) 比较简单，对于并发操作使用 CAS 进行控制。
 
 ### 获取写入锁-scanandlockforput
 
-　　前面我们看到，在往某个 segment 中 put 的时候，首先会调用 node = tryLock() ? null : scanAndLockForPut(key, hash, value)，也就是说先进行一次 tryLock() 快速获取该 segment 的独占锁，如果失败，那么进入到 scanAndLockForPut 这个方法来获取锁。
+前面我们看到，在往某个 segment 中 put 的时候，首先会调用 node = tryLock() ? null : scanAndLockForPut(key, hash, value)，也就是说先进行一次 tryLock() 快速获取该 segment 的独占锁，如果失败，那么进入到 scanAndLockForPut 这个方法来获取锁。
 
-　　下面我们来具体分析这个方法中是怎么控制加锁的。
+下面我们来具体分析这个方法中是怎么控制加锁的。
 
 ```java
 private HashEntry<K,V> scanAndLockForPut(K key, int hash, V value) {
@@ -278,17 +280,17 @@ private HashEntry<K,V> scanAndLockForPut(K key, int hash, V value) {
 }
 ```
 
-　　这个方法有两个出口，一个是 tryLock() 成功了，循环终止，另一个就是重试次数超过了 MAX_SCAN_RETRIES，进到 lock() 方法，此方法会阻塞等待，直到成功拿到独占锁。
+这个方法有两个出口，一个是 tryLock() 成功了，循环终止，另一个就是重试次数超过了 MAX_SCAN_RETRIES，进到 lock() 方法，此方法会阻塞等待，直到成功拿到独占锁。
 
-　　这个方法就是看似复杂，但是其实就是做了一件事，那就是获取该 segment 的独占锁，如果需要的话顺便实例化了一下 node。
+这个方法就是看似复杂，但是其实就是做了一件事，那就是获取该 segment 的独占锁，如果需要的话顺便实例化了一下 node。
 
 ### 扩容-rehash
 
-　　重复一下，segment 数组不能扩容，扩容是 segment 数组某个位置内部的数组 HashEntry<K,V>[] 进行扩容，扩容后，容量为原来的 2 倍。
+重复一下，segment 数组不能扩容，扩容是 segment 数组某个位置内部的数组 HashEntry<K,V>[] 进行扩容，扩容后，容量为原来的 2 倍。
 
-　　首先，我们要回顾一下触发扩容的地方，put 的时候，如果判断该值的插入会导致该 segment 的元素个数超过阈值，那么先进行扩容，再插值，读者这个时候可以回去 put 方法看一眼。
+首先，我们要回顾一下触发扩容的地方，put 的时候，如果判断该值的插入会导致该 segment 的元素个数超过阈值，那么先进行扩容，再插值，读者这个时候可以回去 put 方法看一眼。
 
-　　该方法不需要考虑并发，因为到这里的时候，是持有该 segment 的独占锁的。
+该方法不需要考虑并发，因为到这里的时候，是持有该 segment 的独占锁的。
 
 ```java
 // 方法参数上的 node 是这次扩容后，需要添加到新的数组中的数据。
@@ -353,7 +355,7 @@ private void rehash(HashEntry<K,V> node) {
 
 ### get 过程分析
 
-　　相对于 put 来说，get 就很简单了。
+相对于 put 来说，get 就很简单了。
 
 - 计算 hash 值，找到 segment 数组中的具体位置，或我们前面用的“槽”
 - 槽中也是一个数组，根据 hash 找到数组中具体的位置
@@ -384,9 +386,9 @@ public V get(Object key) {
 
 ### 并发问题分析
 
-　　现在我们已经说完了 put 过程和 get 过程，我们可以看到 get 过程中是没有加锁的，那自然我们就需要去考虑并发问题。
+现在我们已经说完了 put 过程和 get 过程，我们可以看到 get 过程中是没有加锁的，那自然我们就需要去考虑并发问题。
 
-　　添加节点的操作 put 和删除节点的操作 remove 都是要加 segment 上的独占锁的，所以它们之间自然不会有问题，我们需要考虑的问题就是 get 的时候在同一个 segment 中发生了 put 或 remove 操作。
+添加节点的操作 put 和删除节点的操作 remove 都是要加 segment 上的独占锁的，所以它们之间自然不会有问题，我们需要考虑的问题就是 get 的时候在同一个 segment 中发生了 put 或 remove 操作。
 
 - put 操作的线程安全性。
   - 初始化槽，这个我们之前就说过了，使用了 CAS 来初始化 Segment 中的数组。
@@ -400,17 +402,17 @@ public V get(Object key) {
 
 ## ConcurrentHashMap_JDK8
 
-　　在 Java 8 中，几乎完全重写了 ConcurrentHashMap，代码量从原来 Java 7 中的 1000 多行，变成了现在的 6000 多行，所以也大大提高了源码的阅读难度。而为了方便我们理解，我们还是先从整体的结构示意图出发，看一看总体的设计思路，然后再去深入细节。
+在 Java 8 中，几乎完全重写了 ConcurrentHashMap，代码量从原来 Java 7 中的 1000 多行，变成了现在的 6000 多行，所以也大大提高了源码的阅读难度。而为了方便我们理解，我们还是先从整体的结构示意图出发，看一看总体的设计思路，然后再去深入细节。
 
-　　![1.8数据结构](https://www.shiyitopo.tech/uPic/1.8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png)
+![1.8数据结构](https://www.shiyitopo.tech/uPic/1.8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.png)
 
-　　图中的节点有三种类型:
+图中的节点有三种类型:
 
 1. 空着的位置代表还没有元素来填充
 2. 相同hash值使用链表向后进行延伸，此举和hashmap相同
 3. 在链表长度超过8，会将链表转换成为红黑树
 
-　　我们先来看看最基础的内部存储结构 Node，这就是一个一个的节点，如这段代码所示：
+我们先来看看最基础的内部存储结构 Node，这就是一个一个的节点，如这段代码所示：
 
 ```java
 static class Node<K,V> implements Map.Entry<K,V> {
@@ -422,13 +424,13 @@ static class Node<K,V> implements Map.Entry<K,V> {
 }
 ```
 
-　　可以看出，每个 Node 里面是 key-value 的形式，并且把 value 用 volatile 修饰，以便保证可见性，同时内部还有一个指向下一个节点的 next 指针，方便产生链表结构。
+可以看出，每个 Node 里面是 key-value 的形式，并且把 value 用 volatile 修饰，以便保证可见性，同时内部还有一个指向下一个节点的 next 指针，方便产生链表结构。
 
-　　下面我们看两个最重要、最核心的方法。
+下面我们看两个最重要、最核心的方法。
 
 ### put 方法源码分析
 
-　　put 方法的核心是 putVal 方法，为了方便阅读，我把重要步骤的解读用注释的形式补充在下面的源码中。我们逐步分析这个最重要的方法，这个方法相对有些长，我们一步一步把它看清楚。
+put 方法的核心是 putVal 方法，为了方便阅读，我把重要步骤的解读用注释的形式补充在下面的源码中。我们逐步分析这个最重要的方法，这个方法相对有些长，我们一步一步把它看清楚。
 
 ```java
 final V putVal(K key, V value, boolean onlyIfAbsent) {
@@ -519,11 +521,11 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 }
 ```
 
-　　通过以上的源码分析，我们对于 putVal 方法有了详细的认识，可以看出，方法中会逐步根据当前槽点是未初始化、空、扩容、链表、红黑树等不同情况做出不同的处理。
+通过以上的源码分析，我们对于 putVal 方法有了详细的认识，可以看出，方法中会逐步根据当前槽点是未初始化、空、扩容、链表、红黑树等不同情况做出不同的处理。
 
 ### get 方法源码分析
 
-　　get 方法比较简单，我们同样用源码注释的方式来分析一下：
+get 方法比较简单，我们同样用源码注释的方式来分析一下：
 
 ```java
 public V get(Object key) {
@@ -551,7 +553,7 @@ public V get(Object key) {
 }
 ```
 
-　　总结一下 get 的过程：
+总结一下 get 的过程：
 
 1. 计算 Hash 值，并由此值找到对应的槽点；
 2. 如果数组是空的或者该位置为 null，那么直接返回 null 就可以了；
@@ -563,26 +565,26 @@ public V get(Object key) {
 
 ### 并发度
 
-　　Java 7 中，每个 Segment 独立加锁，最大并发个数就是 Segment 的个数，默认是 16。
+Java 7 中，每个 Segment 独立加锁，最大并发个数就是 Segment 的个数，默认是 16。
 
-　　但是到了 Java 8 中，锁粒度更细，理想情况下 table 数组元素的个数（也就是数组长度）就是其支持并发的最大个数，并发度比之前有提高。
+但是到了 Java 8 中，锁粒度更细，理想情况下 table 数组元素的个数（也就是数组长度）就是其支持并发的最大个数，并发度比之前有提高。
 
 ### 保证并发安全的原理
 
-　　Java 7 采用 Segment 分段锁来保证安全，而 Segment 是继承自 ReentrantLock。
+Java 7 采用 Segment 分段锁来保证安全，而 Segment 是继承自 ReentrantLock。
 
-　　Java 8 中放弃了 Segment 的设计，采用 Node + CAS + synchronized 保证线程安全。
+Java 8 中放弃了 Segment 的设计，采用 Node + CAS + synchronized 保证线程安全。
 
 ### 遇到 Hash 碰撞
 
-　　Java 7 在 Hash 冲突时，会使用拉链法，也就是链表的形式。
+Java 7 在 Hash 冲突时，会使用拉链法，也就是链表的形式。
 
-　　Java 8 先使用拉链法，在链表长度超过一定阈值时，将链表转换为红黑树，来提高查找效率。
+Java 8 先使用拉链法，在链表长度超过一定阈值时，将链表转换为红黑树，来提高查找效率。
 
 ### 查询时间复杂度
 
-　　Java 7 遍历链表的时间复杂度是 O(n)，n 为链表长度。
+Java 7 遍历链表的时间复杂度是 O(n)，n 为链表长度。
 
-　　Java 8 如果变成遍历红黑树，那么时间复杂度降低为 O(log(n))，n 为树的节点个数。
+Java 8 如果变成遍历红黑树，那么时间复杂度降低为 O(log(n))，n 为树的节点个数。
 
-　　参考链接：https://www.pdai.tech/md/java/thread/java-thread-x-juc-collection-ConcurrentHashMap.html
+参考链接：https://www.pdai.tech/md/java/thread/java-thread-x-juc-collection-ConcurrentHashMap.html

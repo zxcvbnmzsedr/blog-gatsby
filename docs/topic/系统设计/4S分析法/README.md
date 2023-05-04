@@ -10,6 +10,8 @@ categories:
   - 系统设计
   - 4S分析法
 ---
+# 4S分析法
+
 以Twitter为案例，来作为一个分析
 
 # <u>Scenario</u>场景
@@ -23,7 +25,7 @@ categories:
 
 ## 需要设计哪些功能
 
-　　第一步列举功能:
+第一步列举功能:
 
 * 注册、登录
 * 用户个人页面展示、编辑
@@ -33,7 +35,7 @@ categories:
 * TimeLine和News Feed
 * 关注和取消关注用户
 
-　　第二步骤，功能排序，选出核心功能:
+第二步骤，功能排序，选出核心功能:
 
 * 发送Twitter
 * TimeLine展示
@@ -43,7 +45,7 @@ categories:
 
 ## 需要承受的访问量
 
-　　我们需要对访问量进行一个估算，下面大致是估算方式 :
+我们需要对访问量进行一个估算，下面大致是估算方式 :
 
 * 并发用户Concurrent User
 
@@ -56,9 +58,9 @@ categories:
 
   * 5K
 
-　　这样就大致分析出需要承载的QPS。
+这样就大致分析出需要承载的QPS。
 
-　　下面是一些硬件或者软件能够承载的QPS数量: 
+下面是一些硬件或者软件能够承载的QPS数量: 
 
 * QPS=100
 
@@ -78,13 +80,13 @@ categories:
   * 一个NoSQL集群（Elasticsearch）承受量是10W左右
   * 内存数据库（Redis）100W QPS左右
 
-　　通过这些预估的QPS数量，就能够估算出所需要的机器。
+通过这些预估的QPS数量，就能够估算出所需要的机器。
 
 # Service服务
 
-　　将大系统拆分成一个个小服务。
+将大系统拆分成一个个小服务。
 
-　　![](https://image.ztianzeng.com/uPic/20220614190843.png)
+![](https://image.ztianzeng.com/uPic/20220614190843.png)
 
 * 重放需求
 
@@ -95,15 +97,15 @@ categories:
 
   将整个系统切分成若干个小的Service
 
-　　‍
+‍
 
 # Storage存储
 
-　　对于我们写的Service而言，写的是具象化的程序，而程序=算法+数据结构。
+对于我们写的Service而言，写的是具象化的程序，而程序=算法+数据结构。
 
-　　但是对于系统而言，系统=服务+数据存储。
+但是对于系统而言，系统=服务+数据存储。
 
-　　所以确定存储结构和介质尤为重要。
+所以确定存储结构和介质尤为重要。
 
 ## 处理步骤
 
@@ -126,19 +128,19 @@ categories:
   * 不支持数据持久化
   * 但是效率高，内存级别的访问速度
 
-　　![](https://image.ztianzeng.com/uPic/20220615103234.png)
+![](https://image.ztianzeng.com/uPic/20220615103234.png)
 
 ### 第二步：细化表结构
 
-　　‍
+‍
 
-　　![](https://image.ztianzeng.com/uPic/20220615131659.png)
+![](https://image.ztianzeng.com/uPic/20220615131659.png)
 
 ## 存储模型
 
 ### Pull Model 拉模型
 
-　　![](https://image.ztianzeng.com/uPic/20220615151033.png)
+![](https://image.ztianzeng.com/uPic/20220615151033.png)
 
 * 算法:
 
@@ -178,9 +180,9 @@ categories:
 
 ## Pull的缺陷
 
-　　![](https://image.ztianzeng.com/uPic/20220615151033.png)
+![](https://image.ztianzeng.com/uPic/20220615151033.png)
 
-　　在用户进行读请求时，会访问每个关注的人的DB，所以这一块将会成为瓶颈
+在用户进行读请求时，会访问每个关注的人的DB，所以这一块将会成为瓶颈
 
 1. 在访问DB之前，加入Cache
 2. 缓存每个用户的TimeLine
@@ -193,9 +195,9 @@ categories:
 
 ## Push的缺陷
 
-　　![](https://image.ztianzeng.com/uPic/20220615151122.png)
+![](https://image.ztianzeng.com/uPic/20220615151122.png)
 
-　　在用户发布一篇文章时，会向关注者的TimeLine中都插入一条Tweets。
+在用户发布一篇文章时，会向关注者的TimeLine中都插入一条Tweets。
 
 * 会浪费更多的存储空间
 
@@ -220,12 +222,12 @@ categories:
 
 ### 增长预估
 
-　　对当前业务量的增长率进行一个预判，衡量是采用Pull还是Push，如果实在太大，考虑Push结合Pull进行优化
+对当前业务量的增长率进行一个预判，衡量是采用Pull还是Push，如果实在太大，考虑Push结合Pull进行优化
 
 * 普通用户使用Push方案进行处理
 * 标记大V用户，采用Pull方式进行处理
 * 用户查询，合并自己的TimeLine + 大V的TimeLine
 
-　　相对来说混用的模型实现上会比单纯的复杂。
+相对来说混用的模型实现上会比单纯的复杂。
 
-　　‍
+‍

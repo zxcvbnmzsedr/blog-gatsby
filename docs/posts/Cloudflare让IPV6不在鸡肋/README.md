@@ -6,24 +6,25 @@ categories:
 - posts
 tags: 
 ---
+# Cloudflare让IPV6不在鸡肋
+
 # 前言
 
-　　随着国内IPV4的公网地址越来越少，以及IPV6的不断普及，我们能够很方便的获取到公网的IPV6地址。但是在外面没有IPV6的情况下，想要访问家里的IPV6服务是一件很困难的事情。
+随着国内IPV4的公网地址越来越少，以及IPV6的不断普及，我们能够很方便的获取到公网的IPV6地址。但是在外面没有IPV6的情况下，想要访问家里的IPV6服务是一件很困难的事情。
 
-　　虽然有着共有的6in4，或者ipv4转v6的代理隧道可以用，但是实际用下来，感觉由于代理服务器的影响，没有办法达到预期的速度。
+虽然有着共有的6in4，或者ipv4转v6的代理隧道可以用，但是实际用下来，感觉由于代理服务器的影响，没有办法达到预期的速度。
 
 > [https://tunnelbroker.net/](https://tunnelbroker.net/) 提供了免费的IPV6隧道服务
->
 
-　　不过，国外有一个非常好用的CDN提供商，[CloudFlare](https://www.cloudflare.com/zh-cn/)
+不过，国外有一个非常好用的CDN提供商，[CloudFlare](https://www.cloudflare.com/zh-cn/)
 
-　　它提供了一整套免费的CDN加速和代理，我们只需要通过CDN来代理请求的IPV6地址即可。
+它提供了一整套免费的CDN加速和代理，我们只需要通过CDN来代理请求的IPV6地址即可。
 
-　　![](https://image.ztianzeng.com/uPic/20220613131516.png)
+![](https://image.ztianzeng.com/uPic/20220613131516.png)
 
 # 准备工作
 
-　　要想使用这套服务，直接访问到家中的设备需要准备下面这几样东西:
+要想使用这套服务，直接访问到家中的设备需要准备下面这几样东西:
 
 1. 一个属于自己的域名
 2. 一个能够编写脚本的路由器
@@ -31,16 +32,15 @@ tags:
 
 # 开始折腾
 
-　　我们第一步需要确保域名接入到了cloudflare中。通过修改名称服务器，将域名交给cloudflare进行托管。
+我们第一步需要确保域名接入到了cloudflare中。通过修改名称服务器，将域名交给cloudflare进行托管。
 
-　　然后在cloudflare中新建一个了类型是AAAA的DNS，内容随便写啥。
+然后在cloudflare中新建一个了类型是AAAA的DNS，内容随便写啥。
 
 > 因为我用的是Openwrt，所以会以OpenWrt来进行说明
->
 
-　　先登录OpenWrt的路由器, 查看LAN口的获取到的IPV6地址，把这个IPV6地址粘贴到CloudFlare中。（关于OpenWrt如何开启IPV6，网上教程很多）
+先登录OpenWrt的路由器, 查看LAN口的获取到的IPV6地址，把这个IPV6地址粘贴到CloudFlare中。（关于OpenWrt如何开启IPV6，网上教程很多）
 
-　　然后将Openwrt的端口修改成下面的任何一个（下面这些端口是CloudFlare支持的反向代理的端口，其次国内家用端口封80和443，我选择的是2095）
+然后将Openwrt的端口修改成下面的任何一个（下面这些端口是CloudFlare支持的反向代理的端口，其次国内家用端口封80和443，我选择的是2095）
 
 * 8880
 * 2052
@@ -48,22 +48,21 @@ tags:
 * 2086
 * 2095
 
-　　如果不能访问，一般是由于防火墙的问题，我们可以用5G手机，直接访问[:IPV6地址:]:2095，来确定是不是防火墙的问题。
+如果不能访问，一般是由于防火墙的问题，我们可以用5G手机，直接访问[:IPV6地址:]:2095，来确定是不是防火墙的问题。
 
-　　![](https://image.ztianzeng.com/uPic/20220630093151.png)
+![](https://image.ztianzeng.com/uPic/20220630093151.png)
 
-　　如果一切设置完成，就能访问了。
+如果一切设置完成，就能访问了。
 
 > 必须将代理状态设置成已代理，否则就会你和配置的域名之间就会走IPV6的方式访问。
->
 
 # DDNS
 
-　　由于我们拿到的IPV6是每次拨号都是在变化的，所以要能定时将最新的IPV6地址上报上去。
+由于我们拿到的IPV6是每次拨号都是在变化的，所以要能定时将最新的IPV6地址上报上去。
 
-　　脚本在下面:
+脚本在下面:
 
-　　脚本需要用到jq，所以提取先安装[jq](https://stedolan.github.io/jq/download/)
+脚本需要用到jq，所以提取先安装[jq](https://stedolan.github.io/jq/download/)
 
 ```bash
 #!/bin/bash
@@ -188,4 +187,4 @@ else
 fi
 ```
 
-　　后续也能通过Nginx进行反向代理，这样就不用配置其他服务的域名了，只需要通过nginx进行统一的转发即可。
+后续也能通过Nginx进行反向代理，这样就不用配置其他服务的域名了，只需要通过nginx进行统一的转发即可。

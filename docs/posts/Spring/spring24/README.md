@@ -6,13 +6,15 @@ categories:
 - posts
 tags: 
 ---
+# spring24
+
 # 全新的配置文件处理
 
-　　我感觉最大的改变是提供了新的配置文件的加载方式，为了去适应k8s容器化部署中的configMap。
+我感觉最大的改变是提供了新的配置文件的加载方式，为了去适应k8s容器化部署中的configMap。
 
-　　如果不想使用新的加载方式，依然提供了旧版的加载方式
+如果不想使用新的加载方式，依然提供了旧版的加载方式
 
-　　引入依赖
+引入依赖
 
 ```xml
 <dependency>
@@ -22,13 +24,13 @@ tags:
 </dependency>
 ```
 
-　　在配置文件中加上 spring.config.use-legacy-processing=true 
+在配置文件中加上 spring.config.use-legacy-processing=true 
 
 ## 新版加载方式spring.config.import属性
 
-　　spring.config.import属性可被视作这个版本最为牛逼的属性。
+spring.config.import属性可被视作这个版本最为牛逼的属性。
 
-　　可以从不同的位置加载数据
+可以从不同的位置加载数据
 
 1. 加载classpath数据
 
@@ -54,17 +56,17 @@ spring.config.import=optional:configtree:/etc/config/
 
 # 新的版本描述方案
 
-　　为了更加照顾英语非母语的开发者，spring采用了新的命名方案。
+为了更加照顾英语非母语的开发者，spring采用了新的命名方案。
 
-　　之前那套用英文命名的真的让人摸不着头脑，英语也就算了，还整些个不常用的生词。
+之前那套用英文命名的真的让人摸不着头脑，英语也就算了，还整些个不常用的生词。
 
-　　单词的拼写很困难，版本号全靠复制。
+单词的拼写很困难，版本号全靠复制。
 
-　　而且版本号上面也难以看出版本向下兼容性，很难做出判断而做出风险预估。
+而且版本号上面也难以看出版本向下兼容性，很难做出判断而做出风险预估。
 
-　　为了解决这些问题
+为了解决这些问题
 
-　　Spring采用了日历化版本，并且使用的规则/公式是YYYY.MINOR.MICRO[-MODIFIER]，
+Spring采用了日历化版本，并且使用的规则/公式是YYYY.MINOR.MICRO[-MODIFIER]，
 
 ### 对各部分解释如下：
 
@@ -81,15 +83,15 @@ spring.config.import=optional:configtree:/etc/config/
 
 # R2DBC
 
-　　AR2dbcEntityTemplate可用于通过实体简化 Reactive R2DBC 的使用
+AR2dbcEntityTemplate可用于通过实体简化 Reactive R2DBC 的使用
 
 # Java 15 支持
 
-　　Spring Boot 2.4 现在完全支持（并针对）Java 15。支持的最低版本仍然是 Java 8。
+Spring Boot 2.4 现在完全支持（并针对）Java 15。支持的最低版本仍然是 Java 8。
 
 # 自定义属性名称支持
 
-　　如果想注入的名称和java关键字想冲突可以使用@Name属性进行注入
+如果想注入的名称和java关键字想冲突可以使用@Name属性进行注入
 
 ```java
 @ConfigurationProperties(prefix = "sample")
@@ -118,7 +120,7 @@ public class SampleConfigurationProperties {
 + Spring Security 5.4
 + Spring Session 2020.0
 
-　　还更新了许多第三方依赖项：
+还更新了许多第三方依赖项：
 
 + Artemis 2.13
 + AssertJ 3.18

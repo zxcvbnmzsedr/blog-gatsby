@@ -6,6 +6,8 @@ categories:
 - posts
 tags: 
 ---
+# Mac使用Fuse挂载NTFS
+
 ## 步骤
 
 1. 安装Fuse和nefs-3g

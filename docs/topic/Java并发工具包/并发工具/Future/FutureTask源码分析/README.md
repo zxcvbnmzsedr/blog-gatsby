@@ -12,9 +12,11 @@ categories:
   - Future
   - FutureTask源码分析
 ---
+# FutureTask源码分析
+
 FutureTask为future提供了基础实现，而且也是我们用的最多的实现方式。
 
-　　接下来，将会对FutureTask展开深入的分析。
+接下来，将会对FutureTask展开深入的分析。
 
 ## 核心属性
 
@@ -46,9 +48,9 @@ FutureTask为future提供了基础实现，而且也是我们用的最多的实�
     private volatile WaitNode waiters;
 ```
 
-　　其中我们需要注意的就是state类型，是volatile类型的，任何一个线程修改了这个变量，那么其他所有的线程都会知道最新的值。
+其中我们需要注意的就是state类型，是volatile类型的，任何一个线程修改了这个变量，那么其他所有的线程都会知道最新的值。
 
-　　7种状态:
+7种状态:
 
 + `NEW`: 表示是一个新的任务或者还没有被执行完的状态。初始状态
 + `COMPLETING`: 任务执行完，或者执行任务的时候发生异常，但是任务执行结果或者异常原因还没有被保存到outcome字段的时候，装填会从NEW->COMPLETING。这个状态时间很短，属于中间状态。
@@ -58,7 +60,7 @@ FutureTask为future提供了基础实现，而且也是我们用的最多的实�
 + `INTERRUPTING`:任务还没有开始执行或者已经开始执行但是还没有执行完，此时用户调用了cancel(ture)方法，**中断任务**执行并且还没有执行中断操作之前。这个时候状态则是: NEW -> INTERRUPTING。这是一个中间状态。
 + `INTERRUPTED`:调用interrupt()中断任务执行线程会到这个状态。NEW -> INTERRUPTING -> INTERRUPTED。这是一个最终态。
 
-　　值得注意的是，所有状态值大于COMPLETING的状态都是标识任务已经执行完成，无论是正常、异常、或者任务取消。
+值得注意的是，所有状态值大于COMPLETING的状态都是标识任务已经执行完成，无论是正常、异常、或者任务取消。
 
 ```mermaid
 graph TD;
@@ -84,9 +86,9 @@ public FutureTask(Runnable runnable, V result) {
     }
 ```
 
-　　可以在构造函数中看到，初始化的状态是NEW，和我们上文中写的一致。
+可以在构造函数中看到，初始化的状态是NEW，和我们上文中写的一致。
 
-　　`callable`:用来保存底层调用。如果直接传入runable，会将Runnable对象包装成callable对象，如果任务执行成功就会返回传入的result。如果不需要返回值，可以传入一个null。
+`callable`:用来保存底层调用。如果直接传入runable，会将Runnable对象包装成callable对象，如果任务执行成功就会返回传入的result。如果不需要返回值，可以传入一个null。
 
 ## 核心方法：Run()
 
@@ -131,7 +133,7 @@ public void run() {
 }
 ```
 
-　　说明:
+说明:
 
 + 运行任务，如果任务状态为NEW状态，则利用CAS修改为当前线程，执行完毕调用set(result)设置执行结果。
 
@@ -218,11 +220,11 @@ public V get() throws InterruptedException, ExecutionException {
 }
 ```
 
-　　说明: FutureTask通过get()方法获取任务执行结果。任务处于未完成的状态 state <= COMPLETEING，就调用awaitDown等待任务完成，通过report获取执行结果或者抛出异常。
+说明: FutureTask通过get()方法获取任务执行结果。任务处于未完成的状态 state <= COMPLETEING，就调用awaitDown等待任务完成，通过report获取执行结果或者抛出异常。
 
-　　report方法比较简单，如果当前状态是正常的NORMAL，则直接返回结果。
+report方法比较简单，如果当前状态是正常的NORMAL，则直接返回结果。
 
-　　如果方法状态>=CANCELLED,也就是处于CANCELLED、INTERRUPTING、INTERRUPTED这三种状态的时候，抛出CancellationException，否则（状态为EXCEPTIONAL）就抛出业务异常
+如果方法状态>=CANCELLED,也就是处于CANCELLED、INTERRUPTING、INTERRUPTED这三种状态的时候，抛出CancellationException，否则（状态为EXCEPTIONAL）就抛出业务异常
 
 ```java
 private V report(int s) throws ExecutionException {
@@ -237,7 +239,7 @@ private V report(int s) throws ExecutionException {
 
 ## 核心方法:awaitDone(boolean timed,long nanos)
 
-　　这个方法就是get方法阻塞的关键所在
+这个方法就是get方法阻塞的关键所在
 
 ```java
 
@@ -334,7 +336,7 @@ public boolean cancel(boolean mayInterruptIfRunning) {
 }
 ```
 
-　　说明：尝试取消任务。如果任务已经完成或已经被取消，此操作会失败。
+说明：尝试取消任务。如果任务已经完成或已经被取消，此操作会失败。
 
 - 如果当前Future状态为NEW，根据参数修改Future状态为INTERRUPTING或CANCELLED。
 - 如果当前状态不为NEW，则根据参数mayInterruptIfRunning决定是否在任务运行中也可以中断。中断操作完成后，调用finishCompletion移除并唤醒所有等待线程。

@@ -6,13 +6,15 @@ categories:
 - posts
 tags: 
 ---
-　　直接用传统的Feign封装外部的请求，如果是Https请求的话，开启抓包会导致MtiM解密异常。
+# Feign配置SSL证书进行抓包
 
-　　Java由于虚拟机的机制，没有办法使用系统的证书去进行解密，因此需要通过指定证书地址，进行手动配置。（类似于Android和IOS的信任证书）
+直接用传统的Feign封装外部的请求，如果是Https请求的话，开启抓包会导致MtiM解密异常。
 
-　　‍
+Java由于虚拟机的机制，没有办法使用系统的证书去进行解密，因此需要通过指定证书地址，进行手动配置。（类似于Android和IOS的信任证书）
 
-　　下面这段代码是构造SSL证书的方法：
+‍
+
+下面这段代码是构造SSL证书的方法：
 
 ```java
 private SSLSocketFactory buildSslSocketFactory() {
@@ -44,7 +46,7 @@ private SSLSocketFactory buildSslSocketFactory() {
     }
 ```
 
-　　在声明FeignClient的时候，只需要构造一下替换掉默认的SSL配置即可。
+在声明FeignClient的时候，只需要构造一下替换掉默认的SSL配置即可。
 
 ```java
  @Bean
@@ -56,4 +58,4 @@ private SSLSocketFactory buildSslSocketFactory() {
  }
 ```
 
-　　‍
+‍

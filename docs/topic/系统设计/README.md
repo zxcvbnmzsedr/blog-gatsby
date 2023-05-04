@@ -9,18 +9,19 @@ categories:
   - topic
   - 系统设计
 ---
+# 系统设计
+
 ![](https://image.ztianzeng.com/uPic/20220614171025.png)
 
-　　 在面试中遇到系统设计的问题，大多数的时候都会回答不全，或者回答的答案和面试官想要的大相径庭。
+ 在面试中遇到系统设计的问题，大多数的时候都会回答不全，或者回答的答案和面试官想要的大相径庭。
 
-　　就比如，设计一个*1000QPS*的秒杀系统啥Redis、MQ统统网上怼，系统都能扛得住数万QPS，明显看上去是背答案的。
+就比如，设计一个*1000QPS*的秒杀系统啥Redis、MQ统统网上怼，系统都能扛得住数万QPS，明显看上去是背答案的。
 
-　　关于系统设计github上面有个非常好的repo: [https://github.com/donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
+关于系统设计github上面有个非常好的repo: [https://github.com/donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
 
-　　上面详细的提到了如何设计一个合理的系统 ,总共分为4个步骤:
+上面详细的提到了如何设计一个合理的系统 ,总共分为4个步骤:
 
 > 这4个步骤也被称之为4s分析法
->
 
 1. 描述使用场景，约束和假设（**S**cenario）
 
@@ -53,6 +54,6 @@ categories:
     * 水平扩展
     * 缓存
 
-　　通过上面这4个步骤，就能大体设计出来一个相对完备的系统。
+通过上面这4个步骤，就能大体设计出来一个相对完备的系统。
 
-　　‍
+‍

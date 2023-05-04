@@ -11,19 +11,21 @@ categories:
   - 底层原理
   - AQS框架
 ---
+# AQS框架
+
 AQS框架，全名叫做**A**bstract**Q**ueued**S**ynchronizer。是目前JUC中，各个Lock锁的核心实现。
 
-　　AQS提供了一系列的方式方法，用于我们去实现自己的"锁"结构。
+AQS提供了一系列的方式方法，用于我们去实现自己的"锁"结构。
 
-　　接下来，我们会从**ReentrantLock**开始，剖析AQS框架的整体结构。
+接下来，我们会从**ReentrantLock**开始，剖析AQS框架的整体结构。
 
 ## 模拟场景
 
-　　有三个用户A、B、C，排队去银行取款，银行只有一个窗口。
+有三个用户A、B、C，排队去银行取款，银行只有一个窗口。
 
-　　用户A办理业务的时间比较长，需要办理20分钟，在A办理窗口的时候，B、C只能在等待。
+用户A办理业务的时间比较长，需要办理20分钟，在A办理窗口的时候，B、C只能在等待。
 
-　　代码如下：
+代码如下：
 
 ```java
 public static final ReentrantLock lock = new ReentrantLock();
@@ -62,15 +64,15 @@ public static final ReentrantLock lock = new ReentrantLock();
     }
 ```
 
-　　我们使用lock来模拟银行单个柜台的操作，在办理业务之前必须先拿到柜台的锁。
+我们使用lock来模拟银行单个柜台的操作，在办理业务之前必须先拿到柜台的锁。
 
-　　如下图所示，B、C正在座位上排队，A正在办理业务
+如下图所示，B、C正在座位上排队，A正在办理业务
 
-　　![image-20211214133706380](https://www.shiyitopo.tech/uPic/image-20211214133706380.png)
+![image-20211214133706380](https://www.shiyitopo.tech/uPic/image-20211214133706380.png)
 
 ## 源码分析
 
-　　我们调用lock的方法，才能够获取到办理业务的锁。
+我们调用lock的方法，才能够获取到办理业务的锁。
 
 ```java
  public void lock() {
@@ -78,13 +80,13 @@ public static final ReentrantLock lock = new ReentrantLock();
 }
 ```
 
-　　lock方法的实现，非常简单，就是调用sync对象进行加锁。
+lock方法的实现，非常简单，就是调用sync对象进行加锁。
 
-　　sync对象是继承自AbstractQueuedSynchronizer而实现的锁。
+sync对象是继承自AbstractQueuedSynchronizer而实现的锁。
 
-　　内部定义了一个lock的抽象方法（我们接下来都以默认的**非公平锁**来进行说明）。
+内部定义了一个lock的抽象方法（我们接下来都以默认的**非公平锁**来进行说明）。
 
-　　lock的抽象方法交由给NonfairSync的lock实现。
+lock的抽象方法交由给NonfairSync的lock实现。
 
 ```java
 abstract static class Sync extends AbstractQueuedSynchronizer {
@@ -107,17 +109,17 @@ static final class NonfairSync extends Sync {
 
 ```
 
-　　额外说明:在AQS框架中，有个state字段，这是给实现类用的，谁使用谁实现。
+额外说明:在AQS框架中，有个state字段，这是给实现类用的，谁使用谁实现。
 
-　　在ReentrantLock的Sync中，state字段: 0代表着被占用;1代表着锁已经被占用。
+在ReentrantLock的Sync中，state字段: 0代表着被占用;1代表着锁已经被占用。
 
-　　接下来，会结合具体场景，来剖析整个流程。
+接下来，会结合具体场景，来剖析整个流程。
 
 ## 获取锁流程
 
 ### 用户A加锁
 
-　　在第一次调用lock方法的时候，会通过CAS的方式去判断state的值。state在第一次调用时，肯定是0，所以这个时候可以通过setExclusiveOwnerThread(Thread.currentThread())方法，设置当前获取这个锁的线程为**用户A**
+在第一次调用lock方法的时候，会通过CAS的方式去判断state的值。state在第一次调用时，肯定是0，所以这个时候可以通过setExclusiveOwnerThread(Thread.currentThread())方法，设置当前获取这个锁的线程为**用户A**
 
 ```java
 final void lock() {
@@ -128,15 +130,15 @@ final void lock() {
   }
 ```
 
-　　如下图所示:
+如下图所示:
 
-　　![用户A进来](https://www.shiyitopo.tech/uPic/%E7%94%A8%E6%88%B7A%E8%BF%9B%E6%9D%A5.png)
+![用户A进来](https://www.shiyitopo.tech/uPic/%E7%94%A8%E6%88%B7A%E8%BF%9B%E6%9D%A5.png)
 
 ### 用户B加锁
 
-　　用户B加锁的这种情况，就会走到整个AQS的核心。
+用户B加锁的这种情况，就会走到整个AQS的核心。
 
-　　在用户B加锁的时候，会发现"柜台"已经被A占用了，只能到一旁的小板凳去等待，会调用acquire(1)方法，获取一张"小板凳"；
+在用户B加锁的时候，会发现"柜台"已经被A占用了，只能到一旁的小板凳去等待，会调用acquire(1)方法，获取一张"小板凳"；
 
 ```java
 public final void acquire(int arg) {
@@ -145,11 +147,11 @@ public final void acquire(int arg) {
 }
 ```
 
-　　可以看到在这个if方法中，会尝试获取锁，并且加入到队列中。
+可以看到在这个if方法中，会尝试获取锁，并且加入到队列中。
 
-　　tryAcquire方法:
+tryAcquire方法:
 
-　　**AQS**采用模板方法的模式，将tryAcquire交由给子类进行实现,最后调用到nonfairTryAcquire。
+**AQS**采用模板方法的模式，将tryAcquire交由给子类进行实现,最后调用到nonfairTryAcquire。
 
 ```java
 public abstract class AbstractQueuedSynchronizer{
@@ -184,9 +186,9 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
 
 ```
 
-　　在tryAcquire方法返回false之后，将会进入第二个逻辑: **acquireQueued(addWaiter(Node.EXCLUSIVE), arg)**
+在tryAcquire方法返回false之后，将会进入第二个逻辑: **acquireQueued(addWaiter(Node.EXCLUSIVE), arg)**
 
-　　首先进入的是addWaiter，用户B的进入队列的逻辑:
+首先进入的是addWaiter，用户B的进入队列的逻辑:
 
 ```java
 addWaiter(Node.EXCLUSIVE);
@@ -236,9 +238,9 @@ private Node enq(final Node node) {
   new Node() <---prev---— 用户B
 ```
 
-　　![image-20211214151453981](https://www.shiyitopo.tech/uPic/image-20211214151453981.png)
+![image-20211214151453981](https://www.shiyitopo.tech/uPic/image-20211214151453981.png)
 
-　　再来看: acquireQueued方法,这个方法实现了 用户B 的阻塞
+再来看: acquireQueued方法,这个方法实现了 用户B 的阻塞
 
 ```java
 // node现在是addWaiter返回的 用户B
@@ -270,13 +272,13 @@ final boolean acquireQueued(final Node node, int arg) {
 }
 ```
 
-　　如下图所示，头结点的waitStatus变成了-1
+如下图所示，头结点的waitStatus变成了-1
 
-　　![image-20211214162714865](https://www.shiyitopo.tech/uPic/image-20211214162714865.png)
+![image-20211214162714865](https://www.shiyitopo.tech/uPic/image-20211214162714865.png)
 
 ### 用户C加锁
 
-　　其逻辑和用户B相类似，直接看排队的代码
+其逻辑和用户B相类似，直接看排队的代码
 
 ```java
 private Node addWaiter(Node mode) {
@@ -301,13 +303,13 @@ private Node addWaiter(Node mode) {
 }
 ```
 
-　　![image-20211214163207041](https://www.shiyitopo.tech/uPic/image-20211214163207041.png)
+![image-20211214163207041](https://www.shiyitopo.tech/uPic/image-20211214163207041.png)
 
-　　在 B、C入队之后，整个获取锁的流程就结束了，接下来就等待A执行完业务流程释放锁即可。
+在 B、C入队之后，整个获取锁的流程就结束了，接下来就等待A执行完业务流程释放锁即可。
 
 ## 释放锁流程
 
-　　同样的，在解锁时也是调用AQS的release方法
+同样的，在解锁时也是调用AQS的release方法
 
 ```java
 public void unlock() {
@@ -328,7 +330,7 @@ public final boolean release(int arg) {
   
 ```
 
-　　然后通过tryRelease()模板方法，调用回Sync中的tryRelease
+然后通过tryRelease()模板方法，调用回Sync中的tryRelease
 
 ```java
 // 尝试释放锁
@@ -351,11 +353,11 @@ protected final boolean tryRelease(int releases) {
 }
 ```
 
-　　在这一步执行完之后，状态是这样的:
+在这一步执行完之后，状态是这样的:
 
-　　![image-20211214163224576](https://www.shiyitopo.tech/uPic/image-20211214163224576.png)
+![image-20211214163224576](https://www.shiyitopo.tech/uPic/image-20211214163224576.png)
 
-　　在tryRelease执行成功之后，会执行下面这段代码:
+在tryRelease执行成功之后，会执行下面这段代码:
 
 ```
  Node h = head;
@@ -364,7 +366,7 @@ if (h != null && h.waitStatus != 0)
  return true;
 ```
 
-　　获取头结点，如果头结点不为空且waitStatus为-1时，就调用unparkSuccessor(h)
+获取头结点，如果头结点不为空且waitStatus为-1时，就调用unparkSuccessor(h)
 
 ```java
 private void unparkSuccessor(Node node) {
@@ -388,9 +390,9 @@ private void unparkSuccessor(Node node) {
     }
 ```
 
-　　在unparkSuccessor执行成功之后，会唤醒 用户B的线程, 现在线程被阻塞在 parkAndCheckInterrupt 这一行。
+在unparkSuccessor执行成功之后，会唤醒 用户B的线程, 现在线程被阻塞在 parkAndCheckInterrupt 这一行。
 
-　　因为这个是自旋的方法，所以唤醒之后，会再次进入判断
+因为这个是自旋的方法，所以唤醒之后，会再次进入判断
 
 ```java
 final boolean acquireQueued(final Node node, int arg) {
@@ -427,19 +429,19 @@ final boolean acquireQueued(final Node node, int arg) {
     }
 ```
 
-　　![image-20211214165737590](https://www.shiyitopo.tech/uPic/image-20211214165737590.png)
+![image-20211214165737590](https://www.shiyitopo.tech/uPic/image-20211214165737590.png)
 
-　　这个时候，我们的整个AQS的状态已经和最初B进来的时候一致。也就意味着，原本的用户C 占用了 用户B 的位置，排队向前占了一格。
+这个时候，我们的整个AQS的状态已经和最初B进来的时候一致。也就意味着，原本的用户C 占用了 用户B 的位置，排队向前占了一格。
 
-　　然后，不断循环处理。就成就了加锁和解锁的逻辑。
+然后，不断循环处理。就成就了加锁和解锁的逻辑。
 
-　　至此，整个AQS就基本算是结束了。
+至此，整个AQS就基本算是结束了。
 
 ## 总结
 
-　　这个时候，我们再倒过来看AQS中抽象的概念。
+这个时候，我们再倒过来看AQS中抽象的概念。
 
-　　![img](https://www.shiyitopo.tech/uPic/7132e4cef44c26f62835b197b239147b18062.png)
+![img](https://www.shiyitopo.tech/uPic/7132e4cef44c26f62835b197b239147b18062.png)
 
 + `CLH`队列，虚拟双向队列，Craig,Landin,and Hagersten。仅存在结点之间的关联关系。
 
@@ -458,8 +460,8 @@ final boolean acquireQueued(final Node node, int arg) {
 
   // 值为0，表示当前节点在sync队列中，等待着获取锁
 
-　　AQS就是靠着这个数据结构来对线程来进行处理的。
+AQS就是靠着这个数据结构来对线程来进行处理的。
 
-　　AQS还有其他各种各样的api，这里就不展开赘述了，可以看去看https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html
+AQS还有其他各种各样的api，这里就不展开赘述了，可以看去看https://tech.meituan.com/2019/12/05/aqs-theory-and-apply.html
 
-　　![img](https://www.shiyitopo.tech/uPic/82077ccf14127a87b77cefd1ccf562d3253591.png)
+![img](https://www.shiyitopo.tech/uPic/82077ccf14127a87b77cefd1ccf562d3253591.png)

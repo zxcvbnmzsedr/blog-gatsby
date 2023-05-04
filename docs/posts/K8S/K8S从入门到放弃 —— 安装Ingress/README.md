@@ -6,19 +6,21 @@ categories:
 - posts
 tags: 
 ---
-　　Ingress 是提供了一个路由，用于反向代理到集群内部的服务中。
+# K8S从入门到放弃 —— 安装Ingress
 
-　　这是官网的一张请求示例图。能清晰的看到Ingress所提供的功能。
+Ingress 是提供了一个路由，用于反向代理到集群内部的服务中。
+
+这是官网的一张请求示例图。能清晰的看到Ingress所提供的功能。
 
 # Ingress Controller
 
-　　Ingress 提供了好多种实现方式，比如 traefic / Kong / Istio / Nginx 等
+Ingress 提供了好多种实现方式，比如 traefic / Kong / Istio / Nginx 等
 
-　　最恶心的是，Nginx 还提供了两个版本 :
+最恶心的是，Nginx 还提供了两个版本 :
 
-　　一个是Nginx公司实现的 [nginx-ingress](https://github.com/nginxinc/kubernetes-ingress)
+一个是Nginx公司实现的 [nginx-ingress](https://github.com/nginxinc/kubernetes-ingress)
 
-　　还有一个是K8S 社区实现的 [ingress-nginx](https://github.com/kubernetes/ingress-nginx/)
+还有一个是K8S 社区实现的 [ingress-nginx](https://github.com/kubernetes/ingress-nginx/)
 
 <table>
     <thead>
@@ -185,7 +187,7 @@ tags:
     </tbody>
 </table>
 
-　　我自己一开始使用的是Nginx出品的那个，后面发现Stack Overflow上讨论的问题都没有K8S出品的多，就使用上了K8S的版本Ingress。
+我自己一开始使用的是Nginx出品的那个，后面发现Stack Overflow上讨论的问题都没有K8S出品的多，就使用上了K8S的版本Ingress。
 
 # 安装
 

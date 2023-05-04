@@ -6,11 +6,13 @@ categories:
 - posts
 tags: 
 ---
-　　在docker环境中安装jenkins，jenkins的构建环境是docker中的环境，默认的docker中默认只有python2而没有python3，因此需要再docker中手动装python3
+# Jenkins容器安装python3环境
+
+在docker环境中安装jenkins，jenkins的构建环境是docker中的环境，默认的docker中默认只有python2而没有python3，因此需要再docker中手动装python3
 
 # 进入jenkins容器
 
-　　docker exec -it -u root 容器id /bin/bash
+docker exec -it -u root 容器id /bin/bash
 
 # 容器内部安装python3
 
@@ -25,11 +27,11 @@ cd Python-3.6.8
 ./configure --prefix=/var/jenkins_home/python3
 ```
 
-　　如果执行后报错 configure: error: no acceptable C compiler found in $PATH 则是因为缺少gcc相关的依赖包
+如果执行后报错 configure: error: no acceptable C compiler found in $PATH 则是因为缺少gcc相关的依赖包
 
 ## 安装依赖包
 
-　　自行根据docker的系统镜像选用apt-get 或者 yum 进行安装
+自行根据docker的系统镜像选用apt-get 或者 yum 进行安装
 
 ```
 yum -y install gcc automake autoconf libtool make
@@ -41,7 +43,7 @@ yum install sudo
 
 ## make 编译
 
-　　在python-3.6.8这个目录下重新执行安装
+在python-3.6.8这个目录下重新执行安装
 
 ```
 ./configure --prefix=/var/jenkins_home/python3 --with-ssl

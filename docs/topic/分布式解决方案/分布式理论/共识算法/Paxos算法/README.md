@@ -12,4 +12,6 @@ categories:
   - 共识算法
   - Paxos算法
 ---
-　　‍
+# Paxos算法
+
+‍

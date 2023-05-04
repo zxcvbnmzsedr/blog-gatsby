@@ -1,6 +1,7 @@
 const fetch = require('isomorphic-fetch');
 const path = require('path')
 const cheerio = require('cheerio');
+const AdmZip = require('adm-zip');
 
 class SiYuan {
   constructor(token, host, box) {
@@ -80,7 +81,7 @@ class SiYuan {
 
   getData = (url, data) => {
     // console.log(this.param(data))
-    return fetch(this.host + url, this.param(data)).then(res => {
+    return fetch(this.host+'/api/' + url, this.param(data)).then(res => {
       if (res.status >= 400) {
         console.log(res);
         const err = new Error('http server error');
@@ -90,7 +91,17 @@ class SiYuan {
       return res.json();
     })
   }
-
+  downloadFile = (url) => {
+    return fetch(this.host + url).then(res => {
+      if (res.status >= 400) {
+        console.log(res);
+        const err = new Error('http server error');
+        err.res = res;
+        throw err;
+      }
+      return res.buffer();
+    })
+  }
   async getSiYuanTopic() {
     const topicList = await this.getData('query/sql', {stmt: `select id,hpath, LTRIM(hpath, '/topic/') as topic from blocks where box = '${this.box}' and (type = 'd')  and hpath like '/topic/%' and topic not like '%/%'`});
     const res = []
@@ -199,7 +210,7 @@ module.exports = {
 
 const fs = require('fs')
 const s = new SiYuan('noeyqg6qknhqvl5m',
-  'http://127.0.0.1:6806/api/',
+  'http://127.0.0.1:6806',
   '20220420112442-p6q6e8w'
 )
 
@@ -218,11 +229,32 @@ s.getSiYuanPost()
   .then(e => {
       fs.rmSync(path.join('.', 'docs', 'topic'), {recursive: true})
       fs.rmSync(path.join('.', 'docs', 'posts'), {recursive: true})
-      e.forEach(raw => {
+      e.forEach(async raw => {
         if (raw && (raw.hpath.indexOf('posts') !== -1 || raw.hpath.indexOf('topic') !== -1)) {
           parswRaw(raw)
           mkdirsSync(path.join('.', 'docs', raw.hpath))
+          if (raw.raw.indexOf('image') !== -1){
+            s.getData('export/exportMd', {id: raw.id})
+              .then(e => {
+                s.downloadFile(e.data.zip, {})
+                  .then(e => {
+                    // 解压zip文件，把assert文件夹写入docs中
+                    const zip = new AdmZip(e)
+                    // 提取zip文件中的posts/assert文件夹到docs中
+                    mkdirsSync(path.join('.', 'docs', raw.hpath, 'assets'))
+                    zip.getEntries().forEach(function (zipEntry) {
+                      if (zipEntry.entryName.indexOf('posts/assets') !== -1) {
+                        console.log(zipEntry.entryName)
+                        raw.raw = raw.raw.replace(zipEntry.entryName.replace('posts/',''),'./'+ zipEntry.entryName.replace('posts/',''))
+                        zip.extractEntryTo(zipEntry.entryName, path.join('.', 'docs', raw.hpath, 'assets'), false, true)
+                      }
+                    })
+                    fs.writeFileSync(path.join('.', 'docs', raw.hpath, 'README.md'), raw.raw)
+                  })
+              })
+        }
           fs.writeFileSync(path.join('.', 'docs', raw.hpath, 'README.md'), raw.raw)
+
         }
       })
     }

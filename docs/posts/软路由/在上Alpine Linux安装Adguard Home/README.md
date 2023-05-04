@@ -6,9 +6,11 @@ categories:
 - posts
 tags: 
 ---
+# 在上Alpine Linux安装Adguard Home
+
 ---
 
-　　title: '在上Alpine Linux安装Adguard Home'  
+title: '在上Alpine Linux安装Adguard Home'  
 date: 2021-12-19 14:52:15  
 tags: [软路由]  
 published: true  
@@ -18,7 +20,7 @@ isTop: false
 
 ---
 
-　　由于没有Systemd, Adguard Home的官网的安装方法在Alpine Linux上无法工作。
+由于没有Systemd, Adguard Home的官网的安装方法在Alpine Linux上无法工作。
 然而，需要用OpenRC运行它非常简单。
 
 1. 通过 `curl -s -S -L https://raw.githubusercontent.com/AdguardTeam/AdGuardHome/master/scripts/install.sh | sh -s -- -v` 进行安装
@@ -70,4 +72,4 @@ isTop: false
    `rc-update add AdguardHome`
    `rc-service  AdguardHome start`
 
-　　‍
+‍
