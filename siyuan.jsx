@@ -142,7 +142,7 @@ class SiYuan {
    * @param box
    */
   async getSiYuanPost() {
-    const siYuanBox = await this.getData('query/sql', {stmt: `select * from blocks where box = '${this.box}' and type='d' order by created desc`});
+    const siYuanBox = await this.getData('query/sql', {stmt: `select * from blocks where box = '${this.box}' and type='d' order by created desc limit 200000`});
     return await Promise.all(siYuanBox.data.map(async (siYuanBoxData) => {
       const {id, content, created} = siYuanBoxData;
       const {data} = await this.getData('export/exportMdContent', {id});
@@ -227,8 +227,12 @@ function mkdirsSync(dirname) {
 
 s.getSiYuanPost()
   .then(e => {
-      fs.rmSync(path.join('.', 'docs', 'topic'), {recursive: true})
-      fs.rmSync(path.join('.', 'docs', 'posts'), {recursive: true})
+      if (fs.existsSync(path.join('.', 'docs', 'topic'))) {
+        fs.rmSync(path.join('.', 'docs', 'topic'), {recursive: true})
+      }
+      if (fs.existsSync(path.join('.', 'docs', 'posts'))) {
+        fs.rmSync(path.join('.', 'docs', 'posts'), {recursive: true})
+      }
       e.forEach(async raw => {
         if (raw && (raw.hpath.indexOf('posts') !== -1 || raw.hpath.indexOf('topic') !== -1)) {
           parswRaw(raw)

@@ -1,2 +1,4 @@
 .env
 dist
+docs/posts
+docs/topic

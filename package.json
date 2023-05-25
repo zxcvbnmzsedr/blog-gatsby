@@ -14,11 +14,12 @@
     "build": "node siyuan.jsx && yarn docs:build",
     "docs:dev": "vuepress dev ./docs",
     "docs:build": "vuepress build --no-cache --dest ./dist ./docs ",
-    "deploy": "yarn build && gh-pages -d dist -t true -b master -e docs -r https://github.com/zxcvbnmzsedr/zxcvbnmzsedr.github.io.git"
+    "deploy": "yarn build && echo 'www.ztianzeng.com' > ./dist/CNAME && gh-pages -d dist -t true -b master -e docs -r  git@github.com:zxcvbnmzsedr/zxcvbnmzsedr.github.io.git"
   },
   "dependencies": {
     "@vuepress/plugin-blog": "^1.9.4",
     "adm-zip": "^0.5.10",
+    "gh-pages": "^5.0.0",
     "isomorphic-fetch": "^3.0.0",
     "vuepress": "^1.9.7",
     "vuepress-plugin-baidu-tongji-analytics": "^1.0.2"
